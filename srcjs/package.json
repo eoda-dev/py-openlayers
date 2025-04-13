@@ -5,6 +5,7 @@
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "prettier": "prettier ipywidget --write",
     "start-ipywidget": "vite ipywidget",
     "build-ipywidget": "vite build ipywidget",
     "serve-ipywidget": "vite preview ipywidget",
