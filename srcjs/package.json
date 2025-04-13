@@ -1,0 +1,21 @@
+{
+  "name": "openlayers-widget",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "start-ipywidget": "vite ipywidget",
+    "build-ipywidget": "vite build ipywidget",
+    "serve-ipywidget": "vite preview ipywidget",
+    "build-anywidget-bindings": "esbuild ipywidget/anywidget.js --bundle --minify --format=esm --outfile=anywidget-bindings/openlayers.anywidget.js" 
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.2",
+    "prettier": "^3.5.3",
+    "vite": "^6.2.4"
+  },
+  "dependencies": {
+    "ol": "latest"
+  }
+}

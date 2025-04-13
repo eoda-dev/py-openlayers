@@ -8,3 +8,14 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Node-generated files
+node_modules/
+srcjs/anywidget-bindings/
+
+# Jupyter-generated files
+.ipynb_checkpoints/
+
+# Misc
+*.swp
+
