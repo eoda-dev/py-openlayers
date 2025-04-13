@@ -2,7 +2,11 @@
 import * as layers from "ol/layer";
 window.olLayers = layers;
 
-import render from "./anywidget";
+// import * as anywidget from "./anywidget";
+import anywidget from "./anywidget";
+
+const render = anywidget.render;
+// console.log("render", anywidget.render);
 
 const data = {
   map_options: {

@@ -2,7 +2,7 @@ import "./style.css";
 
 import MapWidget from "./map";
 
-export default function render({ model, el }) {
+function render({ model, el }) {
   console.log("Welcome to anywidget", el);
   // el.innerHTML = "Welcome to anywidget";
   // const calls = model.get("calls");
@@ -19,3 +19,4 @@ export default function render({ model, el }) {
   el.appendChild(mapElement);
 }
 
+export default { render };
