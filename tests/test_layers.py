@@ -1,14 +1,20 @@
 from openlayers.layers import TileLayer, VectorLayer
-from openlayers.sources import VectorSource
+from openlayers.sources import GeoJSONSource, VectorSource
+
 
 def test_tile_layer() -> None:
     layer = TileLayer(source=dict(foo="bar"))
-    print(layer.to_dict())
+    print(layer.model_dump())
+
 
 def test_vector_layer() -> None:
     layer = VectorLayer(
-            source=VectorSource(url="xyz"),
-            style = {"circle-color": "yellow"}
-            )
-    print(layer.to_dict())
+        source=GeoJSONSource(
+            url="https://openlayers.org/data/vector/populated-places.json"
+        ),
+        style={"circle-color": "yellow"},
+    )
+    print(layer.model_dump())
 
+    assert layer.source.url == "https://openlayers.org/data/vector/populated-places.json"
+    assert layer.model_dump()["options"]["source"]["options"]["url"] == "https://openlayers.org/data/vector/populated-places.json"
