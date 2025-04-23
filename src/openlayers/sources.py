@@ -1,16 +1,30 @@
 from __future__ import annotations
 
-from pydantic import computed_field
-from typing import Optional
+from typing import Union
 
-from .abstracts import Source
+from pydantic import BaseModel, ConfigDict, computed_field
+
+
+class Source(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    def model_dump(self) -> dict:
+        return dict(
+            type=self.type, options=super().model_dump(exclude_none=True, by_alias=True)
+        )
+
+    @property
+    def type(self) -> str:
+        return type(self).__name__
 
 
 class OSM(Source): ...
 
+
 class VectorSource(Source):
     url: str | None = None
     format: str | None = "geojson"
+
 
 class GeoJSONSource(Source):
     url: str | None = None
@@ -22,3 +36,6 @@ class GeoJSONSource(Source):
     @property
     def type(self) -> str:
         return "VectorSource"
+
+
+SourceT = Union[OSM | VectorSource | GeoJSONSource]

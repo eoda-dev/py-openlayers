@@ -1,19 +1,36 @@
 from __future__ import annotations
 
-from .abstracts import MyBaseModel, Source, Layer
-# from pydantic import ConfigDict
-# from .sources import VectorSource
+from pydantic import BaseModel, ConfigDict, field_validator
+
+from .sources import Source
+
+
+class Layer(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    source: Source | dict
+
+    @field_validator("source")
+    def validate_source(cls, source) -> dict:
+        if isinstance(source, Source):
+            return source.model_dump()
+        
+        return source
+
+    def model_dump(self) -> dict:
+        
+        return dict(
+            type=self.type,
+            options=super().model_dump(exclude_none=True, by_alias=True)
+        )
+
+    @property
+    def type(self) -> str:
+        return type(self).__name__
+
 
 class TileLayer(Layer): ...
-    # source: dict | Source
 
-"""
-class VectorLayer(MyBaseModel):
-    model_config = ConfigDict(strict=True)
-
-    source: dict | Source | VectorSource
-    style: dict
-"""
 
 class VectorLayer(Layer):
     style: dict | None = None
