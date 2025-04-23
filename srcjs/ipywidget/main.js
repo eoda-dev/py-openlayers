@@ -10,7 +10,7 @@ const render = anywidget.render;
 
 const data = {
   map_options: {
-    layers: []
+    layers: [],
   },
   view_options: {
     center: [0, 0],
