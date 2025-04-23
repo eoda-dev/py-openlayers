@@ -16,9 +16,14 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   mapElement.id = "ol-map-widget";
   mapElement.style.height = height;
   // ...
-  const viewOptions = model.get("view_options");
-  console.log("viewOptions", viewOptions);
-  const mapWidget = new MapWidget(mapElement, viewOptions);
+  const mapOptions = model.get("map_options");
+  console.log("mapOptions", mapOptions);
+  const mapWidget = new MapWidget(mapElement, mapOptions);
+
+  // ...
+  const debugData = model.get("debug_data");
+  mapWidget.debugData(debugData);
+
   el.appendChild(mapElement);
 }
 

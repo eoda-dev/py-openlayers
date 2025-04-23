@@ -1,6 +1,8 @@
 import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 
+import { GeoJSON } from "ol/format";
+
 // import { OSM } from "ol/source";
 
 const sources = {
@@ -9,9 +11,13 @@ const sources = {
 };
 
 type SourceKey = keyof typeof sources;
-type SourceOptions = object;
+type SourceOptions = any;
 
 function parseSourceOptions(options: SourceOptions): SourceOptions {
+    if (options.format === "geojson") {
+        options.format = new GeoJSON()
+    }
+
     return options;
 }
 
