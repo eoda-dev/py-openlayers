@@ -5,8 +5,8 @@ from typing import Union
 from pydantic import BaseModel, ConfigDict, computed_field
 from .abstracts import BaseType
 
-class Source(BaseType): ...
 
+class Source(BaseType): ...
 """
 class Source(BaseModel):
     model_config = ConfigDict(extra="allow")
@@ -20,6 +20,7 @@ class Source(BaseModel):
     def type(self) -> str:
         return type(self).__name__
 """
+
 
 class OSM(Source): ...
 

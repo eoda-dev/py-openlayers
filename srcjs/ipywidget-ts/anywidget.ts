@@ -20,6 +20,12 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("mapOptions", mapOptions);
   const mapWidget = new MapWidget(mapElement, mapOptions);
 
+  const map = mapWidget.getMap();
+  map.on("click", (e) => {
+    const view = map.getView();
+    console.log({ center: view.getCenter(), zoom: view.getZoom() });
+  });
+
   // ...
   const debugData = model.get("debug_data");
   mapWidget.debugData(debugData);

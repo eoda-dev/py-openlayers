@@ -52,6 +52,10 @@ export default class MapWidget {
     });
   }
 
+  getMap(): Map {
+    return this._map;
+  }
+
   // ...
   debugData(data: any): void {
     console.log("debug", data);

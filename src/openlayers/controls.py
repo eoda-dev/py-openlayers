@@ -14,3 +14,17 @@ class ScaleLineControl(Control):
     steps: int | None = None
     units: Literal["metric", "degrees", "imperial", "us", "nautical"] | None = None
     text: bool = False
+
+
+class ZoomSliderControl(Control): ...
+
+
+class MousePositionControl(Control):
+    projection: str | None = "EPSG:4326"
+
+
+# TODO: Needs JS for parsing of layers
+"""
+class OverviewMapControl(Control):
+    layers: list[dict]
+"""

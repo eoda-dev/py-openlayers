@@ -1,9 +1,15 @@
 import ScaleLineControl from 'ol/control/ScaleLine.js';
 import FullScreenControl from 'ol/control/FullScreen.js';
+import ZoomSliderControl from 'ol/control/ZoomSlider.js';
+import MousePositionControl from 'ol/control/MousePosition.js';
+import OverviewMapControl from 'ol/control/OverviewMap.js';
 
 const controls: Controls = {
     ScaleLineControl: ScaleLineControl,
-    FullScreenControl: FullScreenControl
+    FullScreenControl: FullScreenControl,
+    ZoomSliderControl: ZoomSliderControl,
+    MousePositionControl: MousePositionControl,
+    OverviewMapControl: OverviewMapControl
 };
 
 function newControl(type: any, options: any): any {

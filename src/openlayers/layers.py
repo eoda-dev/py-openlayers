@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator, Field
+from uuid import uuid4
 
 from .sources import Source
 
@@ -8,6 +9,7 @@ from .sources import Source
 class Layer(BaseModel):
     model_config = ConfigDict(extra="allow")
 
+    id: str = Field(default_factory=lambda x: str(uuid4()))
     source: Source | dict
 
     @field_validator("source")
