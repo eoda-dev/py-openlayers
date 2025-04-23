@@ -1,9 +1,13 @@
 import { Map, View } from "ol";
+
 // import * as layers from "ol/layer";
 // import * as sources from "ol/source";
+
 import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
+// import OSM from "ol/source/OSM";
 import { ViewOptions } from "ol/View";
+
+import { newSource } from "./sources";
 
 export default class MapWidget {
   _container: HTMLElement;
@@ -15,7 +19,8 @@ export default class MapWidget {
       view: new View(viewOptions),
       layers: [
         new TileLayer({
-          source: new OSM(),
+          // source: new OSM(),
+          source: newSource("OSM")
         }),
       ],
     });
