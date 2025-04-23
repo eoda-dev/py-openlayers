@@ -25,3 +25,7 @@ type LayerDef = {
     type: LayerKey;
     options: LayerOptions;
 }
+
+type Controls = {
+    [key: string]: any;
+}

@@ -19,4 +19,4 @@ def test_vector_layer() -> None:
     assert vector_layer.source["options"]["url"] == "https://openlayers.org/data/vector/populated-places.json"
     assert vector_layer.model_dump()["options"]["source"]["options"]["url"] == "https://openlayers.org/data/vector/populated-places.json"
 
-    print(MapOptions(layers=[vector_layer, TileLayer(source=OSM())]).model_dump())
+    # print(MapOptions(layers=[vector_layer, TileLayer(source=OSM())]).model_dump())

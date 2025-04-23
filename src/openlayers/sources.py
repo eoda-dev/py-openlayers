@@ -3,8 +3,11 @@ from __future__ import annotations
 from typing import Union
 
 from pydantic import BaseModel, ConfigDict, computed_field
+from .abstracts import BaseType
 
+class Source(BaseType): ...
 
+"""
 class Source(BaseModel):
     model_config = ConfigDict(extra="allow")
 
@@ -16,7 +19,7 @@ class Source(BaseModel):
     @property
     def type(self) -> str:
         return type(self).__name__
-
+"""
 
 class OSM(Source): ...
 
@@ -44,5 +47,6 @@ class GeoTIFFSource(Source):
     @property
     def type(self) -> str:
         return "GeoTIFFSource"
+
 
 SourceT = Union[OSM | VectorSource | GeoJSONSource | GeoTIFFSource]

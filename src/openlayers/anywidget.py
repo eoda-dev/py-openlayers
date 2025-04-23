@@ -1,9 +1,11 @@
+from pathlib import Path
+
 import traitlets
 from anywidget import AnyWidget
-from pathlib import Path
 
 from .map import Map
 from .view import View
+
 
 class MapWidget(AnyWidget, Map):
     _esm = Path(__file__).parent / "js" / "openlayers.anywidget.js"
@@ -14,7 +16,15 @@ class MapWidget(AnyWidget, Map):
     height = traitlets.Unicode("600px").tag(sync=True, o=True)
     debug_data = traitlets.Dict().tag(sync=True, o=True)
 
-    def __init__(self, view: View, layers: list = None, height: str = "400px", debug_data: dict = None, **kwargs):
+    def __init__(
+        self,
+        view: View,
+        layers: list = None,
+        controls: list | None = None,
+        height: str = "400px",
+        debug_data: dict = None,
+        **kwargs,
+    ):
         self.debug_data = debug_data or dict()
         AnyWidget.__init__(self, height=height, **kwargs)
-        Map.__init__(self, view, layers)
+        Map.__init__(self, view, layers, controls)

@@ -1,8 +1,17 @@
-from .view import View
+from .layers import TileLayer
 from .map_options import MapOptions
+from .sources import OSM
+from .view import View
+
 
 class Map(object):
-    def __init__(self, view: View | dict, layers: list = None):
-        # self.view_options = view.to_dict()
-        self.map_options = MapOptions(view=view, layers=layers).to_dict()
-
+    def __init__(
+        self,
+        view: View | dict,
+        layers: list | None = None,
+        controls: list | None = None,
+    ):
+        layers = layers or [TileLayer(source=OSM())]
+        self.map_options = MapOptions(
+            view=view, layers=layers, controls=controls
+        ).to_dict()

@@ -14,14 +14,13 @@ class Layer(BaseModel):
     def validate_source(cls, source) -> dict:
         if isinstance(source, Source):
             return source.model_dump()
-        
+
         return source
 
     def model_dump(self) -> dict:
-        
+
         return dict(
-            type=self.type,
-            options=super().model_dump(exclude_none=True, by_alias=True)
+            type=self.type, options=super().model_dump(exclude_none=True, by_alias=True)
         )
 
     @property
@@ -35,7 +34,9 @@ class TileLayer(Layer): ...
 class VectorLayer(Layer):
     style: dict | None = None
 
+
 class WebGLVectorLayer(Layer):
     style: dict | None = None
+
 
 class WebGLTileLayer(Layer): ...
