@@ -18,3 +18,7 @@ type LayerOptions = {
     source: SourceDef;
     [key: string]: any;
 }
+type LayerDef = {
+    type: LayerKey;
+    options: LayerOptions;
+}

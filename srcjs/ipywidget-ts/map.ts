@@ -8,11 +8,14 @@ import TileLayer from "ol/layer/Tile";
 import { ViewOptions } from "ol/View";
 
 import { newSource } from "./sources";
+import { newLayer } from "./layers";
+
 // import { MapOptions } from "ol/Map";
 
+// ...
 type MyMapOptions = {
   viewOptions: ViewOptions;
-  layers: any[] | undefined;
+  layers: LayerDef[] | undefined;
 };
 
 const defaultLayers = [
@@ -27,7 +30,12 @@ export default class MapWidget {
   _map: Map;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
-    const baseLayers = mapOptions.layers || defaultLayers;
+    let baseLayers = defaultLayers;
+    if (mapOptions.layers !== undefined) {
+      baseLayers = mapOptions.layers.map(l => newLayer(l.type, l.options));
+    }
+
+    // const baseLayers = mapOptions.layers || defaultLayers;
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
@@ -36,11 +44,18 @@ export default class MapWidget {
     });
   }
 
+  // ...
   debugData(data: any): void {
     console.log("debug", data);
+
     const sources = data?.sources || [];
     for (let s of sources) {
       console.log(s.type, newSource(s.type, s.options));
+    }
+
+    const layers: LayerDef[] = data?.layers || [];
+    for (let l of layers) {
+      console.log(l.type, newLayer(l.type, l.options));
     }
   }
 }
