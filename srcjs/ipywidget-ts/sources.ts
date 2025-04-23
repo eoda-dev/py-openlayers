@@ -5,13 +5,14 @@ import { GeoJSON } from "ol/format";
 
 // import { OSM } from "ol/source";
 
-const sources = {
+// TODO: Move to types
+const sources: Sources = {
     OSM: OSM,
     VectorSource: VectorSource
 };
 
-type SourceKey = keyof typeof sources;
-type SourceOptions = any;
+// type SourceKey = keyof typeof sources;
+// type SourceOptions = any;
 
 function parseSourceOptions(options: SourceOptions): SourceOptions {
     if (options.format === "geojson") {

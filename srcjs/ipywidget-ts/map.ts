@@ -8,7 +8,7 @@ import TileLayer from "ol/layer/Tile";
 import { ViewOptions } from "ol/View";
 
 import { newSource } from "./sources";
-import { MapOptions } from "ol/Map";
+// import { MapOptions } from "ol/Map";
 
 type MyMapOptions = {
   viewOptions: ViewOptions;
