@@ -1,5 +1,6 @@
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
+import WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 // import BaseLayer from "ol/layer/Base";
 
 import { newSource } from "./sources";
@@ -7,7 +8,8 @@ import { newSource } from "./sources";
 // TODO: Move to types
 const layers: Layers = {
     TileLayer: TileLayer,
-    VectorLayer: VectorLayer
+    VectorLayer: VectorLayer,
+    WebGLVectorLayer: WebGLVectorLayer
 };
 
 // type LayerKey = keyof typeof layers;

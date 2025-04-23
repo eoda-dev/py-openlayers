@@ -34,3 +34,6 @@ class TileLayer(Layer): ...
 
 class VectorLayer(Layer):
     style: dict | None = None
+
+class WebGLVectorLayer(Layer):
+    style: dict | None = None

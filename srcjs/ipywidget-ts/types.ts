@@ -12,6 +12,7 @@ type SourceDef = {
 type Layers = {
     TileLayer: any;
     VectorLayer: any;
+    WebGLVectorLayer: any;
 }
 type LayerKey = keyof Layers;
 type LayerOptions = {
