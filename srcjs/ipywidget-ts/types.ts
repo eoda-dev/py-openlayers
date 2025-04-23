@@ -1,6 +1,7 @@
 type Sources = {
     OSM: any;
     VectorSource: any;
+    GeoTIFFSource: any;
 }
 type SourceKey = keyof Sources;
 type SourceOptions = any;
@@ -13,6 +14,7 @@ type Layers = {
     TileLayer: any;
     VectorLayer: any;
     WebGLVectorLayer: any;
+    WebGLTileLayer: any;
 }
 type LayerKey = keyof Layers;
 type LayerOptions = {

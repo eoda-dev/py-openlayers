@@ -37,3 +37,5 @@ class VectorLayer(Layer):
 
 class WebGLVectorLayer(Layer):
     style: dict | None = None
+
+class WebGLTileLayer(Layer): ...

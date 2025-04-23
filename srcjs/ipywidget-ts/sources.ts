@@ -1,5 +1,6 @@
 import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
+import GeoTIFFSource from 'ol/source/GeoTIFF.js';
 
 import { GeoJSON } from "ol/format";
 
@@ -8,7 +9,8 @@ import { GeoJSON } from "ol/format";
 // TODO: Move to types
 const sources: Sources = {
     OSM: OSM,
-    VectorSource: VectorSource
+    VectorSource: VectorSource,
+    GeoTIFFSource: GeoTIFFSource
 };
 
 // type SourceKey = keyof typeof sources;

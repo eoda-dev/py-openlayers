@@ -38,4 +38,11 @@ class GeoJSONSource(Source):
         return "VectorSource"
 
 
-SourceT = Union[OSM | VectorSource | GeoJSONSource]
+class GeoTIFFSource(Source):
+    sources: list[dict]
+
+    @property
+    def type(self) -> str:
+        return "GeoTIFFSource"
+
+SourceT = Union[OSM | VectorSource | GeoJSONSource | GeoTIFFSource]
