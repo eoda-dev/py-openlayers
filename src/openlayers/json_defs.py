@@ -8,8 +8,8 @@ from .view import View
 class OLBaseModel(BaseModel):
     model_config = ConfigDict(extra="allow")
 
-    def model_dump(self) -> dict:
-        return super().model_dump(exclude_none=True, by_alias=True)
+    def model_dump(self, **kwargs) -> dict:
+        return super().model_dump(exclude_none=True, by_alias=True, **kwargs)
 
     @computed_field(alias="@@type")
     def type(self) -> str:
@@ -37,6 +37,13 @@ class MousePositionControl(Control):
     projection: str | None = "EPSG:4326"
 
 
+# --- Format
+class Format(OLBaseModel): ...
+
+
+class GeoJSON(Format): ...
+
+
 # --- Sources
 class Source(OLBaseModel): ...
 
@@ -44,20 +51,32 @@ class Source(OLBaseModel): ...
 class OSM(Source): ...
 
 
+class VectorSource(Source):
+    url: str | None = None
+    format: dict | GeoJSON  = GeoJSON()
+
+
+SourceT = Union[OSM, VectorSource]
+
+
 # --- Layers
 class Layer(OLBaseModel):
-    source: OSM | dict
+    source: dict | SourceT
 
 
 class TileLayer(Layer): ...
 
 
-LayerT = Union[Layer, TileLayer]
+class WebGLVectorLayer(Layer):
+    style: dict | None = None
+
+
+LayerT = Union[Layer, TileLayer, WebGLVectorLayer]
 
 
 # --- Control that depends on Layer definitions
 class OverviewMapControl(Control):
-    layers: list[LayerT]
+    layers: list[dict | LayerT]
 
 
 ControlT = Union[
@@ -68,8 +87,8 @@ ControlT = Union[
 # ---
 class MapOptions(BaseModel):
     view: View | None = Field(View(), serialization_alias="viewOptions")
-    controls: list[ControlT | dict] | None = None
-    layers: list[LayerT | dict] | None = None
+    controls: list[dict | ControlT] | None = None
+    layers: list[dict | LayerT] | None = None
 
     def model_dump(self) -> dict:
         return super().model_dump(exclude_none=True, by_alias=True)

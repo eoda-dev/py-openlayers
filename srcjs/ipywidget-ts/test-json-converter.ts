@@ -29,4 +29,23 @@ const webglVectorLayer = {
 
 };
 
-export { scaleLineControl, baseLayer, webglVectorLayer }
+// TODO: '@@type' must always be the first entry!
+const populatedPlaces = {
+
+    'source': {
+        'url': 'https://openlayers.org/data/vector/populated-places.json',
+        'format': {
+            '@@type': 'GeoJSON'
+        },
+        '@@type': 'VectorSource',
+    },
+    'style': {
+        'circle-fill-color': 'red',
+        'circle-stroke-color': 'yellow',
+        'circle-stroke-width': 0.75,
+        'circle-radius': 5
+    },
+    '@@type': 'WebGLVectorLayer',
+}
+
+export { scaleLineControl, baseLayer, webglVectorLayer, populatedPlaces as populatedPlacesLayer }

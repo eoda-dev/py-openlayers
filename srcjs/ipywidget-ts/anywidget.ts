@@ -8,6 +8,8 @@ import "ol/ol.css";
 import MapWidget from "./map";
 // import TileLayer from "ol/layer/Tile";
 
+import { webglVectorLayer, populatedPlacesLayer } from "./test-json-converter";
+
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("Welcome to ol-anywidget", el);
 
@@ -41,11 +43,11 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   */
 
   // layer
-  /*
-  const l = mapWidget.testJSONDef() as TileLayer;
+
+  const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
   console.log("layer", l);
-  map.addLayer(l);
-  */
+  // map.addLayer(l);
+
 
   el.appendChild(mapElement);
 }

@@ -12,13 +12,17 @@ class JSONConverter {
         this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON };
     }
 
-    getType(jsonDef: JSONDef): any {
-
+    moveTypeDefToTop(options: JSONDef): JSONDef {
+        let sortedOptions = {} as any
+        Object.keys(options).sort().forEach(key => sortedOptions[key] = options[key]);
+        console.log("sortedOptions", sortedOptions);
+        return sortedOptions;
     }
 
     parseOptions(options: JSONDef): any {
         let parsedOptions = {} as any;
-        for (let key in options) {
+
+        for (let key in this.moveTypeDefToTop(options)) {
             const option = options[key];
             if (Array.isArray(option)) {
                 console.log("Parse items of array");

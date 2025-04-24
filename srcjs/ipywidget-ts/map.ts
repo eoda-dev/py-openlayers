@@ -10,6 +10,8 @@ import { defaults as defaultControls } from 'ol/control/defaults.js';
 
 import { JSONConverter } from "./json";
 
+import { populatedPlacesLayer } from "./test-json-converter";
+
 // ...
 type MyMapOptions = {
   viewOptions: ViewOptions;
@@ -34,6 +36,9 @@ export default class MapWidget {
     if (mapOptions.layers !== undefined) {
       baseLayers = mapOptions.layers.map(layerJSONDef => jsonConverter.parse(layerJSONDef));
     }
+
+    // test
+    baseLayers.push(jsonConverter.parse(populatedPlacesLayer));
 
     let baseControls = [];
     if (mapOptions.controls !== undefined) {
