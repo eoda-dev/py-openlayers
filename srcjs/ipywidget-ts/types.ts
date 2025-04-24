@@ -3,10 +3,10 @@ type SourceCatalog = {
     VectorSource: any;
     GeoTIFFSource: any;
 }
-type SourceKey = keyof SourceCatalog;
+type SourceCatalogKey = keyof SourceCatalog;
 type SourceOptions = any;
 type SourceDef = {
-    type: SourceKey;
+    type: SourceCatalogKey;
     options: any;
 }
 
@@ -16,16 +16,29 @@ type LayerCatalog = {
     WebGLVectorLayer: any;
     WebGLTileLayer: any;
 }
-type LayerKey = keyof LayerCatalog;
+type LayerCatalogKey = keyof LayerCatalog;
 type LayerOptions = {
     source: SourceDef;
     [key: string]: any;
 }
 type LayerDef = {
-    type: LayerKey;
+    type: LayerCatalogKey;
     options: LayerOptions;
 }
 
 type ControlCatalog = {
     [key: string]: any;
 }
+type ControlCatalogKey = keyof ControlCatalog;
+
+// ... JSON parser
+type JSONDef = {
+    "@@type": string;
+    [key: string]: any;
+}
+
+type TypeCatalog = {
+    [key: string]: any;
+}
+
+type TypeCatalogKey = keyof TypeCatalog;

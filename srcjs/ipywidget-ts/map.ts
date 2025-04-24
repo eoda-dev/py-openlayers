@@ -14,6 +14,9 @@ import { newSource } from "./sources";
 import { newLayer } from "./layers";
 import { newControl } from "./controls";
 
+
+import { JSONConverter } from "./json";
+
 // import { MapOptions } from "ol/Map";
 
 // ...
@@ -61,6 +64,12 @@ export default class MapWidget {
 
   addControl(): void {
 
+  }
+
+  testJSONDef(jsonDef: JSONDef): any {
+    const parser = new JSONConverter();
+    const obj = parser.parse(jsonDef);
+    return obj;
   }
 
   // ...

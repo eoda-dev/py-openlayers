@@ -13,7 +13,7 @@ const layerCatalog: LayerCatalog = {
     WebGLTileLayer: WebGLTileLayer
 };
 
-function newLayer(type: LayerKey, options: LayerOptions): any {
+function newLayer(type: LayerCatalogKey, options: LayerOptions): any {
     const sourceDef = options.source;
     options.source = newSource(sourceDef.type, sourceDef.options);
     const layer = new layerCatalog[type](options)

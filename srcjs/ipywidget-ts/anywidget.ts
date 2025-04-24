@@ -39,6 +39,13 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   const debugData = model.get("debug_data");
   mapWidget.debugData(debugData);
 
+  const obj = mapWidget.testJSONDef({
+    "@@type": "ScaleLineControl",
+    bar: true
+  });
+  console.log(obj);
+  map.addControl(obj);
+
   el.appendChild(mapElement);
 }
 

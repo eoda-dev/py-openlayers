@@ -20,7 +20,7 @@ function parseSourceOptions(options: SourceOptions): SourceOptions {
     return options;
 }
 
-function newSource(type: SourceKey, options?: SourceOptions): any {
+function newSource(type: SourceCatalogKey, options?: SourceOptions): any {
     options = options ? parseSourceOptions(options) : options;
     const source = new sourceCatalog[type](options)
     return source;
