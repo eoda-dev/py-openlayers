@@ -48,3 +48,8 @@ type OLAnyWidgetCall = {
     method: string;
     args: any[];
 }
+
+
+type ControlStore = {
+    [key: string]: any
+}

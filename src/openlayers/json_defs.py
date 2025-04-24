@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from typing import Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
-
+from uuid import uuid4
 from .view import View
 
 
@@ -17,7 +19,8 @@ class OLBaseModel(BaseModel):
 
 
 # ---Controls
-class Control(OLBaseModel): ...
+class Control(OLBaseModel):
+    id: str = Field(default_factory=lambda x: str(uuid4()))
 
 
 class FullScreenControl(Control): ...
@@ -61,6 +64,7 @@ SourceT = Union[OSM, VectorSource]
 
 # --- Layers
 class Layer(OLBaseModel):
+    id: str = Field(default_factory=lambda x: str(uuid4()))
     source: dict | SourceT
 
 

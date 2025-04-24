@@ -10,7 +10,8 @@ import { defaults as defaultControls } from 'ol/control/defaults.js';
 
 import { JSONConverter } from "./json";
 
-import { populatedPlacesLayer } from "./test-json-converter";
+// import { populatedPlacesLayer } from "./test-json-converter";
+import BaseLayer from "ol/layer/Base";
 
 // ...
 type MyMapOptions = {
@@ -18,6 +19,12 @@ type MyMapOptions = {
   layers: JSONDef[] | undefined;
   controls: JSONDef[] | undefined;
 };
+
+//
+type LayerStore = {
+  [key: string]: BaseLayer
+}
+
 
 const jsonConverter = new JSONConverter();
 
@@ -30,11 +37,18 @@ const defaultLayers = [
 export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
+  _layerStore: LayerStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
-    let baseLayers = [] // defaultLayers;
+    let baseLayers: BaseLayer[] = [] // defaultLayers;
     if (mapOptions.layers !== undefined) {
-      baseLayers = mapOptions.layers.map(layerJSONDef => jsonConverter.parse(layerJSONDef));
+      // baseLayers = mapOptions.layers.map(layerJSONDef => jsonConverter.parse(layerJSONDef));
+      for (let layerJSONDef of mapOptions.layers) {
+        const layer = jsonConverter.parse(layerJSONDef);
+        baseLayers.push(layer);
+        this._layerStore[layerJSONDef.id] = layer;
+        // console.log(this._layerStore);
+      }
     }
 
     // test
@@ -61,6 +75,18 @@ export default class MapWidget {
   addLayer(layerJSONDef: JSONDef): void {
     const layer = jsonConverter.parse(layerJSONDef);
     this._map.addLayer(layer);
+    this._layerStore[layerJSONDef.id] = layer;
+  }
+
+  removeLayer(layerId: string): void {
+    const layer = this._layerStore[layerId];
+    if (layer === undefined) return;
+
+    this._map.removeLayer(layer);
+    delete this._layerStore[layerId];
+    console.log("layer", layerId, "removed");
+    console.log(this._layerStore);
+
   }
 
   addControl(controlJSONDef: JSONDef): void {
