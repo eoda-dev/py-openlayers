@@ -4,7 +4,7 @@ import ZoomSliderControl from 'ol/control/ZoomSlider.js';
 import MousePositionControl from 'ol/control/MousePosition.js';
 import OverviewMapControl from 'ol/control/OverviewMap.js';
 
-const controls: Controls = {
+const controlCatalog: ControlCatalog = {
     ScaleLineControl: ScaleLineControl,
     FullScreenControl: FullScreenControl,
     ZoomSliderControl: ZoomSliderControl,
@@ -13,7 +13,7 @@ const controls: Controls = {
 };
 
 function newControl(type: any, options: any): any {
-    return new controls[type](options);
+    return new controlCatalog[type](options);
 }
 
-export { newControl, controls }
+export { newControl, controlCatalog }

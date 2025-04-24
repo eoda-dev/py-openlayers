@@ -3,7 +3,7 @@ const SOURCE_INDENTIFIER = "@source="
 const CONTROL_IDENTIFIER = "@control="
 
 class JSONConverter {
-    constructor(layerCatalog: LayerCatalog, sourceCatalog: SourceCatalog, controlCatalog: Controls) {
+    constructor(layerCatalog: LayerCatalog, sourceCatalog: SourceCatalog, controlCatalog: ControlCatalog) {
 
     }
 

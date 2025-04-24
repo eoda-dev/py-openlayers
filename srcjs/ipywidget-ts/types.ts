@@ -26,6 +26,6 @@ type LayerDef = {
     options: LayerOptions;
 }
 
-type Controls = {
+type ControlCatalog = {
     [key: string]: any;
 }
