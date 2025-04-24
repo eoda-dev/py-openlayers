@@ -56,6 +56,14 @@ export default class MapWidget {
     return this._map;
   }
 
+  addLayer(): void {
+
+  }
+
+  addControl(): void {
+
+  }
+
   // ...
   debugData(data: any): void {
     console.log("debug", data);

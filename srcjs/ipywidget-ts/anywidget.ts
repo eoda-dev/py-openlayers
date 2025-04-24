@@ -1,4 +1,5 @@
 import { type AnyModel } from "@anywidget/types";
+import { transform as transformProj } from "ol/proj";
 
 // import "./style.css";
 import "ol/ol.css";
@@ -24,6 +25,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   map.on("click", (e) => {
     const view = map.getView();
     console.log({ center: view.getCenter(), zoom: view.getZoom() });
+    console.log(transformProj(e.coordinate, "EPSG:3857", "EPSG:4326"));
   });
 
   // ...
