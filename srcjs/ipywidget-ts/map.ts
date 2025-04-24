@@ -38,7 +38,7 @@ export default class MapWidget {
     }
 
     // test
-    baseLayers.push(jsonConverter.parse(populatedPlacesLayer));
+    // baseLayers.push(jsonConverter.parse(populatedPlacesLayer));
 
     let baseControls = [];
     if (mapOptions.controls !== undefined) {

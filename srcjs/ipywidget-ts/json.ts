@@ -22,7 +22,8 @@ class JSONConverter {
     parseOptions(options: JSONDef): any {
         let parsedOptions = {} as any;
 
-        for (let key in this.moveTypeDefToTop(options)) {
+        // for (let key in this.moveTypeDefToTop(options)) {
+        for (let key in options) {
             const option = options[key];
             if (Array.isArray(option)) {
                 console.log("Parse items of array");

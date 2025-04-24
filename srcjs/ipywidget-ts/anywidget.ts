@@ -44,8 +44,8 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
 
   // layer
 
-  const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
-  console.log("layer", l);
+  // const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
+  // console.log("layer", l);
   // map.addLayer(l);
 
 
