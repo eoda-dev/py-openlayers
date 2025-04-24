@@ -11,7 +11,9 @@ class Map(object):
         layers: list | None = None,
         controls: list | None = None,
     ):
-        layers = layers or [TileLayer(source=OSM())]
+        if layers is None:
+            layers = [TileLayer(source=OSM())]
+
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).to_dict()

@@ -6,12 +6,11 @@ import { parseClickEvent } from "./utils";
 import "ol/ol.css";
 
 import MapWidget from "./map";
+import TileLayer from "ol/layer/Tile";
 
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
-  console.log("Welcome to anywidget", el);
-  // el.innerHTML = "Welcome to anywidget";
-  // const calls = model.get("calls");
-  // console.log(calls);
+  console.log("Welcome to ol-anywidget", el);
+
   const height = model.get("height") || "400px";
   console.log("height", height);
   const mapElement = document.createElement("div");
@@ -24,11 +23,6 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
 
   const map = mapWidget.getMap();
   map.on("click", (e) => {
-    /*
-    const view = map.getView();
-    console.log({ center: view.getCenter(), zoom: view.getZoom() });
-    console.log(transformProj(e.coordinate, view.getProjection().getCode(), "EPSG:4326"));
-    */
     const info = parseClickEvent(e);
     console.log(info);
     model.set("map_clicked", info);
@@ -45,6 +39,16 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   });
   console.log(obj);
   map.addControl(obj);
+
+  // layer
+  const l = mapWidget.testJSONDef({
+    "@@type": "TileLayer",
+    "source": {
+      "@@type": "OSM"
+    }
+  }) as TileLayer;
+  console.log("layer", l.getSource()?.getAttributions());
+  map.addLayer(l);
 
   el.appendChild(mapElement);
 }

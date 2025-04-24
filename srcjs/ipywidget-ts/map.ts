@@ -37,7 +37,7 @@ export default class MapWidget {
   _map: Map;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
-    let baseLayers = defaultLayers;
+    let baseLayers = [] // defaultLayers;
     if (mapOptions.layers !== undefined) {
       baseLayers = mapOptions.layers.map(l => newLayer(l.type, l.options));
     }
