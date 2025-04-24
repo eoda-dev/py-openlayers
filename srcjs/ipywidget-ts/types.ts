@@ -1,22 +1,22 @@
-type Sources = {
+type SourceCatalog = {
     OSM: any;
     VectorSource: any;
     GeoTIFFSource: any;
 }
-type SourceKey = keyof Sources;
+type SourceKey = keyof SourceCatalog;
 type SourceOptions = any;
 type SourceDef = {
     type: SourceKey;
     options: any;
 }
 
-type Layers = {
+type LayerCatalog = {
     TileLayer: any;
     VectorLayer: any;
     WebGLVectorLayer: any;
     WebGLTileLayer: any;
 }
-type LayerKey = keyof Layers;
+type LayerKey = keyof LayerCatalog;
 type LayerOptions = {
     source: SourceDef;
     [key: string]: any;

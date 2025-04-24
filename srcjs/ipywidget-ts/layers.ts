@@ -6,22 +6,18 @@ import WebGLTileLayer from 'ol/layer/WebGLTile.js';
 
 import { newSource } from "./sources";
 
-// TODO: Move to types
-const layers: Layers = {
+const layerCatalog: LayerCatalog = {
     TileLayer: TileLayer,
     VectorLayer: VectorLayer,
     WebGLVectorLayer: WebGLVectorLayer,
     WebGLTileLayer: WebGLTileLayer
 };
 
-// type LayerKey = keyof typeof layers;
-// type LayerOptions = any;
-
 function newLayer(type: LayerKey, options: LayerOptions): any {
     const sourceDef = options.source;
     options.source = newSource(sourceDef.type, sourceDef.options);
-    const layer = new layers[type](options)
+    const layer = new layerCatalog[type](options)
     return layer;
 }
 
-export { newLayer };
+export { newLayer, layerCatalog };

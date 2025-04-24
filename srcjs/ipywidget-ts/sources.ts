@@ -6,15 +6,11 @@ import { GeoJSON } from "ol/format";
 
 // import { OSM } from "ol/source";
 
-// TODO: Move to types
-const sources: Sources = {
+const sourceCatalog: SourceCatalog = {
     OSM: OSM,
     VectorSource: VectorSource,
     GeoTIFFSource: GeoTIFFSource
 };
-
-// type SourceKey = keyof typeof sources;
-// type SourceOptions = any;
 
 function parseSourceOptions(options: SourceOptions): SourceOptions {
     if (options.format === "geojson") {
@@ -26,8 +22,8 @@ function parseSourceOptions(options: SourceOptions): SourceOptions {
 
 function newSource(type: SourceKey, options?: SourceOptions): any {
     options = options ? parseSourceOptions(options) : options;
-    const source = new sources[type](options)
+    const source = new sourceCatalog[type](options)
     return source;
 }
 
-export { newSource, sources };
+export { newSource, sourceCatalog };

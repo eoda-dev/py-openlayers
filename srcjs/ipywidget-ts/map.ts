@@ -4,7 +4,8 @@ import { Map, View } from "ol";
 // import * as sources from "ol/source";
 
 import TileLayer from "ol/layer/Tile";
-// import OSM from "ol/source/OSM";
+import OSM from "ol/source/OSM";
+
 import { ViewOptions } from "ol/View";
 
 import { defaults as defaultControls } from 'ol/control/defaults.js';
@@ -24,8 +25,7 @@ type MyMapOptions = {
 
 const defaultLayers = [
   new TileLayer({
-    // source: new OSM(),
-    source: newSource("OSM")
+    source: new OSM()
   })
 ];
 
@@ -42,7 +42,6 @@ export default class MapWidget {
     let controls = mapOptions.controls || [];
     controls = controls.map(c => newControl(c.type, c.options));
 
-    // const baseLayers = mapOptions.layers || defaultLayers;
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
