@@ -12,6 +12,7 @@ import { JSONConverter } from "./json";
 
 // import { populatedPlacesLayer } from "./test-json-converter";
 import BaseLayer from "ol/layer/Base";
+import Control from "ol/control/Control";
 
 // ...
 type MyMapOptions = {
@@ -22,9 +23,13 @@ type MyMapOptions = {
 
 //
 type LayerStore = {
-  [key: string]: BaseLayer
+  [key: string]: BaseLayer;
 }
 
+// 
+type ControlStore = {
+  [key: string]: Control;
+}
 
 const jsonConverter = new JSONConverter();
 
@@ -38,6 +43,7 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _layerStore: LayerStore = {};
+  _controlStore: ControlStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
     let baseLayers: BaseLayer[] = [] // defaultLayers;
@@ -54,9 +60,14 @@ export default class MapWidget {
     // test
     // baseLayers.push(jsonConverter.parse(populatedPlacesLayer));
 
-    let baseControls = [];
+    let baseControls: Control[] = [];
     if (mapOptions.controls !== undefined) {
-      baseControls = mapOptions.controls.map(controlJSONDef => jsonConverter.parse(controlJSONDef));
+      // baseControls = mapOptions.controls.map(controlJSONDef => jsonConverter.parse(controlJSONDef));
+      for (let controlJSONDef of mapOptions.controls) {
+        const control = jsonConverter.parse(controlJSONDef);
+        baseControls.push(control);
+        this._controlStore[controlJSONDef.id] = control;
+      }
     }
 
     this._container = mapElement;
@@ -84,14 +95,23 @@ export default class MapWidget {
 
     this._map.removeLayer(layer);
     delete this._layerStore[layerId];
-    console.log("layer", layerId, "removed");
-    console.log(this._layerStore);
-
+    console.log("layer", layerId, "removed", this._layerStore);
   }
 
   addControl(controlJSONDef: JSONDef): void {
     const control = jsonConverter.parse(controlJSONDef);
     this._map.addControl(control);
+    this._controlStore[controlJSONDef.id] = control;
+    console.log(this._controlStore);
+  }
+
+  removeControl(controlId: string): void {
+    const control = this._controlStore[controlId];
+    if (control === undefined) return;
+
+    this._map.removeControl(control);
+    delete this._controlStore[controlId];
+    console.log("control", controlId, "removed", this._controlStore);
   }
 
   testJSONDef(jsonDef: JSONDef): any {
