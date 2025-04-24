@@ -20,7 +20,11 @@ class JSONConverter {
         let parsedOptions = {} as any;
         for (let key in options) {
             const option = options[key];
-            if (typeof option === "object" && option["@@type"] !== undefined) {
+            if (Array.isArray(option)) {
+                console.log("Parse items of array");
+                parsedOptions[key] = option.map(item => this.parse(item));
+            }
+            else if (typeof option === "object" && option["@@type"] !== undefined) {
                 parsedOptions[key] = this.parse(option);
             }
             else if (key !== "@@type") {

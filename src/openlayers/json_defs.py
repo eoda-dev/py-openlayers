@@ -16,6 +16,7 @@ class OLBaseModel(BaseModel):
         return type(self).__name__
 
 
+# ---Controls
 class Control(OLBaseModel): ...
 
 
@@ -29,13 +30,6 @@ class ScaleLineControl(Control):
     text: bool = False
 
 
-# ---
-class Source(OLBaseModel): ...
-
-
-class OSM(Source): ...
-
-
 class ZoomSliderControl(Control): ...
 
 
@@ -43,7 +37,14 @@ class MousePositionControl(Control):
     projection: str | None = "EPSG:4326"
 
 
-# ---
+# --- Sources
+class Source(OLBaseModel): ...
+
+
+class OSM(Source): ...
+
+
+# --- Layers
 class Layer(OLBaseModel):
     source: OSM | dict
 
@@ -52,7 +53,16 @@ class TileLayer(Layer): ...
 
 
 LayerT = Union[Layer, TileLayer]
-ControlT = Union[Control, FullScreenControl, ScaleLineControl]
+
+
+# --- Control that depends on Layer definitions
+class OverviewMapControl(Control):
+    layers: list[LayerT]
+
+
+ControlT = Union[
+    Control, FullScreenControl, ScaleLineControl, ZoomSliderControl, OverviewMapControl
+]
 
 
 # ---
