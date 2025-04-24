@@ -2,12 +2,14 @@ import { layerCatalog } from "./layers"
 import { sourceCatalog } from "./sources"
 import { controlCatalog } from "./controls"
 
+import { GeoJSON } from "ol/format";
+
 class JSONConverter {
     _catalog: any
 
     // constructor(layerCatalog?: LayerCatalog, sourceCatalog?: SourceCatalog, controlCatalog?: ControlCatalog) {
     constructor() {
-        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog };
+        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON };
     }
 
     getType(jsonDef: JSONDef): any {

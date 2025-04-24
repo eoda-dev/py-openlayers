@@ -41,13 +41,28 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   map.addControl(obj);
 
   // layer
+  //"@@type": "TileLayer",
+  //"source": {
+  //  "@@type": "OSM"
   const l = mapWidget.testJSONDef({
-    "@@type": "TileLayer",
-    "source": {
-      "@@type": "OSM"
+    "@@type": "WebGLVectorLayer",
+    source: {
+      "@@type": "VectorSource",
+      url: "https://openlayers.org/data/vector/ecoregions.json",
+      format: {
+        "@@type": "GeoJSON"
+      }
+    },
+    "style": {
+      'stroke-color': ['*', ['get', 'COLOR'], [220, 220, 220]],
+      'stroke-width': 2,
+      'stroke-offset': -1,
+      'fill-color': ['*', ['get', 'COLOR'], [255, 255, 255, 0.6]]
     }
+
+
   }) as TileLayer;
-  console.log("layer", l.getSource()?.getAttributions());
+  console.log("layer", l);
   map.addLayer(l);
 
   el.appendChild(mapElement);
