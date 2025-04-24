@@ -14,6 +14,7 @@ class MapWidget(AnyWidget, Map):
     # view_options = traitlets.Dict().tag(sync=True, o=True)
     map_options = traitlets.Dict().tag(sync=True, o=True)
     height = traitlets.Unicode("600px").tag(sync=True, o=True)
+    map_clicked = traitlets.Dict().tag(sync=True)
     debug_data = traitlets.Dict().tag(sync=True, o=True)
 
     def __init__(

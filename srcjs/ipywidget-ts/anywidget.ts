@@ -1,5 +1,6 @@
 import { type AnyModel } from "@anywidget/types";
 import { transform as transformProj } from "ol/proj";
+import { parseClickEvent } from "./utils";
 
 // import "./style.css";
 import "ol/ol.css";
@@ -23,9 +24,15 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
 
   const map = mapWidget.getMap();
   map.on("click", (e) => {
+    /*
     const view = map.getView();
     console.log({ center: view.getCenter(), zoom: view.getZoom() });
-    console.log(transformProj(e.coordinate, "EPSG:3857", "EPSG:4326"));
+    console.log(transformProj(e.coordinate, view.getProjection().getCode(), "EPSG:4326"));
+    */
+    const info = parseClickEvent(e);
+    console.log(info);
+    model.set("map_clicked", info);
+    model.save_changes();
   });
 
   // ...
