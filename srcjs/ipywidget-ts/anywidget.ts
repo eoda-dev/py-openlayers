@@ -31,6 +31,13 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     model.save_changes();
   });
 
+  model.on("msg:custom", (msg: OLAnyWidgetCall) => {
+    console.log("thanx for your message", msg);
+
+    // @ts-expect-error
+    mapWidget[msg.method](...msg.args);
+  });
+
   // ...
   const debugData = model.get("debug_data");
   mapWidget.debugData(debugData);
@@ -43,11 +50,11 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   */
 
   // layer
-
-  // const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
-  // console.log("layer", l);
-  // map.addLayer(l);
-
+  /*
+  const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
+  console.log("layer", l);
+  map.addLayer(l);
+  */
 
   el.appendChild(mapElement);
 }

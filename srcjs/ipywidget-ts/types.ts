@@ -42,3 +42,9 @@ type TypeCatalog = {
 }
 
 type TypeCatalogKey = keyof TypeCatalog;
+
+// ...
+type OLAnyWidgetCall = {
+    method: string;
+    args: any[];
+}
