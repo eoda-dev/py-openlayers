@@ -19,6 +19,9 @@ class OLBaseModel(BaseModel):
 class Control(OLBaseModel): ...
 
 
+class FullScreenControl(Control): ...
+
+
 class ScaleLineControl(Control):
     bar: bool | None = False
     steps: int | None = None
@@ -33,6 +36,13 @@ class Source(OLBaseModel): ...
 class OSM(Source): ...
 
 
+class ZoomSliderControl(Control): ...
+
+
+class MousePositionControl(Control):
+    projection: str | None = "EPSG:4326"
+
+
 # ---
 class Layer(OLBaseModel):
     source: OSM | dict
@@ -42,7 +52,7 @@ class TileLayer(Layer): ...
 
 
 LayerT = Union[Layer, TileLayer]
-ControlT = Union[Control, ScaleLineControl]
+ControlT = Union[Control, FullScreenControl, ScaleLineControl]
 
 
 # ---
