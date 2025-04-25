@@ -1274,6 +1274,8 @@ dev = [
     { name = "geopandas" },
     { name = "isort" },
     { name = "jupyter" },
+    { name = "pyproj", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "pyproj", version = "3.7.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "pytest" },
     { name = "ruff" },
 ]
@@ -1289,6 +1291,7 @@ dev = [
     { name = "geopandas", specifier = ">=1.0.1" },
     { name = "isort", specifier = ">=6.0.1" },
     { name = "jupyter", specifier = ">=1.1.1" },
+    { name = "pyproj", specifier = ">=3.6.1" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.5" },
 ]
