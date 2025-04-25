@@ -1,4 +1,8 @@
-from .json_defs import OSM, MapOptions, TileLayer, View, LayerT, ControlT
+from __future__ import annotations
+
+from typing import Any
+
+from .json_defs import OSM, ControlT, LayerT, MapOptions, TileLayer, View
 
 
 class Map(object):
@@ -8,9 +12,32 @@ class Map(object):
         layers: list[LayerT | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
     ):
+        self._calls = []
         if layers is None:
-            layers = [TileLayer(source=OSM())]
+            layers = [TileLayer(id="osm", source=OSM())]
 
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()
+
+    def add_call(self, method_name: str, *args: Any) -> None:
+        call = dict(method=method_name, args=args)
+        self._calls.append(call)
+
+    def add_layer(self, layer: LayerT | dict) -> None:
+        if isinstance(layer, LayerT):
+            layer = layer.model_dump()
+
+        self.add_call("addLayer", layer)
+
+    def remove_layer(self, layer_id: str) -> None:
+        self.add_call("removeLayer", layer_id)
+
+    def add_control(self, control: ControlT | dict) -> None:
+        if isinstance(control, ControlT):
+            control = control.model_dump()
+
+        self.add_call("addControl", control)
+
+    def remove_control(self, control_id: str) -> None:
+        self.add_call("removeControl", control_id)

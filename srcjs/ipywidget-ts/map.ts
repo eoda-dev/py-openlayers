@@ -87,6 +87,7 @@ export default class MapWidget {
     const layer = jsonConverter.parse(layerJSONDef);
     this._map.addLayer(layer);
     this._layerStore[layerJSONDef.id] = layer;
+    console.log("layerStore", this._layerStore);
   }
 
   removeLayer(layerId: string): void {

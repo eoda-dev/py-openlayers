@@ -59,7 +59,12 @@ class VectorSource(Source):
     format: dict | GeoJSON  = GeoJSON()
 
 
-SourceT = Union[OSM, VectorSource]
+class GeoTIFFSource(Source):
+    normalize: bool | None = None
+    sources: list[dict]
+
+
+SourceT = Union[OSM, VectorSource, GeoTIFFSource]
 
 
 # --- Layers
@@ -71,11 +76,19 @@ class Layer(OLBaseModel):
 class TileLayer(Layer): ...
 
 
+class VectorLayer(Layer):
+    style: dict | None = None
+
+
 class WebGLVectorLayer(Layer):
     style: dict | None = None
 
 
-LayerT = Union[Layer, TileLayer, WebGLVectorLayer]
+class WebGLTileLayer(Layer):
+    style: dict | None = None
+
+
+LayerT = Union[Layer, TileLayer, WebGLVectorLayer | WebGLTileLayer]
 
 
 # --- Control that depends on Layer definitions

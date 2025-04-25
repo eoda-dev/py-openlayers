@@ -27,9 +27,11 @@ class JSONConverter {
             const option = options[key];
             if (Array.isArray(option)) {
                 console.log("Parse items of array");
-                parsedOptions[key] = option.map(item => this.parse(item));
+                // parsedOptions[key] = option.map(item => this.parse(item));
+                parsedOptions[key] = option.map(item => this.parseOptions(item));
             }
             else if (typeof option === "object" && option["@@type"] !== undefined) {
+                console.log("type detected", option["@@type"], this._catalog[option["@@type"]]);
                 parsedOptions[key] = this.parse(option);
             }
             else if (key !== "@@type") {
@@ -44,6 +46,7 @@ class JSONConverter {
         // console.log(this._catalog);
         const parsedOptions = this.parseOptions(jsonDef);
         console.log("parsedOptions", parsedOptions);
+        console.log("main type", jsonDef["@@type"]);
         return new this._catalog[jsonDef["@@type"]](parsedOptions);
     }
 }
