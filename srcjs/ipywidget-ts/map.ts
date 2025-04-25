@@ -13,6 +13,8 @@ import { JSONConverter } from "./json";
 // import { populatedPlacesLayer } from "./test-json-converter";
 import { Layer } from "ol/layer";
 import Control from "ol/control/Control";
+import VectorSource from "ol/source/Vector";
+import { GeoJSON } from "ol/format";
 
 // ...
 type MyMapOptions = {
@@ -94,8 +96,20 @@ export default class MapWidget {
 
   }
 
+  addGeoJSONToSource(layer: Layer, geoJSONObject: any): void {
+    const source = layer.getSource() as VectorSource;
+    // const options = { dataProjection: "EPSG:4326", featureProjection: "EPSG:4326" };
+
+    source.addFeatures(new GeoJSON().readFeatures(geoJSONObject));
+    console.log("geojsonObject added to VectorSource", geoJSONObject);
+  }
+
   addLayer(layerJSONDef: JSONDef): void {
     const layer = jsonConverter.parse(layerJSONDef);
+
+    if (layerJSONDef.source["@@geojson"] !== undefined)
+      this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"])
+
     this._map.addLayer(layer);
     this._layerStore[layerJSONDef.id] = layer;
     console.log("layerStore", this._layerStore);

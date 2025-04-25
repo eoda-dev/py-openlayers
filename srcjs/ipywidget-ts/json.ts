@@ -3,13 +3,15 @@ import { sourceCatalog } from "./sources"
 import { controlCatalog } from "./controls"
 
 import { GeoJSON } from "ol/format";
+import Feature from 'ol/Feature.js';
+import { Polygon, Point, LineString, Circle } from "ol/geom";
 
 class JSONConverter {
     _catalog: any
 
     // constructor(layerCatalog?: LayerCatalog, sourceCatalog?: SourceCatalog, controlCatalog?: ControlCatalog) {
     constructor() {
-        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON };
+        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON, Feature, Polygon, Point, LineString, Circle };
     }
 
     // TODO: Remove, noot needed
@@ -29,13 +31,13 @@ class JSONConverter {
             if (Array.isArray(option)) {
                 console.log("Parse items of array");
                 // parsedOptions[key] = option.map(item => this.parse(item));
-                parsedOptions[key] = option.map(item => this.parseOptions(item));
+                parsedOptions[key] = option.map(item => item["@@type"] ? this.parse(item) : this.parseOptions(item));
             }
             else if (typeof option === "object" && option["@@type"] !== undefined) {
-                console.log("type detected", option["@@type"], this._catalog[option["@@type"]]);
+                // console.log("type detected", option["@@type"], this._catalog[option["@@type"]]);
                 parsedOptions[key] = this.parse(option);
             }
-            else if (key !== "@@type") {
+            else if (key !== "@@type" && key !== "@@geojson") {
                 parsedOptions[key] = option;
             }
         }
@@ -47,7 +49,7 @@ class JSONConverter {
         // console.log(this._catalog);
         const parsedOptions = this.parseOptions(jsonDef);
         console.log("parsedOptions", parsedOptions);
-        console.log("main type", jsonDef["@@type"]);
+        console.log("type detected", jsonDef["@@type"]);
         return new this._catalog[jsonDef["@@type"]](parsedOptions);
     }
 }

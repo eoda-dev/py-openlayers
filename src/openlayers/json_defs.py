@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal, Union
+from typing import Literal, Union, Any
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
 from uuid import uuid4
@@ -56,7 +56,8 @@ class OSM(Source): ...
 
 class VectorSource(Source):
     url: str | None = None
-    features: list | None = None
+    features: list[dict] | None = None
+    geojson: dict | None = Field(None, serialization_alias="@@geojson")
     format: dict | GeoJSON  = GeoJSON()
 
 

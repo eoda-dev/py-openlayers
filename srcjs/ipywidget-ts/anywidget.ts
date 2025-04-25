@@ -21,7 +21,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   // ...
   const mapOptions = model.get("map_options");
   console.log("mapOptions", mapOptions);
-  const mapWidget = new MapWidget(mapElement, mapOptions);
+  const mapWidget = (window as any).anywidgetMapWidget = new MapWidget(mapElement, mapOptions);
 
   model.set("map_created", true);
   model.save_changes();
