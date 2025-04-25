@@ -1,2 +1,7 @@
-def main() -> None:
-    print("Hello from openlayers!")
+try:
+    from .anywidget import MapWidget
+    from .geopandas import *
+except ImportError as e:
+    ...
+
+__all__ = [MapWidget]
