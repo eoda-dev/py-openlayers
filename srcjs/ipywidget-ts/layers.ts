@@ -4,7 +4,7 @@ import WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import WebGLTileLayer from 'ol/layer/WebGLTile.js';
 // import BaseLayer from "ol/layer/Base";
 
-import { newSource } from "./sources";
+// import { newSource } from "./sources";
 
 const layerCatalog: LayerCatalog = {
     TileLayer: TileLayer,
@@ -13,11 +13,13 @@ const layerCatalog: LayerCatalog = {
     WebGLTileLayer: WebGLTileLayer
 };
 
+/*
 function newLayer(type: LayerCatalogKey, options: LayerOptions): any {
     const sourceDef = options.source;
     options.source = newSource(sourceDef.type, sourceDef.options);
     const layer = new layerCatalog[type](options)
     return layer;
 }
+*/
 
-export { newLayer, layerCatalog };
+export { layerCatalog };

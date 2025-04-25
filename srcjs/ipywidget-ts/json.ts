@@ -12,6 +12,7 @@ class JSONConverter {
         this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON };
     }
 
+    // TODO: Remove, noot needed
     moveTypeDefToTop(options: JSONDef): JSONDef {
         let sortedOptions = {} as any
         Object.keys(options).sort().forEach(key => sortedOptions[key] = options[key]);

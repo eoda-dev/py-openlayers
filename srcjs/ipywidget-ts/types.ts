@@ -4,11 +4,13 @@ type SourceCatalog = {
     GeoTIFFSource: any;
 }
 type SourceCatalogKey = keyof SourceCatalog;
+/*
 type SourceOptions = any;
 type SourceDef = {
     type: SourceCatalogKey;
     options: any;
 }
+*/
 
 type LayerCatalog = {
     TileLayer: any;
@@ -17,14 +19,19 @@ type LayerCatalog = {
     WebGLTileLayer: any;
 }
 type LayerCatalogKey = keyof LayerCatalog;
+
+/*
 type LayerOptions = {
     source: SourceDef;
     [key: string]: any;
 }
+*/
+/*
 type LayerDef = {
     type: LayerCatalogKey;
     options: LayerOptions;
 }
+*/
 
 type ControlCatalog = {
     [key: string]: any;

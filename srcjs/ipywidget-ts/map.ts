@@ -11,7 +11,7 @@ import { defaults as defaultControls } from 'ol/control/defaults.js';
 import { JSONConverter } from "./json";
 
 // import { populatedPlacesLayer } from "./test-json-converter";
-import BaseLayer from "ol/layer/Base";
+import { Layer } from "ol/layer";
 import Control from "ol/control/Control";
 
 // ...
@@ -23,7 +23,7 @@ type MyMapOptions = {
 
 //
 type LayerStore = {
-  [key: string]: BaseLayer;
+  [key: string]: Layer;
 }
 
 // 
@@ -46,7 +46,7 @@ export default class MapWidget {
   _controlStore: ControlStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
-    let baseLayers: BaseLayer[] = [] // defaultLayers;
+    let baseLayers: Layer[] = [] // defaultLayers;
     if (mapOptions.layers !== undefined) {
       // baseLayers = mapOptions.layers.map(layerJSONDef => jsonConverter.parse(layerJSONDef));
       for (let layerJSONDef of mapOptions.layers) {
@@ -81,6 +81,17 @@ export default class MapWidget {
 
   getMap(): Map {
     return this._map;
+  }
+
+  setViewFromSource(layerId: string): void {
+    const layer = this._layerStore[layerId];
+    const source = layer.getSource();
+    const view = source?.getView();
+    if (view !== undefined) this._map.setView(view);
+  }
+
+  setExtentFromSource(): void {
+
   }
 
   addLayer(layerJSONDef: JSONDef): void {

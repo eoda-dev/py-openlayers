@@ -12,8 +12,10 @@ const controlCatalog: ControlCatalog = {
     OverviewMapControl: OverviewMapControl
 };
 
+/*
 function newControl(type: any, options: any): any {
     return new controlCatalog[type](options);
 }
+*/
 
-export { newControl, controlCatalog }
+export { controlCatalog }

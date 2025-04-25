@@ -2,7 +2,7 @@ import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import GeoTIFFSource from 'ol/source/GeoTIFF.js';
 
-import { GeoJSON } from "ol/format";
+// import { GeoJSON } from "ol/format";
 
 // import { OSM } from "ol/source";
 
@@ -12,6 +12,7 @@ const sourceCatalog: SourceCatalog = {
     GeoTIFFSource: GeoTIFFSource
 };
 
+/*
 function parseSourceOptions(options: SourceOptions): SourceOptions {
     if (options.format === "geojson") {
         options.format = new GeoJSON()
@@ -19,11 +20,14 @@ function parseSourceOptions(options: SourceOptions): SourceOptions {
 
     return options;
 }
+*/
 
+/*
 function newSource(type: SourceCatalogKey, options?: SourceOptions): any {
     options = options ? parseSourceOptions(options) : options;
     const source = new sourceCatalog[type](options)
     return source;
 }
+*/
 
-export { newSource, sourceCatalog };
+export { sourceCatalog };

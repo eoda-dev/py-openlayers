@@ -34,8 +34,12 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   model.on("msg:custom", (msg: OLAnyWidgetCall) => {
     console.log("thanx for your message", msg);
 
-    // @ts-expect-error
-    mapWidget[msg.method](...msg.args);
+    try {
+      // @ts-expect-error
+      mapWidget[msg.method](...msg.args);
+    } catch (error) {
+      console.log("error in anywidget msg call", error);
+    }
   });
 
   // ...
