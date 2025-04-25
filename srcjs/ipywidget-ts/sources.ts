@@ -9,7 +9,8 @@ import GeoTIFFSource from 'ol/source/GeoTIFF.js';
 const sourceCatalog: SourceCatalog = {
     OSM: OSM,
     VectorSource: VectorSource,
-    GeoTIFFSource: GeoTIFFSource
+    GeoTIFFSource: GeoTIFFSource,
+    GeoJSONSource: VectorSource
 };
 
 /*

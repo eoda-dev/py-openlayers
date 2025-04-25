@@ -56,6 +56,7 @@ class OSM(Source): ...
 
 class VectorSource(Source):
     url: str | None = None
+    features: list | None = None
     format: dict | GeoJSON  = GeoJSON()
 
 
@@ -71,6 +72,7 @@ SourceT = Union[OSM, VectorSource, GeoTIFFSource]
 class Layer(OLBaseModel):
     id: str = Field(default_factory=lambda x: str(uuid4()))
     source: dict | SourceT
+    background: str | None = None
 
 
 class TileLayer(Layer): ...

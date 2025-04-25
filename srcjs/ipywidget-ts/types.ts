@@ -2,6 +2,7 @@ type SourceCatalog = {
     OSM: any;
     VectorSource: any;
     GeoTIFFSource: any;
+    GeoJSONSource: any;
 }
 type SourceCatalogKey = keyof SourceCatalog;
 /*
