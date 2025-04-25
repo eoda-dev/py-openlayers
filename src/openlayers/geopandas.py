@@ -31,3 +31,7 @@ class DataFrameAccessor(object):
         m = MapWidget(**kwargs)
         m.add_layer(layer)
         return m
+
+
+@pd.api.extensions.register_dataframe_accessor("openlayers")
+class DataFrameAccessorAlias(DataFrameAccessor): ...
