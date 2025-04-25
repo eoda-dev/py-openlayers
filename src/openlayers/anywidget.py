@@ -14,10 +14,12 @@ class MapWidget(AnyWidget, Map):
     _css = Path(__file__).parent / "js" / "openlayers.anywidget.css"
 
     # view_state = traitlets.Dict().tag(sync=True, o=True)
-    map_options = traitlets.Dict().tag(sync=True, o=True)
-    height = traitlets.Unicode().tag(sync=True, o=True)
+    height = traitlets.Unicode().tag(sync=True)
+    calls = traitlets.List().tag(sync=True)
+    map_created = traitlets.Bool().tag(sync=True)
+    map_options = traitlets.Dict().tag(sync=True)
     map_clicked = traitlets.Dict().tag(sync=True)
-    debug_data = traitlets.Dict().tag(sync=True, o=True)
+    debug_data = traitlets.Dict().tag(sync=True)
 
     def __init__(
         self,
@@ -29,9 +31,14 @@ class MapWidget(AnyWidget, Map):
         **kwargs,
     ):
         self.debug_data = debug_data or dict()
+        self.map_created = False
+        self.calls = []
         AnyWidget.__init__(self, height=height, **kwargs)
         Map.__init__(self, view, layers, controls)
 
     def add_call(self, method_name: str, *args: Any) -> None:
         call = dict(method=method_name, args=args)
-        self.send(call)
+        if self.map_created:
+            return self.send(call)
+
+        self.calls = self.calls + [call]

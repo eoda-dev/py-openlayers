@@ -23,6 +23,16 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("mapOptions", mapOptions);
   const mapWidget = new MapWidget(mapElement, mapOptions);
 
+  model.set("map_created", true);
+  model.save_changes();
+
+  const calls: OLAnyWidgetCall[] = model.get("calls");
+  console.log("calls", calls);
+  for (let call of calls) {
+    // @ts-expect-error
+    mapWidget[call.method](...call.args);
+  }
+
   const map = mapWidget.getMap();
   map.on("click", (e) => {
     const info = parseClickEvent(e);
