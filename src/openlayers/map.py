@@ -20,9 +20,15 @@ class Map(object):
             view=view, layers=layers, controls=controls
         ).model_dump()
 
+    # 'apply_call_to_map'
     def add_call(self, method_name: str, *args: Any) -> None:
         call = dict(method=method_name, args=args)
         self._calls.append(call)
+
+    # 'apply_call_to_layer'
+    def add_layer_call(self, layer_id: str, method_name: str, *args: Any):
+        layer_call = dict(method=method_name, args=args)
+        self.add_call("applyCallToLayer", layer_id, layer_call)
 
     def add_layer(self, layer: LayerT | dict) -> None:
         if isinstance(layer, LayerT):
