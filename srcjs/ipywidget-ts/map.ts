@@ -15,6 +15,8 @@ import { Layer } from "ol/layer";
 import Control from "ol/control/Control";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
+import type VectorLayer from "ol/layer/Vector";
+import type WebGLVectorLayer from "ol/layer/WebGLVector";
 
 // ...
 type MyMapOptions = {
@@ -85,6 +87,14 @@ export default class MapWidget {
     return this._map;
   }
 
+  getLayer(layerId: string): Layer {
+    return this._layerStore[layerId];
+  }
+
+  getControl(controlId: string): Control {
+    return this._controlStore[controlId];
+  }
+
   setViewFromSource(layerId: string): void {
     const layer = this._layerStore[layerId];
     const source = layer.getSource();
@@ -138,6 +148,26 @@ export default class MapWidget {
     this._map.removeControl(control);
     delete this._controlStore[controlId];
     console.log("control", controlId, "removed", this._controlStore);
+  }
+
+  /*
+  setLayerProperty(layerId: string, prop: string, value: any): void {
+    const layer = this.getLayer(layerId);
+    layer.set(prop, value);
+  }
+  */
+
+  setLayerStyle(layerId: string, style: any): void {
+    const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
+    layer.setStyle(style)
+  }
+
+  applyCallToLayer(layerId: string, call: OLAnyWidgetCall): void {
+    console.log("layer call", "layerId", layerId);
+    const layer = this.getLayer(layerId);
+
+    // @ts-expect-error
+    layer[call.method](...call.args)
   }
 
   testJSONDef(jsonDef: JSONDef): any {
