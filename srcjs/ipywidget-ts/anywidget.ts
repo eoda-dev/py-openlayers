@@ -8,9 +8,9 @@ import "ol/ol.css";
 import MapWidget from "./map";
 // import TileLayer from "ol/layer/Tile";
 
-import { webglVectorLayer, populatedPlacesLayer } from "./test-json-converter";
+// import { webglVectorLayer, populatedPlacesLayer } from "./test-json-converter";
 
-import { InfoBox } from "./custom-controls";
+// import { InfoBox } from "./custom-controls";
 
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("Welcome to ol-anywidget", el);
@@ -43,6 +43,8 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     model.save_changes();
     mapWidget.addOverlay(e.coordinate);
   });
+
+  mapWidget.addDefaultTooltip();
 
   // map.addControl(new InfoBox({ html: "Hi there" }));
 

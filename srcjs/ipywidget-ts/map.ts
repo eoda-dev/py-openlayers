@@ -1,4 +1,4 @@
-import { Map, View } from "ol";
+import { Feature, Map, View } from "ol";
 import { type ViewOptions } from "ol/View";
 
 import TileLayer from "ol/layer/Tile";
@@ -190,5 +190,35 @@ export default class MapWidget {
     el.innerHTML = "We are out here."
     const overlay = new Overlay({ element: el, position: position });
     this._map.addOverlay(overlay);
+  }
+
+  // ...
+  addDefaultTooltip(): void {
+    const map = this._map;
+    let currentFeature: any = null;
+    map.on('pointermove', function (e) {
+      if (e.dragging)
+        return;
+      const feature = map.forEachFeatureAtPixel(e.pixel, function (feature) {
+        return feature;
+      });
+      if (feature) {
+        console.log("new pos", e.coordinate, feature.getProperties());
+        if (feature !== currentFeature)
+          console.log("need to update", currentFeature);
+      } else {
+        console.log("HIDE");
+      }
+      currentFeature = feature;
+    });
+
+
+
+
+
+
+    map.getTargetElement().addEventListener("pointerleave", () => {
+      console.log("pointerleave");
+    });
   }
 }

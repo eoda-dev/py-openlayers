@@ -28,7 +28,7 @@ def _(gpd, url):
 
 @app.cell
 def _(countries, ol):
-    m = countries.openlayers.explore(controls=[ol.json_defs.ScaleLineControl()])
+    m = countries.openlayers.explore(controls=[ol.json_defs.ScaleLineControl()], style={"fill-color": "green", "stroke-color": "yellow"})
     return (m,)
 
 
