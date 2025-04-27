@@ -1,5 +1,5 @@
 import { Map, View } from "ol";
-import { ViewOptions } from "ol/View";
+import { type ViewOptions } from "ol/View";
 
 import TileLayer from "ol/layer/Tile";
 
@@ -8,13 +8,18 @@ import OSM from "ol/source/OSM";
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 // import { MapOptions } from "ol/Map";
 
+import GeoJSON from "ol/format/GeoJSON";
+
+import Overlay from "ol/Overlay";
+
 import { JSONConverter } from "./json";
 
 // import { populatedPlacesLayer } from "./test-json-converter";
-import { Layer } from "ol/layer";
-import Control from "ol/control/Control";
-import VectorSource from "ol/source/Vector";
-import { GeoJSON } from "ol/format";
+import type Layer from "ol/layer/Layer";
+import type Control from "ol/control/Control";
+
+import type VectorSource from "ol/source/Vector";
+
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 
@@ -138,7 +143,7 @@ export default class MapWidget {
     const control = jsonConverter.parse(controlJSONDef);
     this._map.addControl(control);
     this._controlStore[controlJSONDef.id] = control;
-    console.log(this._controlStore);
+    console.log("controlStore", this._controlStore);
   }
 
   removeControl(controlId: string): void {
@@ -176,5 +181,14 @@ export default class MapWidget {
 
   // ...
   debugData(data: any): void {
+  }
+
+  // ...
+  addOverlay(position: any): void {
+    const el = document.createElement("div");
+    el.style.cssText = "";
+    el.innerHTML = "We are out here."
+    const overlay = new Overlay({ element: el, position: position });
+    this._map.addOverlay(overlay);
   }
 }

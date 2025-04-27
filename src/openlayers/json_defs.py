@@ -40,6 +40,14 @@ class MousePositionControl(Control):
     projection: str | None = "EPSG:4326"
 
 
+# --- Custom controls
+
+
+class InfoBox(Control):
+    html: str
+    css_text: str = Field("top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText")
+
+
 # --- Format
 class Format(OLBaseModel): ...
 
@@ -58,7 +66,7 @@ class VectorSource(Source):
     url: str | None = None
     features: list[dict] | None = None
     geojson: dict | None = Field(None, serialization_alias="@@geojson")
-    format: dict | GeoJSON  = GeoJSON()
+    format: dict | GeoJSON = GeoJSON()
 
 
 class GeoTIFFSource(Source):
