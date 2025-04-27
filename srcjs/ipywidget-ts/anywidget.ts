@@ -12,6 +12,8 @@ import MapWidget from "./map";
 
 // import { InfoBox } from "./custom-controls";
 
+import { addTooltipTo } from "./tooltip";
+
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("Welcome to ol-anywidget", el);
 
@@ -44,7 +46,8 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     mapWidget.addOverlay(e.coordinate);
   });
 
-  mapWidget.addDefaultTooltip();
+  // mapWidget.addDefaultTooltip();
+  addTooltipTo(map);
 
   // map.addControl(new InfoBox({ html: "Hi there" }));
 
