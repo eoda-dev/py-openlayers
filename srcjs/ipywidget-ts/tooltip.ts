@@ -3,18 +3,17 @@
 import { type Map } from "ol";
 import Overlay from "ol/Overlay";
 
-function addTooltipOverlayTo(map: Map): { overlay: Overlay; el: HTMLElement } {
+function createElement(): HTMLElement {
     const el = document.createElement("div");
-    el.style.cssText = "padding: 5px; background: #efefef; color: black;"
+    el.style.cssText = "padding: 5px; background-color: #333; color: #fff; border-radius: 4px; z-index: 100;"
     el.style.visibility = "hidden";
-    const overlay = new Overlay({ element: el });
-    map.addOverlay(overlay);
-    return { overlay, el };
+    return el;
 }
 
 function addTooltipTo(map: Map): void {
-    const tooltip = addTooltipOverlayTo(map);
-    let el = tooltip.el;
+    let el = createElement();
+    const overlay = new Overlay({ element: el });
+    map.addOverlay(overlay);
     let currentFeature: any = null;
     map.on('pointermove', function (e) {
         if (e.dragging)
@@ -24,14 +23,12 @@ function addTooltipTo(map: Map): void {
         });
         if (feature) {
             el.style.visibility = "visible";
-            // console.log("new pos", e.coordinate, feature.getProperties());
-            tooltip.overlay.setPosition(e.coordinate);
+            overlay.setPosition(e.coordinate);
             if (feature !== currentFeature) {
                 el.innerHTML = feature.get("name")?.toString() || "";
             }
         } else {
             el.style.visibility = "hidden";
-            // console.log("HIDE");
         }
         currentFeature = feature;
     });
