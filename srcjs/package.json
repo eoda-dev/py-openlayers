@@ -11,7 +11,8 @@
     "serve-ipywidget": "vite preview ipywidget",
     "build-anywidget-bindings": "esbuild ipywidget/anywidget.js --bundle --minify --format=esm --outfile=anywidget-bindings/openlayers.anywidget.js",
     "build-anywidget-bindings-dev": "node ./esbuild-build-bindings.mjs",
-    "build-anywidget-bindings-ts": "tsc --build && esbuild build/anywidget.js --bundle --minify --format=esm --outfile=anywidget-bindings/openlayers.anywidget.js"
+    "build-anywidget-bindings-ts": "tsc --build && esbuild build/anywidget.js --bundle --minify --format=esm --outfile=anywidget-bindings/openlayers.anywidget.js",
+    "build-standalone-bindings-ts": "tsc --build && esbuild build/anywidget.js --bundle --minify --outfile=anywidget-bindings/openlayers.standalone.js"
   },
   "devDependencies": {
     "@anywidget/types": "^0.2.0",

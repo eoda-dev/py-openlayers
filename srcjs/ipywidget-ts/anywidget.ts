@@ -53,21 +53,13 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   const debugData = model.get("debug_data");
   mapWidget.debugData(debugData);
 
-  // control
-  /*
-  const obj = mapWidget.testJSONDef());
-  console.log(obj);
-  map.addControl(obj);
-  */
-
-  // layer
-  /*
-  const l = mapWidget.testJSONDef(populatedPlacesLayer) as any;
-  console.log("layer", l);
-  map.addLayer(l);
-  */
-
   el.appendChild(mapElement);
 }
+
+
+// TODO: Move away from here
+(window as any).renderOLMapWidget = (mapOptions: any) => {
+  console.log("render OL-MapWidget", mapOptions);
+};
 
 export default { render };

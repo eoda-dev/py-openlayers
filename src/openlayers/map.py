@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import webbrowser
+from pathlib import Path
 from typing import Any
 
+from .export import HTMLTemplate, write_file
 from .json_defs import OSM, ControlT, LayerT, MapOptions, TileLayer, View
 
 
@@ -47,3 +50,13 @@ class Map(object):
 
     def remove_control(self, control_id: str) -> None:
         self.add_call("removeControl", control_id)
+
+    def to_html(self, **kwargs) -> str:
+        return HTMLTemplate().render(**kwargs)
+
+    def save(self, path: Path | str = None, preview: bool = True, **kwargs) -> str:
+        path = write_file(content=self.to_html(**kwargs), path=path)
+        if preview:
+            webbrowser.open(path)
+
+        return path

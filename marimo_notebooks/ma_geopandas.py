@@ -29,6 +29,7 @@ def _(gpd, url):
 @app.cell
 def _(countries, ol):
     m = countries.openlayers.explore(controls=[ol.json_defs.ScaleLineControl()], style={"fill-color": "green", "stroke-color": "yellow"})
+    m.add_call("addTooltip", "name")
     return (m,)
 
 
@@ -45,8 +46,8 @@ def _(w):
 
 
 @app.cell
-def _(m):
-    m.add_call("addTooltip", "name")
+def _():
+    # m.add_call("addTooltip", "name")
     # m.add_control(ol.json_defs.InfoBox(id="hi-there", html="Hi <b>there</b>", css_text="background: white;top:100px;"))
     # m.remove_control("hi-there");
     return
