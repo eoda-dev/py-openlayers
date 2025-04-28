@@ -1,20 +1,14 @@
 [project]
 name = "openlayers"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.1.0-rc.1"
+description = "Python Bindings for OpenLayersJS"
 readme = "README.md"
-authors = [
-    { name = "Stefan Kuethe", email = "stefan.kuethe@eoda.de" }
-]
+authors = [{ name = "Stefan Kuethe", email = "stefan.kuethe@eoda.de" }]
 requires-python = ">=3.9, <4"
-dependencies = [
-    "anywidget>=0.9.0",
-    "jinja2>=3.1.6",
-    "pydantic>=2.5.3",
-]
+dependencies = ["anywidget>=0.9.0", "jinja2>=3.1.6", "pydantic>=2.5.3"]
 
-[project.scripts]
-openlayers = "openlayers:main"
+# [project.scripts]
+# openlayers = "openlayers:main"
 
 [build-system]
 requires = ["hatchling"]
