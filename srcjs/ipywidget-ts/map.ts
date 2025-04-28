@@ -25,12 +25,17 @@ import type VectorSource from "ol/source/Vector";
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 
+// My types
+import { MyMapOptions } from ".";
+
 // ...
+/*
 type MyMapOptions = {
   viewOptions: ViewOptions;
   layers: JSONDef[] | undefined;
   controls: JSONDef[] | undefined;
 };
+*/
 
 //
 type LayerStore = {

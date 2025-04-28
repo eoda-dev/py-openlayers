@@ -41,7 +41,7 @@ class HTMLTemplate(object):
 
     def render(self, **kwargs) -> str:
         headers = [f"<style>{self._css}</style>"]
-        scripts = [self._js]
+        scripts = [self._js, "renderOLMapWidget({});"]
         return Template(self._template).render(
             headers=headers, scripts=scripts, js=self._js, **kwargs
         )

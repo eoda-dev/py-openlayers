@@ -56,10 +56,4 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   el.appendChild(mapElement);
 }
 
-
-// TODO: Move away from here
-(window as any).renderOLMapWidget = (mapOptions: any) => {
-  console.log("render OL-MapWidget", mapOptions);
-};
-
 export default { render };

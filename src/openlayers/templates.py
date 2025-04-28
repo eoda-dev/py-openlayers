@@ -8,6 +8,11 @@ html_template = """<!DOCTYPE html>
     {% for header in headers|default([]) -%}
     {{ header }}
     {% endfor -%}
+    <style>
+        #map {
+            height: {{ height|default('500px')}};
+        }
+    </style>
 </head>
 
 <body>
@@ -22,5 +27,5 @@ html_template = """<!DOCTYPE html>
 js_template = """// ...
 (() => {
     var data = {{ data|safe }};
-    x(data);
+    renderOLMapWidget(data);
 })();"""
