@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import Literal, Union, Any
+from typing import Any, Literal, Union
+from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
-from uuid import uuid4
+
 from .view import View
 
 
@@ -43,7 +44,9 @@ class MousePositionControl(Control):
 # --- Custom controls
 class InfoBox(Control):
     html: str
-    css_text: str = Field("top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText")
+    css_text: str = Field(
+        "top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText"
+    )
 
 
 # --- Format
@@ -106,7 +109,12 @@ class OverviewMapControl(Control):
 
 
 ControlT = Union[
-    Control, FullScreenControl, ScaleLineControl, ZoomSliderControl, OverviewMapControl, InfoBox
+    Control,
+    FullScreenControl,
+    ScaleLineControl,
+    ZoomSliderControl,
+    OverviewMapControl,
+    InfoBox,
 ]
 
 
