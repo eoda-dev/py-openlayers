@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class VectorSource():
+class VectorSource:
     url: str
 
     def __init__(self, url):
@@ -9,7 +9,7 @@ class VectorSource():
 
 
 class VectorLayer(object):
-    #model_config = ConfigDict(arbitrary_types_allowed=True)
+    # model_config = ConfigDict(arbitrary_types_allowed=True)
 
     # style: dict
     # source: VectoreSource | None = None
@@ -17,6 +17,7 @@ class VectorLayer(object):
     def __init__(self, style: dict, source: VectorSource = None):
         self.style = style
         self.source = source
+
 
 TypeCatalog = dict(VectorLayer=VectorLayer, VectorSource=VectorSource)
 
@@ -33,8 +34,10 @@ identifier = Identifier()
 def istype(key: str) -> bool:
     return key == identifier.TYPE
 
+
 def isargs(key: str) -> bool:
     return key == identifier.ARGS
+
 
 # def isgeojson(key: str) -> bool:
 #     return key == identifier.GEOJSON
@@ -48,20 +51,20 @@ class JSONParser(object):
     def __init__(self) -> None: ...
 
     def parse(self, JSONDef: dict):
-        #print("parse", JSONDef)
+        # print("parse", JSONDef)
         type = JSONDef[identifier.TYPE]
-        #print("type detected", TypeCatalog[type])
+        # print("type detected", TypeCatalog[type])
         values = {k: v for k, v in JSONDef.items() if not istype(k)}
-        #print("values", values)
+        # print("values", values)
         args = self.parse_args(values)
-        #print("args", args)
+        # print("args", args)
         return TypeCatalog[type](**args)
-            
-        
+
     def parse_args(self, kwargs: dict) -> dict:
         parsed_kwargs = dict()
         for k, v in kwargs.items():
-            if k == identifier.TYPE: ...
+            if k == identifier.TYPE:
+                ...
             #  Is new type
             if isinstance(v, dict) and identifier.TYPE in v.keys():
                 parsed_kwargs[k] = self.parse(v)
@@ -70,15 +73,12 @@ class JSONParser(object):
 
         return parsed_kwargs
 
+
 def test_JSONParser():
     JSONDef = {
         "@@type": "VectorLayer",
-        "style": {
-            "a": 10, "b": 20
-        },
-        "source": {
-            "@@type": "VectorSource", "url": "myUrl.de"
-        },
+        "style": {"a": 10, "b": 20},
+        "source": {"@@type": "VectorSource", "url": "myUrl.de"},
     }
 
     parser = JSONParser()

@@ -1,6 +1,8 @@
-from openlayers.config import config, Backend
+from openlayers.config import Backend, config, defaults
+
 
 def test_config() -> None:
-    config.default_backend = Backend.STANDALONE
+    defaults.backend = Backend.STANDALONE
 
     print(config)
+    print(defaults.model_dump())
