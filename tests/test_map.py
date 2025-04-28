@@ -3,6 +3,12 @@ from openlayers.view import View
 
 
 def test_map() -> None:
+    # Prepare
     view = View(center=(2, 2))
+
+    # Act
     m = Map(view)
-    print(m._view)
+
+    # Assert
+    print(m.map_options)
+    assert m.map_options["viewOptions"] == view.model_dump()

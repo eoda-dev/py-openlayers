@@ -41,8 +41,6 @@ class MousePositionControl(Control):
 
 
 # --- Custom controls
-
-
 class InfoBox(Control):
     html: str
     css_text: str = Field("top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText")
@@ -99,7 +97,7 @@ class WebGLTileLayer(Layer):
     style: dict | None = None
 
 
-LayerT = Union[Layer, TileLayer, WebGLVectorLayer | WebGLTileLayer]
+LayerT = Union[Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer]
 
 
 # --- Control that depends on Layer definitions
@@ -108,7 +106,7 @@ class OverviewMapControl(Control):
 
 
 ControlT = Union[
-    Control, FullScreenControl, ScaleLineControl, ZoomSliderControl, OverviewMapControl
+    Control, FullScreenControl, ScaleLineControl, ZoomSliderControl, OverviewMapControl, InfoBox
 ]
 
 

@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from .json_defs import MapOptions
+
+"""
 from typing import Union
 
 from pydantic import Field, field_validator
@@ -24,3 +27,4 @@ class MapOptions(MyBaseModel):
             item.model_dump() if isinstance(item, Union[Layer, Control]) else item
             for item in items
         ]
+"""
