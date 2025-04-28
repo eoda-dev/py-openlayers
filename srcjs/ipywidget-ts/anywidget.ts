@@ -6,13 +6,6 @@ import { parseClickEvent } from "./utils";
 import "ol/ol.css";
 
 import MapWidget from "./map";
-// import TileLayer from "ol/layer/Tile";
-
-// import { webglVectorLayer, populatedPlacesLayer } from "./test-json-converter";
-
-// import { InfoBox } from "./custom-controls";
-
-import { addTooltipTo } from "./tooltip";
 
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("Welcome to ol-anywidget", el);
@@ -43,13 +36,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     console.log(info);
     model.set("map_clicked", info);
     model.save_changes();
-    mapWidget.addOverlay(e.coordinate);
   });
-
-  // mapWidget.addDefaultTooltip();
-  addTooltipTo(map);
-
-  // map.addControl(new InfoBox({ html: "Hi there" }));
 
   model.on("msg:custom", (msg: OLAnyWidgetCall) => {
     console.log("thanx for your message", msg);

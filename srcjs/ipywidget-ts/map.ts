@@ -14,6 +14,8 @@ import Overlay from "ol/Overlay";
 
 import { JSONConverter } from "./json";
 
+import { addTooltipTo } from "./tooltip";
+
 // import { populatedPlacesLayer } from "./test-json-converter";
 import type Layer from "ol/layer/Layer";
 import type Control from "ol/control/Control";
@@ -57,21 +59,23 @@ export default class MapWidget {
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
     let baseLayers: Layer[] = [] // defaultLayers;
     if (mapOptions.layers !== undefined) {
-      // baseLayers = mapOptions.layers.map(layerJSONDef => jsonConverter.parse(layerJSONDef));
       for (let layerJSONDef of mapOptions.layers) {
+
+        // TODO: Duplicated code, use 'addLayer' after map was created instead
         const layer = jsonConverter.parse(layerJSONDef);
+
+        if (layerJSONDef.source["@@geojson"] !== undefined)
+          this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
+
         baseLayers.push(layer);
         this._layerStore[layerJSONDef.id] = layer;
-        // console.log(this._layerStore);
       }
     }
 
-    // test
-    // baseLayers.push(jsonConverter.parse(populatedPlacesLayer));
 
     let baseControls: Control[] = [];
+    // TODO: Use 'addControls' after map was created instead
     if (mapOptions.controls !== undefined) {
-      // baseControls = mapOptions.controls.map(controlJSONDef => jsonConverter.parse(controlJSONDef));
       for (let controlJSONDef of mapOptions.controls) {
         const control = jsonConverter.parse(controlJSONDef);
         baseControls.push(control);
@@ -123,7 +127,7 @@ export default class MapWidget {
     const layer = jsonConverter.parse(layerJSONDef);
 
     if (layerJSONDef.source["@@geojson"] !== undefined)
-      this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"])
+      this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
 
     this._map.addLayer(layer);
     this._layerStore[layerJSONDef.id] = layer;
@@ -193,32 +197,7 @@ export default class MapWidget {
   }
 
   // ...
-  addDefaultTooltip(): void {
-    const map = this._map;
-    let currentFeature: any = null;
-    map.on('pointermove', function (e) {
-      if (e.dragging)
-        return;
-      const feature = map.forEachFeatureAtPixel(e.pixel, function (feature) {
-        return feature;
-      });
-      if (feature) {
-        console.log("new pos", e.coordinate, feature.getProperties());
-        if (feature !== currentFeature)
-          console.log("need to update", currentFeature);
-      } else {
-        console.log("HIDE");
-      }
-      currentFeature = feature;
-    });
-
-
-
-
-
-
-    map.getTargetElement().addEventListener("pointerleave", () => {
-      console.log("pointerleave");
-    });
+  addTooltip(prop: string): void {
+    addTooltipTo(this._map, prop);
   }
 }

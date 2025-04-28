@@ -10,7 +10,7 @@ function createElement(): HTMLElement {
     return el;
 }
 
-function addTooltipTo(map: Map): void {
+function addTooltipTo(map: Map, prop: string): void {
     let el = createElement();
     const overlay = new Overlay({ element: el });
     map.addOverlay(overlay);
@@ -25,7 +25,7 @@ function addTooltipTo(map: Map): void {
             el.style.visibility = "visible";
             overlay.setPosition(e.coordinate);
             if (feature !== currentFeature) {
-                el.innerHTML = feature.get("name")?.toString() || "";
+                el.innerHTML = feature.get(prop)?.toString() || "";
             }
         } else {
             el.style.visibility = "hidden";
@@ -34,7 +34,8 @@ function addTooltipTo(map: Map): void {
     });
 
     map.getTargetElement().addEventListener("pointerleave", () => {
-        // console.log("pointerleave");
+        el.style.visibility = "hidden";
+        currentFeature = undefined;
     });
 }
 
