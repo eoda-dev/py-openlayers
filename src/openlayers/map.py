@@ -11,7 +11,7 @@ from .json_defs import OSM, ControlT, LayerT, MapOptions, TileLayer, View
 class Map(object):
     def __init__(
         self,
-        view: View | dict,
+        view: View | dict = View(),
         layers: list[LayerT | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
     ):
