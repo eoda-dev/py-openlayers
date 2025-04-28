@@ -5,8 +5,8 @@ from typing import Union
 from pydantic import Field, field_validator
 
 from .abstracts import MyBaseModel
-from .controls import Control
-from .layers import Layer
+from .json_defs import Control
+from .json_defs import Layer
 from .view import View
 
 

@@ -17,5 +17,6 @@ def test_to_html() -> None:
 
 def test_save_html() -> None:
     m = Map(View())
+    print(m.map_options)
     path = m.save(preview=True)
     print("path", path)

@@ -1,7 +1,7 @@
-from openlayers.sources import GeoJSONSource, OSM
-from openlayers.controls import ScaleLineControl
-from openlayers.layers import TileLayer, VectorLayer
-from openlayers.map import MapOptions
+from openlayers.json_defs import OSM
+from openlayers.json_defs import ScaleLineControl
+from openlayers.json_defs import TileLayer, VectorLayer
+from openlayers.map_options import MapOptions
 
 def test_vector_layer() -> None:
     #vector_layer = VectorLayer(

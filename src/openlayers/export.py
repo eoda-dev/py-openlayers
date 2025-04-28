@@ -1,5 +1,6 @@
 import os
 import tempfile
+import json
 from pathlib import Path
 
 from jinja2 import Template
@@ -39,9 +40,10 @@ class HTMLTemplate(object):
         self._css = read_file(css) if os.path.isfile(css) else css
         self._js = read_file(js) if os.path.isfile(js) else js
 
-    def render(self, **kwargs) -> str:
+    def render(self, data: dict = None, **kwargs) -> str:
+        data = json.dumps(data or dict(viewOptions=dict(center=(0, 0))))
         headers = [f"<style>{self._css}</style>"]
-        scripts = [self._js, "renderOLMapWidget({});"]
+        scripts = [self._js, f"var data={data}; renderOLMapWidget(data);"]
         return Template(self._template).render(
             headers=headers, scripts=scripts, js=self._js, **kwargs
         )

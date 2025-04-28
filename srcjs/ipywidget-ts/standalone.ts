@@ -6,7 +6,7 @@ import { MyMapOptions } from ".";
 const MAP_CONTAINER = "map";
 
 (window as any).renderOLMapWidget = (mapOptions: MyMapOptions) => {
-    mapOptions.viewOptions = mapOptions.viewOptions || { center: [0, 0] };
+    // mapOptions.viewOptions = mapOptions.viewOptions || { center: [0, 0] };
     console.log("render OL-MapWidget", mapOptions);
     const mapElement = document.getElementById(MAP_CONTAINER) || document.createElement("div");
     console.log("el", mapElement);

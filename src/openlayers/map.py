@@ -52,7 +52,7 @@ class Map(object):
         self.add_call("removeControl", control_id)
 
     def to_html(self, **kwargs) -> str:
-        return HTMLTemplate().render(**kwargs)
+        return HTMLTemplate().render(data=self.map_options, **kwargs)
 
     def save(self, path: Path | str = None, preview: bool = True, **kwargs) -> str:
         path = write_file(content=self.to_html(**kwargs), path=path)
