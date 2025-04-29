@@ -3,7 +3,7 @@ from openlayers.controls import ScaleLineControl
 from openlayers.layers import TileLayer
 from openlayers.map_options import MapOptions
 
-def test_vector_layer() -> None:
+def _test_vector_layer() -> None:
     # Act
     map_options = MapOptions(
         layers=[TileLayer(source=OSM())],
