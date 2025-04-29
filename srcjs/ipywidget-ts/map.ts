@@ -26,7 +26,8 @@ import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 
 // My types
-import { MyMapOptions } from ".";
+import { type MyMapOptions } from ".";
+import { type Coordinate } from "ol/coordinate";
 
 // ...
 /*
@@ -101,8 +102,15 @@ export default class MapWidget {
     return this._map;
   }
 
-  getLayer(layerId: string): Layer {
+  getLayerOld(layerId: string): Layer {
     return this._layerStore[layerId];
+  }
+
+  getLayer(layerId: string): Layer | undefined {
+    for (let layer of this._map.getLayers().getArray()) {
+      if (layer.get("id") === layerId)
+        return layer as Layer;
+    }
   }
 
   getControl(controlId: string): Control {
@@ -110,8 +118,8 @@ export default class MapWidget {
   }
 
   setViewFromSource(layerId: string): void {
-    const layer = this._layerStore[layerId];
-    const source = layer.getSource();
+    const layer = this.getLayer(layerId); // this._layerStore[layerId];
+    const source = layer?.getSource();
     const view = source?.getView();
     if (view !== undefined) this._map.setView(view);
   }
@@ -140,7 +148,7 @@ export default class MapWidget {
   }
 
   removeLayer(layerId: string): void {
-    const layer = this._layerStore[layerId];
+    const layer = this.getLayer(layerId); // this._layerStore[layerId];
     if (layer === undefined) return;
 
     this._map.removeLayer(layer);
@@ -193,7 +201,7 @@ export default class MapWidget {
   }
 
   // ...
-  addOverlay(position: any): void {
+  addOverlay(position: Coordinate | undefined): void {
     const el = document.createElement("div");
     el.style.cssText = "";
     el.innerHTML = "We are out here."

@@ -50,6 +50,7 @@ def _():
     # m.add_call("addTooltip", "name")
     # m.add_control(ol.json_defs.InfoBox(id="hi-there", html="Hi <b>there</b>", css_text="background: white;top:100px;"))
     # m.remove_control("hi-there");
+    # m.remove_layer("geopandas")
     return
 
 
