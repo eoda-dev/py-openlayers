@@ -2,20 +2,12 @@ from __future__ import annotations
 
 from ..abstracts import MyBaseModel
 
-
-class CRS(object):
-    MERCATOR = "EPSG:3857"
-    EPSG_3857 = "EPSG:3857"
-    WGS_84 = "EPSG:4326"
-    EPSG_4326 = "EPSG:4326"
-
-
 class Projection(object):
     MERCATOR = "EPSG:3857"
     WEB_MERCATOR = "EPSG:4326"
 
-    @classmethod
-    def from_epsg(cls, code: int) -> str:
+    @staticmethod
+    def from_epsg(code: int) -> str:
         return f"EPSG:{code}"
 
 class View(MyBaseModel):

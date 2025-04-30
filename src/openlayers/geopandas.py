@@ -6,10 +6,10 @@ from openlayers.config import DEFAULT_STYLE
 from .anywidget import MapWidget
 from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
-from .view import CRS
+from .models.view import Projection
 
 
-def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = CRS.MERCATOR):
+def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERCATOR):
     if crs:
         data = data.to_crs(crs)
 
@@ -17,7 +17,7 @@ def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = CRS.MERCATOR):
 
 
 @pd.api.extensions.register_dataframe_accessor("ol")
-class DataFrameAccessor(object):
+class OLAccessor(object):
     def __init__(self, gdf: gpd.GeoDataFrame) -> None:
         self._gdf = gdf
 
@@ -33,4 +33,4 @@ class DataFrameAccessor(object):
 
 
 @pd.api.extensions.register_dataframe_accessor("openlayers")
-class DataFrameAccessorAlias(DataFrameAccessor): ...
+class OpenLayersAccessorAlias(OLAccessor): ...
