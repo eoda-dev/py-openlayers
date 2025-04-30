@@ -30,5 +30,5 @@ style = {
 }
 
 gdf = gpd.GeoDataFrame.from_features(features, crs=Projection.MERCATOR)
-m = gdf.ol.explore(style=style)
+m = gdf.ol.explore(style=style, controls=[ol.controls.OverviewMapControl()])
 m.save(preview=True)

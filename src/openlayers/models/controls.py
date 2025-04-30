@@ -6,8 +6,8 @@ from uuid import uuid4
 from pydantic import Field
 
 from .core import OLBaseModel
-from .layers import LayerT
-
+from .layers import LayerT, TileLayer
+from .sources import OSM
 
 # -- Base control
 class Control(OLBaseModel):
@@ -33,7 +33,7 @@ class MousePositionControl(Control):
 
 
 class OverviewMapControl(Control):
-    layers: list[dict | LayerT]
+    layers: list[dict | LayerT] = [TileLayer(source=OSM())]
 
 
 # --- Custom controls
