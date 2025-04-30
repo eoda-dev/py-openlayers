@@ -5,7 +5,6 @@ from enum import Enum
 
 from pydantic import BaseModel, ConfigDict
 
-from .abstracts import MyBaseModel
 from .styles import VectorStyle
 
 DEFAULT_STYLE = {
@@ -21,15 +20,14 @@ class Backend(Enum):
     IPYWIDGET = "anywidget"
 
 
-class Defaults(MyBaseModel):
-    model_config = ConfigDict(use_enum_values=True, validate_default=True, validate_assignment=True)
+class Config(BaseModel):
+    model_config = ConfigDict(
+        use_enum_values=True, validate_default=True, validate_assignment=True
+    )
 
     backend: str | Backend = Backend.ANYWIDGET
     vector_style: VectorStyle = VectorStyle()
     controls: list = list()
-
-
-class Config(BaseModel):
     maptiler_api_key_env_var: str = "MAPTILER_API_KEY"
 
     @property
@@ -38,5 +36,3 @@ class Config(BaseModel):
 
 
 config = Config()
-
-defaults = Defaults()

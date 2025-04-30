@@ -1,12 +1,13 @@
 import geopandas as gpd
 import pandas as pd
 
-from openlayers.config import DEFAULT_STYLE
-
 from .anywidget import MapWidget
 from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
 from .models.view import Projection
+from .styles import Style, VectorStyle
+
+# from .config import DEFAULT_STYLE
 
 
 def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERCATOR):
@@ -22,8 +23,11 @@ class OLAccessor(object):
         self._gdf = gdf
 
     def explore(
-        self, style=DEFAULT_STYLE, layer_id: str = "geopandas", **kwargs
+        self, style=VectorStyle(), layer_id: str = "geopandas", **kwargs
     ) -> MapWidget:
+        if isinstance(style, Style):
+            style = style.model_dump()
+
         feature_collection = gdf_to_geojson(self._gdf)
         source = VectorSource(geojson=feature_collection)
         layer = WebGLVectorLayer(id=layer_id, style=style, source=source)
