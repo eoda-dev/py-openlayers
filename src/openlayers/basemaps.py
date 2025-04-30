@@ -1,4 +1,5 @@
-from .json_defs import OSM, TileLayer
+from .models.sources import OSM
+from .models.layers import TileLayer
 
 
 class Basemaps(object):

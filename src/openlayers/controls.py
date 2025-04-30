@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from .json_defs import (
+from .models.controls import (
     Control,
     ControlT,
     FullScreenControl,
@@ -9,3 +7,5 @@ from .json_defs import (
     ScaleLineControl,
     ZoomSliderControl,
 )
+
+__all__ = ["FullScreenControl", "InfoBox", "OverviewMapControl", "ScaleLineControl", "ZoomSliderControl"]

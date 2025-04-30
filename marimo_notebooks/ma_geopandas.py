@@ -11,7 +11,9 @@ def _():
     import marimo as mo
     import geopandas as gpd
     import openlayers as ol
-    return gpd, mo, ol
+    import requests as req
+    from openlayers.view import Projection
+    return Projection, gpd, mo, ol, req
 
 
 @app.cell
@@ -21,14 +23,16 @@ def _():
 
 
 @app.cell
-def _(gpd, url):
-    countries = gpd.read_file(url)
+def _(Projection, gpd, req, url):
+    geojson = req.get(url).json()
+    countries = gpd.GeoDataFrame.from_features(geojson, crs =Projection.WEB_MERCATOR)
+    # countries = countries.set_crs(crs=Projection.WEB_MERCATOR)
     return (countries,)
 
 
 @app.cell
 def _(countries, ol):
-    m = countries.openlayers.explore(controls=[ol.json_defs.ScaleLineControl()], style={"fill-color": "green", "stroke-color": "yellow"})
+    m = countries.openlayers.explore(controls=[ol.controls.ScaleLineControl()], style={"fill-color": "green", "stroke-color": "yellow"})
     m.add_call("addTooltip", "name")
     return (m,)
 

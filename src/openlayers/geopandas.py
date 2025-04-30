@@ -4,7 +4,8 @@ import pandas as pd
 from openlayers.config import DEFAULT_STYLE
 
 from .anywidget import MapWidget
-from .json_defs import VectorLayer, VectorSource, WebGLVectorLayer
+from .models.layers import VectorLayer, WebGLVectorLayer
+from .models.sources import VectorSource
 from .view import CRS
 
 

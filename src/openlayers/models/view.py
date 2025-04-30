@@ -10,9 +10,17 @@ class CRS(object):
     EPSG_4326 = "EPSG:4326"
 
 
+class Projection(object):
+    MERCATOR = "EPSG:3857"
+    WEB_MERCATOR = "EPSG:4326"
+
+    @classmethod
+    def from_epsg(cls, code: int) -> str:
+        return f"EPSG:{code}"
+
 class View(MyBaseModel):
     center: tuple[float, float] | None = (0, 0)
     zoom: float | None = 0
-    projection: str | None = None
+    projection: str | None = Projection.from_epsg(3857)
     min_zoom: int | float | None = None
     max_zoom: int | float | None = None

@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from .json_defs import (
+from .models.layers import (
     Layer,
     LayerT,
     TileLayer,
@@ -8,3 +6,5 @@ from .json_defs import (
     WebGLTileLayer,
     WebGLVectorLayer,
 )
+
+__all__ = ["TileLayer", "VectorLayer","WebGLTileLayer", "WebGLVectorLayer"]

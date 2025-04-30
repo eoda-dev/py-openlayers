@@ -5,7 +5,11 @@ from pathlib import Path
 from typing import Any
 
 from .export import HTMLTemplate, write_file
-from .json_defs import OSM, ControlT, LayerT, MapOptions, TileLayer, View
+from .models.sources import OSM
+from .models.controls import ControlT
+from .models.layers import LayerT, TileLayer
+from .models.map_options import MapOptions
+from .models.view import View
 
 
 class Map(object):

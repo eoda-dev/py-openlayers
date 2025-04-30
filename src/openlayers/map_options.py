@@ -1,1 +1,3 @@
-from .json_defs import MapOptions
+from .models.map_options import MapOptions
+
+__all__ = ["MapOptions"]

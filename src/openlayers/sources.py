@@ -1,3 +1,3 @@
-from __future__ import annotations
+from .models.sources import OSM, GeoTIFFSource, Source, SourceT, VectorSource
 
-from .json_defs import OSM, GeoTIFFSource, SourceT, VectorSource
+__all__ = ["OSM", "GeoTIFFSource", "VectorSource"]

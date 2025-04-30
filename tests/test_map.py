@@ -1,5 +1,6 @@
 from openlayers.map import Map
 from openlayers.view import View
+# from openlayers.models.view import View
 
 
 def test_map() -> None:

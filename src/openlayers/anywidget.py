@@ -6,9 +6,9 @@ from typing import Any
 import traitlets
 from anywidget import AnyWidget
 
-from .json_defs import ControlT, LayerT
+from .models.controls import ControlT, LayerT
 from .map import Map
-from .view import View
+from .models.view import View
 
 
 class MapWidget(AnyWidget, Map):
