@@ -4,4 +4,5 @@ declare type MyMapOptions = {
     viewOptions: ViewOptions;
     layers: JSONDef[] | undefined;
     controls: JSONDef[] | undefined;
+    calls: OLAnyWidgetCall[] | undefined
 };

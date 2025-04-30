@@ -19,7 +19,8 @@ class Map(object):
         layers: list[LayerT | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
     ):
-        self._calls = []
+        self._initial_view = view
+        self.calls = []
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
 
@@ -30,7 +31,7 @@ class Map(object):
     # 'apply_call_to_map'
     def add_call(self, method_name: str, *args: Any) -> None:
         call = dict(method=method_name, args=args)
-        self._calls.append(call)
+        self.calls.append(call)
 
     # 'apply_call_to_layer'
     def add_layer_call(self, layer_id: str, method_name: str, *args: Any):
@@ -56,7 +57,8 @@ class Map(object):
         self.add_call("removeControl", control_id)
 
     def to_html(self, **kwargs) -> str:
-        return HTMLTemplate().render(data=self.map_options, **kwargs)
+        data = self.map_options | dict(calls=self.calls)
+        return HTMLTemplate().render(data=data, **kwargs)
 
     def save(self, path: Path | str = None, preview: bool = True, **kwargs) -> str:
         path = write_file(content=self.to_html(**kwargs), path=path)

@@ -12,4 +12,12 @@ const MAP_CONTAINER = "map";
     console.log("el", mapElement);
     const mapWidget = new MapWidget(mapElement, mapOptions);
     const map = mapWidget.getMap();
+
+    console.log("calls", mapOptions.calls);
+    if (mapOptions.calls) {
+        for (let call of mapOptions.calls) {
+            // @ts-expect-error
+            mapWidget[call.method](...call.args);
+        }
+    }
 };
