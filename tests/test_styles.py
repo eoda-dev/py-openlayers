@@ -1,7 +1,7 @@
-from openlayers.styles import VectorStyle
+from openlayers.styles import default_style
 
 def test_vector_style() -> None:
-    style = VectorStyle()
+    style = default_style()
     json_def = style.model_dump()
 
     print(json_def)

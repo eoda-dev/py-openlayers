@@ -5,13 +5,15 @@ from enum import Enum
 
 from pydantic import BaseModel, ConfigDict
 
-from .styles import VectorStyle
+from .styles import default_style, FlatStyle
 
+"""
 DEFAULT_STYLE = {
     "stroke-color": "steelblue",
     "stroke-width": 3,
     "circle-color": "green",
 }
+"""
 
 
 class Backend(Enum):
@@ -26,7 +28,7 @@ class Config(BaseModel):
     )
 
     backend: str | Backend = Backend.ANYWIDGET
-    vector_style: VectorStyle = VectorStyle()
+    vector_style: FlatStyle = default_style()
     controls: list = list()
     maptiler_api_key_env_var: str = "MAPTILER_API_KEY"
 

@@ -5,7 +5,7 @@ from .anywidget import MapWidget
 from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
 from .models.view import Projection
-from .styles import Style, VectorStyle
+from .styles import FlatStyle, default_style
 
 # from .config import DEFAULT_STYLE
 
@@ -23,9 +23,9 @@ class OLAccessor(object):
         self._gdf = gdf
 
     def explore(
-        self, style=VectorStyle(), layer_id: str = "geopandas", **kwargs
+        self, style=default_style(), layer_id: str = "geopandas", **kwargs
     ) -> MapWidget:
-        if isinstance(style, Style):
+        if isinstance(style, FlatStyle):
             style = style.model_dump()
 
         feature_collection = gdf_to_geojson(self._gdf)
@@ -37,4 +37,4 @@ class OLAccessor(object):
 
 
 @pd.api.extensions.register_dataframe_accessor("openlayers")
-class OpenLayersAccessorAlias(OLAccessor): ...
+class OpenLayersAccessor(OLAccessor): ...
