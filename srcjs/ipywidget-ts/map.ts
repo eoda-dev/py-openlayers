@@ -43,11 +43,13 @@ type ControlStore = {
 
 const jsonConverter = new JSONConverter();
 
+/*
 const defaultLayers = [
   new TileLayer({
     source: new OSM()
   })
 ];
+*/
 
 export default class MapWidget {
   _container: HTMLElement;
@@ -82,27 +84,28 @@ export default class MapWidget {
       }
     }
 
-    const center = mapOptions.viewOptions.center;
-    if (center) {
-      console.log("center before", center);
-      mapOptions.viewOptions.center = transformProj(center, "EPSG:4326", mapOptions.viewOptions.projection || "EPSG:3857");
-      console.log("center after", mapOptions.viewOptions.center);
-    }
-
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
-      view: new View(mapOptions.viewOptions),
+      // view: new View(mapOptions.viewOptions),
+      view: new View(this.transformCenter(mapOptions.viewOptions)),
       controls: defaultControls().extend(baseControls),
       layers: baseLayers,
     });
   }
 
-  /*
-  transformCenter(ViewOptions): ViewOptions {
 
+  transformCenter(viewOptions: ViewOptions): ViewOptions {
+    const center = viewOptions.center;
+    if (center && viewOptions.projection !== "EPSG:4326") {
+      // console.log("center before", center);
+      viewOptions.center = fromLonLat(center);
+      // viewOptions.center = transformProj(center, "EPSG:4326", viewOptions.projection || "EPSG:3857");
+      // console.log("center after", viewOptions.center);
+    }
+    return viewOptions;
   }
-  */
+
 
   getMap(): Map {
     return this._map;
