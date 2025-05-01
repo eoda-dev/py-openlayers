@@ -3,16 +3,11 @@ type SourceCatalog = {
     VectorSource: any;
     GeoTIFFSource: any;
     GeoJSONSource: any;
+    ImageTileSource: any;
 }
 type SourceCatalogKey = keyof SourceCatalog;
-/*
-type SourceOptions = any;
-type SourceDef = {
-    type: SourceCatalogKey;
-    options: any;
-}
-*/
 
+// ...
 type LayerCatalog = {
     TileLayer: any;
     VectorLayer: any;
@@ -21,19 +16,7 @@ type LayerCatalog = {
 }
 type LayerCatalogKey = keyof LayerCatalog;
 
-/*
-type LayerOptions = {
-    source: SourceDef;
-    [key: string]: any;
-}
-*/
-/*
-type LayerDef = {
-    type: LayerCatalogKey;
-    options: LayerOptions;
-}
-*/
-
+// ...
 type ControlCatalog = {
     [key: string]: any;
 }
@@ -45,6 +28,7 @@ type JSONDef = {
     [key: string]: any;
 }
 
+// ...
 type TypeCatalog = {
     [key: string]: any;
 }
