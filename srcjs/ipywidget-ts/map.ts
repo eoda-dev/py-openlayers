@@ -25,20 +25,13 @@ import type VectorSource from "ol/source/Vector";
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 
+import { transform as transformProj, fromLonLat } from "ol/proj";
+
 // My types
 import { type MyMapOptions } from ".";
 import { type Coordinate } from "ol/coordinate";
 
 // ...
-/*
-type MyMapOptions = {
-  viewOptions: ViewOptions;
-  layers: JSONDef[] | undefined;
-  controls: JSONDef[] | undefined;
-};
-*/
-
-//
 type LayerStore = {
   [key: string]: Layer;
 }
@@ -89,6 +82,13 @@ export default class MapWidget {
       }
     }
 
+    const center = mapOptions.viewOptions.center;
+    if (center) {
+      console.log("center before", center);
+      mapOptions.viewOptions.center = transformProj(center, "EPSG:4326", mapOptions.viewOptions.projection || "EPSG:3857");
+      console.log("center after", mapOptions.viewOptions.center);
+    }
+
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
@@ -97,6 +97,12 @@ export default class MapWidget {
       layers: baseLayers,
     });
   }
+
+  /*
+  transformCenter(ViewOptions): ViewOptions {
+
+  }
+  */
 
   getMap(): Map {
     return this._map;
