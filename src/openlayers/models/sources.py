@@ -5,6 +5,7 @@ from pydantic import Field
 from .core import OLBaseModel
 from .formats import GeoJSON
 
+from ..constants import CARTO_ATTRIBUTION
 
 # --- Base source
 class Source(OLBaseModel): ...
@@ -27,10 +28,12 @@ class GeoTIFFSource(Source):
 
 # See also https://github.com/CartoDB/basemap-styles
 class ImageTileSource(Source):
-    url: str = "https://{a-d}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
-    # url: str = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+    # url: str = "https://{a-d}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
+    # attributions: str | None = CARTO_ATTRIBUTION
+    url: str
     attributions: str | None = None
-    max_zoom: float | int | None = None
+    min_zoom: float | int | None = Field(0, serialization_alias="minZoom")
+    max_zoom: float | int | None = Field(20, serialization_alias="maxZoom")
 
 
 # --- Source type

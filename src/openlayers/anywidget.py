@@ -11,7 +11,9 @@ from .map import Map
 from .models.view import View
 
 
-class MapWidget(AnyWidget, Map):
+class MapWidget(Map, AnyWidget):
+    """Map widget"""
+
     _esm = Path(__file__).parent / "js" / "openlayers.anywidget.js"
     _css = Path(__file__).parent / "js" / "openlayers.anywidget.css"
 
@@ -35,8 +37,9 @@ class MapWidget(AnyWidget, Map):
         self.debug_data = debug_data or dict()
         self.map_created = False
         self.calls = []
-        AnyWidget.__init__(self, height=height, **kwargs)
+
         Map.__init__(self, view, layers, controls)
+        AnyWidget.__init__(self, height=height, **kwargs)
 
     def add_call(self, method_name: str, *args: Any) -> None:
         call = dict(method=method_name, args=args)
@@ -44,3 +47,7 @@ class MapWidget(AnyWidget, Map):
             return self.send(call)
 
         self.calls = self.calls + [call]
+
+
+def map_widget(*args, **kwargs) -> MapWidget:
+    return MapWidget(*args, **kwargs)
