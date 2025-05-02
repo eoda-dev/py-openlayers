@@ -8,6 +8,18 @@ from .models.layers import TileLayer
 from .models.sources import OSM, ImageTileSource
 
 
+# light_all,
+# dark_all,
+# light_nolabels,
+# light_only_labels,
+# dark_nolabels,
+# dark_only_labels,
+# rastertiles/voyager,
+# rastertiles/voyager_nolabels,
+# rastertiles/voyager_only_labels,
+# rastertiles/voyager_labels_under
+
+
 class Carto(Enum):
     LIGHT_ALL = "light_all"
     DARK_ALL = "dark_all"
