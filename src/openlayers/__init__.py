@@ -6,11 +6,11 @@ try:
 except ImportError as e:
     ...
 
-from . import controls
-from . import layers
+from . import controls, layers
 from .layers import *
 from .map import Map
+from .view import View
 
 __version__ = importlib.metadata.version(__package__)
 
-__all__ = ["Map", "MapWidget", "controls", "layers"]
+__all__ = ["Map", "View", "MapWidget", "controls", "layers"]

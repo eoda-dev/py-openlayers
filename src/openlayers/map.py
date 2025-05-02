@@ -5,10 +5,10 @@ from pathlib import Path
 from typing import Any
 
 from .export import HTMLTemplate, write_file
-from .models.sources import OSM
 from .models.controls import ControlT
 from .models.layers import LayerT, TileLayer
 from .models.map_options import MapOptions
+from .models.sources import OSM
 from .models.view import View
 
 
@@ -19,7 +19,7 @@ class Map(object):
         layers: list[LayerT | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
     ):
-        self._initial_view = view
+        self._initial_view_state = view
         self.calls = []
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
@@ -27,6 +27,10 @@ class Map(object):
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()
+
+    @property
+    def initial_view_state(self):
+        return self._initial_view_state
 
     # 'apply_call_to_map'
     def add_call(self, method_name: str, *args: Any) -> None:
