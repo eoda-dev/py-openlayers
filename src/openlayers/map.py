@@ -10,7 +10,7 @@ from .models.layers import LayerT, TileLayer
 from .models.map_options import MapOptions
 from .models.sources import OSM
 from .models.view import View
-
+from .styles import FlatStyle
 
 class Map(object):
     def __init__(
@@ -62,6 +62,12 @@ class Map(object):
 
     def add_tooltip(self, prop: str | None = None) -> None:
         self.add_call("addTooltip", prop)
+
+    def set_layer_style(self, layer_id: str, style: dict | FlatStyle) -> None:
+        if isinstance(style, FlatStyle):
+            style = style.model_dump()
+
+        self.add_layer_call(layer_id, "setStyle", style)
 
     def to_html(self, **kwargs) -> str:
         data = self.map_options | dict(calls=self.calls)

@@ -23,14 +23,25 @@ class OLAccessor:
     def explore(
         self,
         style: dict | FlatStyle = default_style(),
+        tooltip: bool = True,
         layer_id: str = "geopandas",
+        webgl: bool = True,
         **kwargs,
     ) -> MapWidget:
+        # Create geojson source
         feature_collection = gdf_to_geojson(self._gdf)
         source = VectorSource(geojson=feature_collection)
-        layer = WebGLVectorLayer(id=layer_id, style=style, source=source)
+        
+        # Create layer
+        layer_class = WebGLVectorLayer if webgl else VectorLayer
+        layer = layer_class(id=layer_id, style=style, source=source)
+        
+        # Initialize map instance add add components
         m = MapWidget(**kwargs)
         m.add_layer(layer)
+        if tooltip:
+            m.add_tooltip()
+
         return m
 
 

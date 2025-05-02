@@ -7,6 +7,7 @@ from .formats import GeoJSON
 
 # from ..constants import CARTO_ATTRIBUTION
 
+
 # --- Base source
 class Source(OLBaseModel): ...
 
@@ -26,10 +27,8 @@ class GeoTIFFSource(Source):
     normalize: bool | None = None
     sources: list[dict]
 
-# See also https://github.com/CartoDB/basemap-styles
+
 class ImageTileSource(Source):
-    # url: str = "https://{a-d}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png"
-    # attributions: str | None = CARTO_ATTRIBUTION
     url: str
     attributions: str | None = None
     min_zoom: float | int | None = Field(0, serialization_alias="minZoom")
