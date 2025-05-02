@@ -230,7 +230,7 @@ export default class MapWidget {
   }
 
   // ...
-  addTooltip(prop: string): void {
+  addTooltip(prop: string | null): void {
     // addTooltipTo(this._map, prop);
     addTooltip2(this._map, prop);
   }

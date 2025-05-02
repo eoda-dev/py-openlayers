@@ -7,7 +7,7 @@ from pydantic import Field, field_validator
 
 from .core import OLBaseModel
 from .sources import SourceT
-from ..styles import FlatStyle
+from ..styles import FlatStyle, default_style
 
 
 # --- Base layer
@@ -24,7 +24,7 @@ class TileLayer(Layer): ...
 
 
 class VectorLayer(Layer):
-    style: dict | FlatStyle | None = None
+    style: dict | FlatStyle = default_style()
 
     @field_validator("style")
     def validate_style(cls, v):
@@ -35,9 +35,6 @@ class VectorLayer(Layer):
 
 
 class WebGLVectorLayer(VectorLayer): ...
-
-
-# style: dict | FlatStyle | None = None
 
 
 class WebGLTileLayer(Layer):

@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 def fix_keys(d: dict) -> dict:
     return {k.replace("_", "-"): v for k, v in d.items() if v is not None}
 
+
 # TODO: Move to models folder
 class FlatStyle(BaseModel):
     model_config = ConfigDict(extra="allow")
@@ -30,13 +31,15 @@ class FlatStyle(BaseModel):
 
 def default_style() -> FlatStyle:
     return FlatStyle(
-        fill_color="#0B775E",
-        stroke_color="#3B9AB2",
+        fill_color="rgba(255,255,255,0.4)",
+        # ---
+        stroke_color="#3399CC",
         stroke_width=1.25,
+        # ---
         circle_radius=5,
-        circle_fill_color="#EBCC2A",
+        circle_fill_color="rgba(255,255,255,0.4)",
         circle_stroke_width=1.25,
-        circle_stroke_color="#F21A00",
+        circle_stroke_color="#3399CC",
     )
 
 

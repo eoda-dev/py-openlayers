@@ -60,7 +60,7 @@ class Map(object):
     def remove_control(self, control_id: str) -> None:
         self.add_call("removeControl", control_id)
 
-    def add_tooltip(self, prop: str) -> None:
+    def add_tooltip(self, prop: str | None = None) -> None:
         self.add_call("addTooltip", prop)
 
     def to_html(self, **kwargs) -> str:

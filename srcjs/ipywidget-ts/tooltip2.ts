@@ -34,7 +34,7 @@ info.style.width = "auto";
 info.style.zIndex = "100";
 info.style.backgroundColor = "#333";
 info.style.color = "#fff";
-info.style.textAlign = "center";
+// info.style.textAlign = "center";
 info.style.borderRadius = "4px";
 info.style.padding = "7px";
 info.style.left = "50%";
@@ -42,7 +42,15 @@ info.style.left = "50%";
 info.style.visibility = "hidden";
 info.style.pointerEvents = "none";
 
-function addTooltip2(map: Map, prop: string): void {
+function renderFeatureProperties(feature: FeatureLike, prop: string | null): string {
+    if (prop)
+        return feature.get(prop);
+
+    const properties = getFeatureProperties(feature);
+    return Object.keys(properties).map((key) => `${key}: ${properties[key]}`).join("</br>");
+}
+
+function addTooltip2(map: Map, prop: string | null): void {
     info.id = "ol-tooltip";
     map.getTargetElement().appendChild(info);
     console.log("tooltip element added", info);
@@ -56,16 +64,14 @@ function addTooltip2(map: Map, prop: string): void {
                 return feature;
             });
         if (feature) {
-            // map.getTargetElement().style.cursor = "pointer";
             // console.log("feature props", getFeatureProperties(feature));
             info.style.left = (pixel[0] + 15) + 'px';
             info.style.top = pixel[1] + 'px';
             if (feature !== currentFeature) {
                 info.style.visibility = 'visible';
-                info.innerText = feature.get(prop);
+                info.innerHTML = renderFeatureProperties(feature, prop);
             }
         } else {
-            // map.getTargetElement().style.cursor = "";
             info.style.visibility = 'hidden';
         }
         currentFeature = feature;

@@ -9,6 +9,9 @@ html_template = """<!DOCTYPE html>
     {{ header }}
     {% endfor -%}
     <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
         #map {
             height: {{ height|default('500px')}};
         }
