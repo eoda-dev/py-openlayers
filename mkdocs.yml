@@ -1,0 +1,37 @@
+site_name: OpenLayers For Python
+
+repo_name: py-openlayers
+repo_url: https://github.com/eoda-dev/py-openlayers
+
+theme:
+  name: material
+  palette:
+    primary: green
+
+plugins:
+  - search:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_section_style: table
+            show_root_heading: true
+            show_source: True
+            show_docstring_modules: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite:
+  - pymdownx.superfences:
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: [docs/examples, "."]
+
+nav:
+  - Get started: index.md
+  # - Concepts: concept.md
+  - Changelog: changelog.md
