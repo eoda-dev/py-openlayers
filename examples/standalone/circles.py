@@ -1,8 +1,6 @@
 import requests as req
-import geopandas as gpd
 import openlayers as ol
 from openlayers.view import Projection
-from openlayers.sources import ImageTileSource
 
 url = "https://openlayers.org/data/vector/populated-places.json"
 features = req.get(url).json()
@@ -30,9 +28,7 @@ style = {
     ],
 }
 
-layerx = ol.TileLayer(id="carto", source=ImageTileSource())
-
-gdf = gpd.GeoDataFrame.from_features(features, crs=Projection.MERCATOR)
+gdf = ol.GeoDataFrame.from_features(features, crs=Projection.MERCATOR)
 m = gdf.ol.explore(style=style, controls=[ol.controls.ZoomSliderControl()])
-m.add_layer(layerx)
+m.add_tooltip("name")
 m.save(preview=True)

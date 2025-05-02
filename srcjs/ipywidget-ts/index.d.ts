@@ -8,3 +8,7 @@ declare type MyMapOptions = {
     controls: JSONDef[] | undefined;
     calls: OLAnyWidgetCall[] | undefined
 };
+
+declare type FeatureProps = {
+    [x: string]: any;
+};

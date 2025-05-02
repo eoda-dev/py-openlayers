@@ -31,12 +31,14 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   }
 
   const map = mapWidget.getMap();
+  /*
   map.on("click", (e) => {
     const info = parseClickEvent(e);
     console.log(info);
     model.set("map_clicked", info);
     model.save_changes();
   });
+  */
 
   model.on("msg:custom", (msg: OLAnyWidgetCall) => {
     console.log("thanx for your message", msg);

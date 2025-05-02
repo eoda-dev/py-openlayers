@@ -1,5 +1,5 @@
 import { Feature, Map, View } from "ol";
-import { type ViewOptions } from "ol/View";
+import type { ViewOptions } from "ol/View";
 
 import TileLayer from "ol/layer/Tile";
 
@@ -14,7 +14,8 @@ import Overlay from "ol/Overlay";
 
 import { JSONConverter } from "./json";
 
-import { addTooltipTo } from "./tooltip";
+import { addTooltipTo } from "./tooltip"; // Uses an overlay
+import { addTooltip2 } from "./tooltip2"; // Uses custom div container
 
 // import { populatedPlacesLayer } from "./test-json-converter";
 import type Layer from "ol/layer/Layer";
@@ -28,8 +29,8 @@ import type WebGLVectorLayer from "ol/layer/WebGLVector";
 import { transform as transformProj, fromLonLat } from "ol/proj";
 
 // My types
-import { type MyMapOptions } from ".";
-import { type Coordinate } from "ol/coordinate";
+import type { MyMapOptions } from ".";
+import type { Coordinate } from "ol/coordinate";
 
 // ...
 type LayerStore = {
@@ -215,7 +216,7 @@ export default class MapWidget {
     return jsonConverter.parse(jsonDef);
   }
 
-  // ...
+  // TODO: Remove
   debugData(data: any): void {
   }
 
@@ -230,6 +231,7 @@ export default class MapWidget {
 
   // ...
   addTooltip(prop: string): void {
-    addTooltipTo(this._map, prop);
+    // addTooltipTo(this._map, prop);
+    addTooltip2(this._map, prop);
   }
 }
