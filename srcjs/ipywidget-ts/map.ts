@@ -84,17 +84,27 @@ export default class MapWidget {
       }
     }
 
+    const view = jsonConverter.parse(mapOptions.view) as View;
+    const center = view.getCenter();
+    console.log("center", center)
+    if (center && view.getProjection().getCode() !== "EPSG:4326") {
+      const centerTransformed = fromLonLat(center);
+      console.log("centerTransformed", centerTransformed);
+      view.setCenter(centerTransformed);
+    }
+
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
       // view: new View(mapOptions.viewOptions),
-      view: new View(this.transformCenter(mapOptions.viewOptions)),
+      // view: new View(this.transformCenter(mapOptions.viewOptions)),
+      view: view,
       controls: defaultControls().extend(baseControls),
       layers: baseLayers,
     });
   }
 
-
+  // TODO: Obsolete
   transformCenter(viewOptions: ViewOptions): ViewOptions {
     const center = viewOptions.center;
     if (center && viewOptions.projection !== "EPSG:4326") {

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 
 from pydantic import BaseModel
@@ -38,10 +40,12 @@ class BasemapLayer(object):
         return TileLayer(id="osm", source=OSM())
 
     @staticmethod
-    def carto(style_name: str = Carto.DARK_ALL, double_resolution=True) -> TileLayer:
+    def carto(
+        style_name: str | Carto = Carto.DARK_ALL, double_resolution: bool = True
+    ) -> TileLayer:
         style = CartoRasterStyle(style=style_name, double_resolution=double_resolution)
         return TileLayer(
-            id=f"carto-{style_name}",
+            id=f"carto-{Carto(style_name).value}",
             source=ImageTileSource(url=style.url, attributions=style.attribution),
         )
 
@@ -52,6 +56,3 @@ class BasemapLayer(object):
     crossOrigin: '',
   }),
 """
-
-
-# class Basemap(BaseModel): ...

@@ -5,7 +5,7 @@ from pydantic import Field
 from .core import OLBaseModel
 from .formats import GeoJSON
 
-from ..constants import CARTO_ATTRIBUTION
+# from ..constants import CARTO_ATTRIBUTION
 
 # --- Base source
 class Source(OLBaseModel): ...
@@ -14,7 +14,7 @@ class Source(OLBaseModel): ...
 # --- Sources
 class VectorSource(Source):
     url: str | None = None
-    features: list[dict] | None = None
+    # features: list[dict] | None = None
     geojson: dict | None = Field(None, serialization_alias="@@geojson")
     format: dict | GeoJSON = GeoJSON()
 

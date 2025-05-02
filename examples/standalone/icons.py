@@ -14,6 +14,7 @@ style = FlatStyle(
 
 icon_layer = ol.VectorLayer(style=style, source=ol.VectorSource(url=url))
 
-m = ol.MapWidget(layers=[BasemapLayer.carto(), icon_layer])
+m = ol.Map(layers=[BasemapLayer.carto(), icon_layer])
 # m.add_tooltip()
+m.add_control(ol.controls.OverviewMapControl())
 m.save()

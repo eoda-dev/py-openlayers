@@ -18,15 +18,15 @@ def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERC
 
 
 @pd.api.extensions.register_dataframe_accessor("ol")
-class OLAccessor(object):
+class OLAccessor:
     def __init__(self, gdf: gpd.GeoDataFrame) -> None:
         self._gdf = gdf
 
     def explore(
         self, style=default_style(), layer_id: str = "geopandas", **kwargs
     ) -> MapWidget:
-        if isinstance(style, FlatStyle):
-            style = style.model_dump()
+        # if isinstance(style, FlatStyle):
+        #    style = style.model_dump()
 
         feature_collection = gdf_to_geojson(self._gdf)
         source = VectorSource(geojson=feature_collection)

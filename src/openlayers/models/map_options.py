@@ -8,7 +8,7 @@ from .view import View
 
 
 class MapOptions(BaseModel):
-    view: View | None = Field(View(), serialization_alias="viewOptions")
+    view: View | None = View() # Field(View(), serialization_alias="viewOptions")
     controls: list[dict | ControlT] | None = None
     layers: list[dict | LayerT] | None = None
 

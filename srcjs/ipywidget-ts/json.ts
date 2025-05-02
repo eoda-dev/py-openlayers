@@ -2,7 +2,9 @@ import { layerCatalog } from "./layers"
 import { sourceCatalog } from "./sources"
 import { controlCatalog } from "./controls"
 
-import { GeoJSON } from "ol/format";
+import { GeoJSON, KML } from "ol/format";
+import { View } from "ol";
+
 import Feature from 'ol/Feature.js';
 import { Polygon, Point, LineString, Circle } from "ol/geom";
 
@@ -11,7 +13,7 @@ class JSONConverter {
 
     // constructor(layerCatalog?: LayerCatalog, sourceCatalog?: SourceCatalog, controlCatalog?: ControlCatalog) {
     constructor() {
-        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON, Feature, Polygon, Point, LineString, Circle };
+        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON, KML, View };
     }
 
     // TODO: Remove, noot needed
@@ -28,7 +30,7 @@ class JSONConverter {
         // for (let key in this.moveTypeDefToTop(options)) {
         for (let key in options) {
             const option = options[key];
-            if (Array.isArray(option)) {
+            if (Array.isArray(option) && typeof option[0] === "object") {
                 console.log("Parse items of array");
                 // parsedOptions[key] = option.map(item => this.parse(item));
                 parsedOptions[key] = option.map(item => item["@@type"] ? this.parse(item) : this.parseOptions(item));
