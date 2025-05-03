@@ -35,31 +35,51 @@ import type { Coordinate } from "ol/coordinate";
 // ...
 type LayerStore = {
   [key: string]: Layer;
-}
+};
 
 // 
 type ControlStore = {
   [key: string]: Control;
-}
+};
+
+//
+type Metadata = {
+  layers: any[]; //{ [key: string]: any };
+  controls: any[]; //{ [key: string]: any };
+};
+
+const TYPE_IDENTIFIER = "@@type";
+const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
 
-/*
-const defaultLayers = [
-  new TileLayer({
-    source: new OSM()
-  })
-];
-*/
+function parseLayerDef(layerDef: JSONDef): Layer {
+  const layer = jsonConverter.parse(layerDef);
+  layer.set("id", layerDef.id);
+  addGeojsonFeatures(layer, layerDef[GEOJSON_IDENTIFIER]);
+  return layer;
+}
+
+function addGeojsonFeatures(layer: Layer, features: any): void {
+  if (features === undefined)
+    return;
+
+  const source = layer.getSource() as VectorSource;
+  source.addFeatures(new GeoJSON().readFeatures(features));
+  console.log("geojson features added", features);
+}
+
 
 export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
+  _metadata: Metadata = { layers: [], controls: [] };
   _layerStore: LayerStore = {};
   _controlStore: ControlStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
     let baseLayers: Layer[] = [] // defaultLayers;
+    /*
     if (mapOptions.layers !== undefined) {
       for (let layerJSONDef of mapOptions.layers) {
 
@@ -73,7 +93,7 @@ export default class MapWidget {
         this._layerStore[layerJSONDef.id] = layer;
       }
     }
-
+    */
 
     let baseControls: Control[] = [];
     // TODO: Use 'addControls' after map was created instead
@@ -103,6 +123,11 @@ export default class MapWidget {
       controls: defaultControls().extend(baseControls),
       layers: baseLayers,
     });
+
+    // Add layers
+    for (let layerDef of mapOptions.layers || []) {
+      this.addLayer(layerDef);
+    }
   }
 
   // TODO: Obsolete
@@ -125,13 +150,6 @@ export default class MapWidget {
   // TODO: Obsolete
   getLayerOld(layerId: string): Layer {
     return this._layerStore[layerId];
-  }
-
-  getLayer(layerId: string): Layer | undefined {
-    for (let layer of this._map.getLayers().getArray()) {
-      if (layer.get("id") === layerId)
-        return layer as Layer;
-    }
   }
 
   // TODO: Obsolete
@@ -166,7 +184,8 @@ export default class MapWidget {
     console.log("geojsonObject added to VectorSource", geoJSONObject);
   }
 
-  addLayer(layerJSONDef: JSONDef): void {
+  /*
+  addLayerOld(layerJSONDef: JSONDef): void {
     const layer = jsonConverter.parse(layerJSONDef);
     layer.set("id", layerJSONDef.id);
 
@@ -177,14 +196,35 @@ export default class MapWidget {
     this._layerStore[layerJSONDef.id] = layer;
     console.log("layerStore", this._layerStore);
   }
+  */
+
+  getLayer(layerId: string): Layer | undefined {
+    for (let layer of this._map.getLayers().getArray()) {
+      if (layer.get("id") === layerId)
+        return layer as Layer;
+    }
+  }
+
+  addLayer(layerDef: JSONDef): void {
+    const layer = parseLayerDef(layerDef);
+    this._map.addLayer(layer);
+    this._metadata.layers.push({
+      id: layer.get("id"),
+      type: layerDef[TYPE_IDENTIFIER],
+      extent: layer.getExtent()
+    });
+    console.log("layer", layer.get("id"), "added", this._metadata);
+  }
 
   removeLayer(layerId: string): void {
     const layer = this.getLayer(layerId);
-    if (layer === undefined) return;
+    if (layer === undefined)
+      return;
 
     this._map.removeLayer(layer);
-    delete this._layerStore[layerId];
-    console.log("layer", layerId, "removed", this._layerStore);
+    // delete this._layerStore[layerId];
+    this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
+    console.log("layer", layerId, "removed", this._metadata);
   }
 
   addControl(controlJSONDef: JSONDef): void {
