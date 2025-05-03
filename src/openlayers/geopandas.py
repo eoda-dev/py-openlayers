@@ -23,7 +23,7 @@ class OLAccessor:
     def explore(
         self,
         style: dict | FlatStyle = default_style(),
-        tooltip: bool = True,
+        tooltip: bool | str = True,
         layer_id: str = "geopandas",
         webgl: bool = True,
         **kwargs,
@@ -39,8 +39,10 @@ class OLAccessor:
         # Initialize map instance add add components
         m = MapWidget(**kwargs)
         m.add_layer(layer)
-        if tooltip:
-            m.add_tooltip()
+        if isinstance(tooltip, str):
+            m.add_tooltip(tooltip)
+        elif tooltip:
+            m.add_default_tooltip()
 
         return m
 
