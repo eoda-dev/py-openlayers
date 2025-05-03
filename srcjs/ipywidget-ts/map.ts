@@ -74,8 +74,8 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
-  _layerStore: LayerStore = {};
-  _controlStore: ControlStore = {};
+  // _layerStore: LayerStore = {};
+  // _controlStore: ControlStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
     let baseLayers: Layer[] = [] // defaultLayers;
@@ -97,6 +97,7 @@ export default class MapWidget {
 
     let baseControls: Control[] = [];
     // TODO: Use 'addControls' after map was created instead
+    /*
     if (mapOptions.controls !== undefined) {
       for (let controlJSONDef of mapOptions.controls) {
         const control = jsonConverter.parse(controlJSONDef);
@@ -104,7 +105,9 @@ export default class MapWidget {
         this._controlStore[controlJSONDef.id] = control;
       }
     }
+    */
 
+    // TODO: Move to func 'parseView'
     const view = jsonConverter.parse(mapOptions.view) as View;
     const center = view.getCenter();
     console.log("center", center)
@@ -117,12 +120,15 @@ export default class MapWidget {
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
-      // view: new View(mapOptions.viewOptions),
-      // view: new View(this.transformCenter(mapOptions.viewOptions)),
       view: view,
       controls: defaultControls().extend(baseControls),
       layers: baseLayers,
     });
+
+    // Add controls
+    for (let controlDef of mapOptions.controls || []) {
+      this.addControl(controlDef);
+    }
 
     // Add layers
     for (let layerDef of mapOptions.layers || []) {
@@ -152,23 +158,12 @@ export default class MapWidget {
     return this._metadata;
   }
 
-  // TODO: Obsolete
-  getLayerOld(layerId: string): Layer {
-    return this._layerStore[layerId];
-  }
-
-  // TODO: Obsolete
-  /*
-  getControlOld(controlId: string): Control {
-    return this._controlStore[controlId];
-  }
-  */
-
   setViewFromSource(layerId: string): void {
-    const layer = this.getLayer(layerId); // this._layerStore[layerId];
+    const layer = this.getLayer(layerId);
     const source = layer?.getSource();
     const view = source?.getView();
-    if (view !== undefined) this._map.setView(view);
+    if (view)
+      this._map.setView(view);
   }
 
   setExtentFromSource(): void {
@@ -220,12 +215,11 @@ export default class MapWidget {
 
   removeLayer(layerId: string): void {
     const layer = this.getLayer(layerId);
-    if (layer === undefined)
-      return;
-
-    this._map.removeLayer(layer);
-    this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
-    console.log("layer", layerId, "removed", this._metadata);
+    if (layer) {
+      this._map.removeLayer(layer);
+      this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
+      console.log("layer", layerId, "removed", this._metadata);
+    }
   }
 
   // --- Controls
