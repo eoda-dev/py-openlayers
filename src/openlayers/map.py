@@ -67,6 +67,12 @@ class Map(object):
     def add_tooltip(self, template: str | None = None) -> None:
         self.add_call("addTooltip", template)
 
+    def set_opacity(self, layer_id: str, opacity: float = 1.0) -> None:
+        self.add_layer_call(layer_id, "setOpacity", opacity)
+
+    def set_visible(self, layer_id: str, visible: bool = False) -> None:
+        self.add_layer_call(layer_id, "setVisible", visible)
+
     def set_layer_style(self, layer_id: str, style: dict | FlatStyle) -> None:
         if isinstance(style, FlatStyle):
             style = style.model_dump()
