@@ -1,9 +1,9 @@
-import { Feature, Map, View } from "ol";
+import { Map, View } from "ol";
 import type { ViewOptions } from "ol/View";
 
-import TileLayer from "ol/layer/Tile";
+// import TileLayer from "ol/layer/Tile";
 
-import OSM from "ol/source/OSM";
+// import OSM from "ol/source/OSM";
 
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 // import { MapOptions } from "ol/Map";
@@ -14,7 +14,7 @@ import Overlay from "ol/Overlay";
 
 import { JSONConverter } from "./json";
 
-import { addTooltipTo } from "./tooltip"; // Uses an overlay
+// import { addTooltipTo } from "./tooltip"; // Uses an overlay
 import { addTooltip2 } from "./tooltip2"; // Uses custom div container
 
 // import { populatedPlacesLayer } from "./test-json-converter";
@@ -66,8 +66,8 @@ export default class MapWidget {
         // TODO: Duplicated code, use 'addLayer' after map was created instead
         const layer = jsonConverter.parse(layerJSONDef);
 
-        if (layerJSONDef.source["@@geojson"] !== undefined)
-          this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
+        // if (layerJSONDef.source["@@geojson"] !== undefined)
+        this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
 
         baseLayers.push(layer);
         this._layerStore[layerJSONDef.id] = layer;
@@ -122,6 +122,7 @@ export default class MapWidget {
     return this._map;
   }
 
+  // TODO: Obsolete
   getLayerOld(layerId: string): Layer {
     return this._layerStore[layerId];
   }
@@ -133,8 +134,16 @@ export default class MapWidget {
     }
   }
 
-  getControl(controlId: string): Control {
+  // TODO: Obsolete
+  getControlOld(controlId: string): Control {
     return this._controlStore[controlId];
+  }
+
+  getControl(controId: string): Control | undefined {
+    for (let control of this._map.getControls().getArray()) {
+      if (control.get("id") === controId)
+        return control;
+    }
   }
 
   setViewFromSource(layerId: string): void {
@@ -149,18 +158,20 @@ export default class MapWidget {
   }
 
   addGeoJSONToSource(layer: Layer, geoJSONObject: any): void {
-    const source = layer.getSource() as VectorSource;
-    // const options = { dataProjection: "EPSG:4326", featureProjection: "EPSG:4326" };
+    if (geoJSONObject === undefined)
+      return;
 
+    const source = layer.getSource() as VectorSource;
     source.addFeatures(new GeoJSON().readFeatures(geoJSONObject));
     console.log("geojsonObject added to VectorSource", geoJSONObject);
   }
 
   addLayer(layerJSONDef: JSONDef): void {
     const layer = jsonConverter.parse(layerJSONDef);
+    layer.set("id", layerJSONDef.id);
 
-    if (layerJSONDef.source["@@geojson"] !== undefined)
-      this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
+    //if (layerJSONDef.source["@@geojson"] !== undefined)
+    this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
 
     this._map.addLayer(layer);
     this._layerStore[layerJSONDef.id] = layer;
@@ -178,26 +189,21 @@ export default class MapWidget {
 
   addControl(controlJSONDef: JSONDef): void {
     const control = jsonConverter.parse(controlJSONDef);
+    control.set("id", controlJSONDef.id);
+    // ...
     this._map.addControl(control);
     this._controlStore[controlJSONDef.id] = control;
     console.log("controlStore", this._controlStore);
   }
 
   removeControl(controlId: string): void {
-    const control = this._controlStore[controlId];
+    const control = this.getControl(controlId);
     if (control === undefined) return;
 
     this._map.removeControl(control);
     delete this._controlStore[controlId];
     console.log("control", controlId, "removed", this._controlStore);
   }
-
-  /*
-  setLayerProperty(layerId: string, prop: string, value: any): void {
-    const layer = this.getLayer(layerId);
-    layer.set(prop, value);
-  }
-  */
 
   setLayerStyle(layerId: string, style: any): void {
     const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
