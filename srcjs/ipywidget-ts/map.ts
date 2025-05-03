@@ -179,7 +179,7 @@ export default class MapWidget {
   }
 
   removeLayer(layerId: string): void {
-    const layer = this.getLayer(layerId); // this._layerStore[layerId];
+    const layer = this.getLayer(layerId);
     if (layer === undefined) return;
 
     this._map.removeLayer(layer);

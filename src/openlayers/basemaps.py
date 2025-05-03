@@ -57,7 +57,7 @@ class BasemapLayer(object):
     ) -> TileLayer:
         style = CartoRasterStyle(style=style_name, double_resolution=double_resolution)
         return TileLayer(
-            id=f"carto-{Carto(style_name).value}",
+            id=f"carto-{Carto(style_name).value.replace('_', '-')}",
             source=ImageTileSource(url=style.url, attributions=style.attribution),
         )
 

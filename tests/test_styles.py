@@ -6,4 +6,4 @@ def test_vector_style() -> None:
 
     print(json_def)
 
-    assert json_def["stroke-color"] == "#3B9AB2"
+    assert json_def["stroke-color"] == "#3399CC"
