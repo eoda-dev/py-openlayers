@@ -1,5 +1,5 @@
 import { Map, View } from "ol";
-import type { ViewOptions } from "ol/View";
+// import type { ViewOptions } from "ol/View";
 
 // import TileLayer from "ol/layer/Tile";
 
@@ -33,25 +33,42 @@ import type { MyMapOptions } from ".";
 import type { Coordinate } from "ol/coordinate";
 
 // ...
+/*
 type LayerStore = {
   [key: string]: Layer;
 };
+*/
 
-// 
+//
+/* 
 type ControlStore = {
   [key: string]: Control;
 };
+*/
 
 //
 type Metadata = {
-  layers: any[]; //{ [key: string]: any };
-  controls: any[]; //{ [key: string]: any };
+  layers: any[];
+  controls: any[];
 };
 
 const TYPE_IDENTIFIER = "@@type";
 const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
+
+function parseViewDef(viewDef: JSONDef): View {
+  const view = jsonConverter.parse(viewDef) as View;
+  const center = view.getCenter();
+  console.log("view center", center)
+  if (center && view.getProjection().getCode() !== "EPSG:4326") {
+    const centerTransformed = fromLonLat(center);
+    console.log("view center transformed", centerTransformed);
+    view.setCenter(centerTransformed);
+  }
+
+  return view;
+}
 
 function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
@@ -74,8 +91,6 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
-  // _layerStore: LayerStore = {};
-  // _controlStore: ControlStore = {};
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
     let baseLayers: Layer[] = [] // defaultLayers;
@@ -108,6 +123,7 @@ export default class MapWidget {
     */
 
     // TODO: Move to func 'parseView'
+    /*
     const view = jsonConverter.parse(mapOptions.view) as View;
     const center = view.getCenter();
     console.log("center", center)
@@ -116,6 +132,8 @@ export default class MapWidget {
       console.log("centerTransformed", centerTransformed);
       view.setCenter(centerTransformed);
     }
+      */
+    const view = parseViewDef(mapOptions.view);
 
     this._container = mapElement;
     this._map = new Map({
