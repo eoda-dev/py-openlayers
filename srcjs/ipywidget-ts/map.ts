@@ -15,6 +15,8 @@ import type WebGLVectorLayer from "ol/layer/WebGLVector";
 import type { Coordinate } from "ol/coordinate";
 import type { MyMapOptions } from ".";
 
+import type { AnyModel } from "@anywidget/types";
+
 type Metadata = {
   layers: any[];
   controls: any[];
@@ -62,8 +64,11 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
+  _model: AnyModel | undefined;
 
-  constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
+  constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
+    this._model = model;
+
     const view = parseViewDef(mapOptions.view);
     let baseControls: Control[] = [];
     let baseLayers: Layer[] = [];

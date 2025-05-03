@@ -1,9 +1,11 @@
 import type { MapBrowserEvent } from "ol";
 import type { FeatureLike } from "ol/Feature";
 import type { FeatureProps } from ".";
+import type { View } from "ol";
 
-import { transform as transformProj, toLonLat } from "ol/proj";
+import { toLonLat } from "ol/proj";
 
+// TODO: get 'info' from 'parseView' 
 function parseClickEvent(e: MapBrowserEvent): any {
     const view = e.target.getView();
     const projectionCode = view.getProjection().getCode();
@@ -11,10 +13,20 @@ function parseClickEvent(e: MapBrowserEvent): any {
         center: view.getCenter(),
         projection: projectionCode,
         zoom: view.getZoom(),
-        // lnglat: transformProj(e.coordinate, projectionCode, "EPSG:4326")
-        lonLat: toLonLat(e.coordinate)
+        centerLonLat: toLonLat(e.coordinate)
     };
     return info;
+}
+
+function parseView(view: View): any {
+    const center = view.getCenter() || [];
+    const projectionCode = view.getProjection().getCode();
+    return {
+        center: center,
+        projection: projectionCode,
+        zoom: view.getZoom(),
+        center_lonlat: toLonLat(center)
+    };
 }
 
 function getFeatureProperties(feature: FeatureLike): FeatureProps {
@@ -22,4 +34,4 @@ function getFeatureProperties(feature: FeatureLike): FeatureProps {
     return props;
 }
 
-export { parseClickEvent, getFeatureProperties }
+export { parseClickEvent, getFeatureProperties, parseView }
