@@ -131,6 +131,7 @@ export default class MapWidget {
   }
 
   // TODO: Obsolete
+  /*
   transformCenter(viewOptions: ViewOptions): ViewOptions {
     const center = viewOptions.center;
     if (center && viewOptions.projection !== "EPSG:4326") {
@@ -141,10 +142,14 @@ export default class MapWidget {
     }
     return viewOptions;
   }
-
+  */
 
   getMap(): Map {
     return this._map;
+  }
+
+  getMetadata(): Metadata {
+    return this._metadata;
   }
 
   // TODO: Obsolete
@@ -153,16 +158,11 @@ export default class MapWidget {
   }
 
   // TODO: Obsolete
+  /*
   getControlOld(controlId: string): Control {
     return this._controlStore[controlId];
   }
-
-  getControl(controId: string): Control | undefined {
-    for (let control of this._map.getControls().getArray()) {
-      if (control.get("id") === controId)
-        return control;
-    }
-  }
+  */
 
   setViewFromSource(layerId: string): void {
     const layer = this.getLayer(layerId); // this._layerStore[layerId];
@@ -175,6 +175,7 @@ export default class MapWidget {
 
   }
 
+  /*
   addGeoJSONToSource(layer: Layer, geoJSONObject: any): void {
     if (geoJSONObject === undefined)
       return;
@@ -183,6 +184,7 @@ export default class MapWidget {
     source.addFeatures(new GeoJSON().readFeatures(geoJSONObject));
     console.log("geojsonObject added to VectorSource", geoJSONObject);
   }
+  */
 
   /*
   addLayerOld(layerJSONDef: JSONDef): void {
@@ -198,6 +200,7 @@ export default class MapWidget {
   }
   */
 
+  // --- Layers
   getLayer(layerId: string): Layer | undefined {
     for (let layer of this._map.getLayers().getArray()) {
       if (layer.get("id") === layerId)
@@ -210,8 +213,7 @@ export default class MapWidget {
     this._map.addLayer(layer);
     this._metadata.layers.push({
       id: layer.get("id"),
-      type: layerDef[TYPE_IDENTIFIER],
-      extent: layer.getExtent()
+      type: layerDef[TYPE_IDENTIFIER]
     });
     console.log("layer", layer.get("id"), "added", this._metadata);
   }
@@ -222,42 +224,56 @@ export default class MapWidget {
       return;
 
     this._map.removeLayer(layer);
-    // delete this._layerStore[layerId];
     this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
     console.log("layer", layerId, "removed", this._metadata);
   }
 
-  addControl(controlJSONDef: JSONDef): void {
-    const control = jsonConverter.parse(controlJSONDef);
-    control.set("id", controlJSONDef.id);
-    // ...
+  // --- Controls
+  getControl(controlId: string): Control | undefined {
+    for (let control of this._map.getControls().getArray()) {
+      if (control.get("id") === controlId)
+        return control;
+    }
+  }
+
+  addControl(controlDef: JSONDef): void {
+    const control = jsonConverter.parse(controlDef);
+    control.set("id", controlDef.id);
     this._map.addControl(control);
-    this._controlStore[controlJSONDef.id] = control;
-    console.log("controlStore", this._controlStore);
+    this._metadata.controls.push({
+      id: control.get("id"),
+      type: controlDef[TYPE_IDENTIFIER],
+    });
+    console.log("control", control.get("id"), "added", this._metadata);
   }
 
   removeControl(controlId: string): void {
     const control = this.getControl(controlId);
-    if (control === undefined) return;
-
-    this._map.removeControl(control);
-    delete this._controlStore[controlId];
-    console.log("control", controlId, "removed", this._controlStore);
+    if (control) {
+      this._map.removeControl(control);
+      this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
+      console.log("control", controlId, "removed", this._metadata);
+    }
   }
 
+  // --- Misc
   setLayerStyle(layerId: string, style: any): void {
     const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
-    layer.setStyle(style)
+    if (layer) {
+      console.log("set layer style", layerId, style);
+      layer.setStyle(style)
+    }
   }
 
   applyCallToLayer(layerId: string, call: OLAnyWidgetCall): void {
-    console.log("layer call", "layerId", layerId);
+    console.log("run layer method", layerId);
     const layer = this.getLayer(layerId);
 
     // @ts-expect-error
     layer[call.method](...call.args)
   }
 
+  // TODO: Remove
   testJSONDef(jsonDef: JSONDef): any {
     return jsonConverter.parse(jsonDef);
   }
@@ -266,7 +282,7 @@ export default class MapWidget {
   debugData(data: any): void {
   }
 
-  // ...
+  // TODO: Test only at the moment
   addOverlay(position: Coordinate | undefined): void {
     const el = document.createElement("div");
     el.style.cssText = "";
@@ -277,7 +293,6 @@ export default class MapWidget {
 
   // ...
   addTooltip(prop: string | null): void {
-    // addTooltipTo(this._map, prop);
     addTooltip2(this._map, prop);
   }
 }
