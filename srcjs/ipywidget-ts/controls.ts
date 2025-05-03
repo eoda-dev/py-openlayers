@@ -3,6 +3,7 @@ import FullScreenControl from 'ol/control/FullScreen.js';
 import ZoomSliderControl from 'ol/control/ZoomSlider.js';
 import MousePositionControl from 'ol/control/MousePosition.js';
 import OverviewMapControl from 'ol/control/OverviewMap.js';
+
 import { InfoBox } from './custom-controls';
 
 const controlCatalog: ControlCatalog = {
@@ -14,10 +15,4 @@ const controlCatalog: ControlCatalog = {
     InfoBox: InfoBox
 };
 
-/*
-function newControl(type: any, options: any): any {
-    return new controlCatalog[type](options);
-}
-*/
-
-export { controlCatalog }
+export { controlCatalog };

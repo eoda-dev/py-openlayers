@@ -1,62 +1,33 @@
 import { Map, View } from "ol";
-// import type { ViewOptions } from "ol/View";
-
-// import TileLayer from "ol/layer/Tile";
-
-// import OSM from "ol/source/OSM";
-
 import { defaults as defaultControls } from 'ol/control/defaults.js';
-// import { MapOptions } from "ol/Map";
-
 import GeoJSON from "ol/format/GeoJSON";
-
 import Overlay from "ol/Overlay";
-
+import { fromLonLat } from "ol/proj";
 import { JSONConverter } from "./json";
+import { addTooltip2 } from "./tooltip2";
 
-// import { addTooltipTo } from "./tooltip"; // Uses an overlay
-import { addTooltip2 } from "./tooltip2"; // Uses custom div container
-
-// import { populatedPlacesLayer } from "./test-json-converter";
+// --- Types
 import type Layer from "ol/layer/Layer";
 import type Control from "ol/control/Control";
-
 import type VectorSource from "ol/source/Vector";
-
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
-
-import { transform as transformProj, fromLonLat } from "ol/proj";
-
-// My types
-import type { MyMapOptions } from ".";
 import type { Coordinate } from "ol/coordinate";
+import type { MyMapOptions } from ".";
 
-// ...
-/*
-type LayerStore = {
-  [key: string]: Layer;
-};
-*/
-
-//
-/* 
-type ControlStore = {
-  [key: string]: Control;
-};
-*/
-
-//
 type Metadata = {
   layers: any[];
   controls: any[];
 };
 
+// --- Constants
+// TODO: Move to constants
 const TYPE_IDENTIFIER = "@@type";
 const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
 
+// --- Helpers
 function parseViewDef(viewDef: JSONDef): View {
   const view = jsonConverter.parse(viewDef) as View;
   const center = view.getCenter();
@@ -72,68 +43,30 @@ function parseViewDef(viewDef: JSONDef): View {
 
 function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
+  console.log("layerDef", layerDef);
   layer.set("id", layerDef.id);
-  addGeojsonFeatures(layer, layerDef[GEOJSON_IDENTIFIER]);
+  addGeojsonFeatures(layer, layerDef["source"][GEOJSON_IDENTIFIER]);
   return layer;
 }
 
 function addGeojsonFeatures(layer: Layer, features: any): void {
-  if (features === undefined)
-    return;
-
-  const source = layer.getSource() as VectorSource;
-  source.addFeatures(new GeoJSON().readFeatures(features));
-  console.log("geojson features added", features);
+  if (features) {
+    const source = layer.getSource() as VectorSource;
+    source.addFeatures(new GeoJSON().readFeatures(features));
+    console.log("geojson features added", features);
+  }
 }
 
-
+// --- Base class
 export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions) {
-    let baseLayers: Layer[] = [] // defaultLayers;
-    /*
-    if (mapOptions.layers !== undefined) {
-      for (let layerJSONDef of mapOptions.layers) {
-
-        // TODO: Duplicated code, use 'addLayer' after map was created instead
-        const layer = jsonConverter.parse(layerJSONDef);
-
-        // if (layerJSONDef.source["@@geojson"] !== undefined)
-        this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
-
-        baseLayers.push(layer);
-        this._layerStore[layerJSONDef.id] = layer;
-      }
-    }
-    */
-
-    let baseControls: Control[] = [];
-    // TODO: Use 'addControls' after map was created instead
-    /*
-    if (mapOptions.controls !== undefined) {
-      for (let controlJSONDef of mapOptions.controls) {
-        const control = jsonConverter.parse(controlJSONDef);
-        baseControls.push(control);
-        this._controlStore[controlJSONDef.id] = control;
-      }
-    }
-    */
-
-    // TODO: Move to func 'parseView'
-    /*
-    const view = jsonConverter.parse(mapOptions.view) as View;
-    const center = view.getCenter();
-    console.log("center", center)
-    if (center && view.getProjection().getCode() !== "EPSG:4326") {
-      const centerTransformed = fromLonLat(center);
-      console.log("centerTransformed", centerTransformed);
-      view.setCenter(centerTransformed);
-    }
-      */
     const view = parseViewDef(mapOptions.view);
+    let baseControls: Control[] = [];
+    let baseLayers: Layer[] = [];
 
     this._container = mapElement;
     this._map = new Map({
@@ -154,19 +87,9 @@ export default class MapWidget {
     }
   }
 
-  // TODO: Obsolete
-  /*
-  transformCenter(viewOptions: ViewOptions): ViewOptions {
-    const center = viewOptions.center;
-    if (center && viewOptions.projection !== "EPSG:4326") {
-      // console.log("center before", center);
-      viewOptions.center = fromLonLat(center);
-      // viewOptions.center = transformProj(center, "EPSG:4326", viewOptions.projection || "EPSG:3857");
-      // console.log("center after", viewOptions.center);
-    }
-    return viewOptions;
+  getElement(): HTMLElement {
+    return this._container;
   }
-  */
 
   getMap(): Map {
     return this._map;
@@ -188,32 +111,7 @@ export default class MapWidget {
 
   }
 
-  /*
-  addGeoJSONToSource(layer: Layer, geoJSONObject: any): void {
-    if (geoJSONObject === undefined)
-      return;
-
-    const source = layer.getSource() as VectorSource;
-    source.addFeatures(new GeoJSON().readFeatures(geoJSONObject));
-    console.log("geojsonObject added to VectorSource", geoJSONObject);
-  }
-  */
-
-  /*
-  addLayerOld(layerJSONDef: JSONDef): void {
-    const layer = jsonConverter.parse(layerJSONDef);
-    layer.set("id", layerJSONDef.id);
-
-    //if (layerJSONDef.source["@@geojson"] !== undefined)
-    this.addGeoJSONToSource(layer, layerJSONDef.source["@@geojson"]);
-
-    this._map.addLayer(layer);
-    this._layerStore[layerJSONDef.id] = layer;
-    console.log("layerStore", this._layerStore);
-  }
-  */
-
-  // --- Layers
+  // --- Layer methods
   getLayer(layerId: string): Layer | undefined {
     for (let layer of this._map.getLayers().getArray()) {
       if (layer.get("id") === layerId)
@@ -240,7 +138,23 @@ export default class MapWidget {
     }
   }
 
-  // --- Controls
+  setLayerStyle(layerId: string, style: any): void {
+    const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
+    if (layer) {
+      console.log("set layer style", layerId, style);
+      layer.setStyle(style)
+    }
+  }
+
+  applyCallToLayer(layerId: string, call: OLAnyWidgetCall): void {
+    console.log("run layer method", layerId);
+    const layer = this.getLayer(layerId);
+
+    // @ts-expect-error
+    layer[call.method](...call.args)
+  }
+
+  // --- Control methods
   getControl(controlId: string): Control | undefined {
     for (let control of this._map.getControls().getArray()) {
       if (control.get("id") === controlId)
@@ -266,32 +180,6 @@ export default class MapWidget {
       this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
       console.log("control", controlId, "removed", this._metadata);
     }
-  }
-
-  // --- Misc
-  setLayerStyle(layerId: string, style: any): void {
-    const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
-    if (layer) {
-      console.log("set layer style", layerId, style);
-      layer.setStyle(style)
-    }
-  }
-
-  applyCallToLayer(layerId: string, call: OLAnyWidgetCall): void {
-    console.log("run layer method", layerId);
-    const layer = this.getLayer(layerId);
-
-    // @ts-expect-error
-    layer[call.method](...call.args)
-  }
-
-  // TODO: Remove
-  testJSONDef(jsonDef: JSONDef): any {
-    return jsonConverter.parse(jsonDef);
-  }
-
-  // TODO: Remove
-  debugData(data: any): void {
   }
 
   // TODO: Test only at the moment

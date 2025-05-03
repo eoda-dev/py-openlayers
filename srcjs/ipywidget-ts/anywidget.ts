@@ -1,12 +1,12 @@
-import { type AnyModel } from "@anywidget/types";
-// import { transform as transformProj } from "ol/proj";
-import { parseClickEvent } from "./utils";
-
-// import "./style.css";
 import "ol/ol.css";
 
 import MapWidget from "./map";
+import { parseClickEvent } from "./utils";
 
+// --- Types
+import type { AnyModel } from "@anywidget/types";
+
+// --- Main function
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("Welcome to ol-anywidget", el);
 
@@ -50,10 +50,6 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
       console.log("error in anywidget msg call", error);
     }
   });
-
-  // ...
-  const debugData = model.get("debug_data");
-  mapWidget.debugData(debugData);
 
   el.appendChild(mapElement);
 }

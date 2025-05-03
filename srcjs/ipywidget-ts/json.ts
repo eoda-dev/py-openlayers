@@ -50,7 +50,7 @@ class JSONConverter {
     parse(jsonDef: JSONDef): any {
         // console.log(this._catalog);
         const parsedOptions = this.parseOptions(jsonDef);
-        console.log("parsedOptions", parsedOptions);
+        console.log("parsed options", parsedOptions);
         console.log("type detected", jsonDef["@@type"]);
         return new this._catalog[jsonDef["@@type"]](parsedOptions);
     }
