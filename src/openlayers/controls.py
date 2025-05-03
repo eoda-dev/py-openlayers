@@ -8,4 +8,10 @@ from .models.controls import (
     ZoomSliderControl,
 )
 
-__all__ = ["FullScreenControl", "InfoBox", "OverviewMapControl", "ScaleLineControl", "ZoomSliderControl"]
+__all__ = [
+    "FullScreenControl",
+    "InfoBox",
+    "OverviewMapControl",
+    "ScaleLineControl",
+    "ZoomSliderControl",
+]

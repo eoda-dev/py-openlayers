@@ -9,6 +9,7 @@ from .core import OLBaseModel
 from .layers import LayerT, TileLayer
 from .sources import OSM
 
+
 # -- Base control
 class Control(OLBaseModel):
     id: str = Field(default_factory=lambda x: str(uuid4()))

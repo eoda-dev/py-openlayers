@@ -1,10 +1,10 @@
 from .models.sources import (
     OSM,
     GeoTIFFSource,
+    ImageTileSource,
     Source,
     SourceT,
     VectorSource,
-    ImageTileSource,
 )
 
 __all__ = ["OSM", "GeoTIFFSource", "VectorSource"]

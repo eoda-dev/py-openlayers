@@ -7,7 +7,6 @@ from pydantic import BaseModel
 from .models.layers import TileLayer
 from .models.sources import OSM, ImageTileSource
 
-
 # light_all,
 # dark_all,
 # light_nolabels,

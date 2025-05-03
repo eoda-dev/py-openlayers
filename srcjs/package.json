@@ -16,12 +16,14 @@
   },
   "devDependencies": {
     "@anywidget/types": "^0.2.0",
+    "@types/mustache": "^4.2.5",
     "esbuild": "^0.25.2",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",
     "vite": "^6.2.4"
   },
   "dependencies": {
+    "mustache": "^4.2.0",
     "ol": "latest"
   }
 }

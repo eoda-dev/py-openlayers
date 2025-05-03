@@ -1,6 +1,7 @@
 from ..models.view import View as ViewModel
 
-class View(object):    
+
+class View(object):
     def __init__(self, center: tuple[float, float], **kwargs) -> None:
         self._model = ViewModel(**(locals() | kwargs))
 

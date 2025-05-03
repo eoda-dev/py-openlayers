@@ -7,4 +7,4 @@ from .models.layers import (
     WebGLVectorLayer,
 )
 
-__all__ = ["TileLayer", "VectorLayer","WebGLTileLayer", "WebGLVectorLayer"]
+__all__ = ["TileLayer", "VectorLayer", "WebGLTileLayer", "WebGLVectorLayer"]

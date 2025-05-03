@@ -6,8 +6,8 @@ from typing import Any
 import traitlets
 from anywidget import AnyWidget
 
-from .models.controls import ControlT, LayerT
 from .map import Map
+from .models.controls import ControlT, LayerT
 from .models.view import View
 
 

@@ -31,11 +31,11 @@ class OLAccessor:
         # Create geojson source
         feature_collection = gdf_to_geojson(self._gdf)
         source = VectorSource(geojson=feature_collection)
-        
+
         # Create layer
         layer_class = WebGLVectorLayer if webgl else VectorLayer
         layer = layer_class(id=layer_id, style=style, source=source)
-        
+
         # Initialize map instance add add components
         m = MapWidget(**kwargs)
         m.add_layer(layer)

@@ -12,6 +12,7 @@ from .models.sources import OSM
 from .models.view import View
 from .styles import FlatStyle
 
+
 class Map(object):
     def __init__(
         self,
@@ -60,8 +61,11 @@ class Map(object):
     def remove_control(self, control_id: str) -> None:
         self.add_call("removeControl", control_id)
 
-    def add_tooltip(self, prop: str | None = None) -> None:
-        self.add_call("addTooltip", prop)
+    def add_default_tooltip(self) -> None:
+        self.add_tooltip()
+
+    def add_tooltip(self, template: str | None = None) -> None:
+        self.add_call("addTooltip", template)
 
     def set_layer_style(self, layer_id: str, style: dict | FlatStyle) -> None:
         if isinstance(style, FlatStyle):

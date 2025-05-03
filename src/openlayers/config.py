@@ -5,7 +5,7 @@ from enum import Enum
 
 from pydantic import BaseModel, ConfigDict
 
-from .styles import default_style, FlatStyle
+from .styles import FlatStyle, default_style
 
 """
 DEFAULT_STYLE = {

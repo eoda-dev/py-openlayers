@@ -5,9 +5,9 @@ from uuid import uuid4
 
 from pydantic import Field, field_validator
 
+from ..styles import FlatStyle, default_style
 from .core import OLBaseModel
 from .sources import SourceT
-from ..styles import FlatStyle, default_style
 
 
 # --- Base layer

@@ -197,7 +197,7 @@ export default class MapWidget {
   }
 
   // ...
-  addTooltip(prop: string | null): void {
-    addTooltip2(this._map, prop);
+  addTooltip(template: string | null): void {
+    addTooltip2(this._map, template);
   }
 }

@@ -5,6 +5,8 @@ import { Map } from "ol";
 import type { FeatureLike } from "ol/Feature";
 import type { Pixel } from "ol/pixel";
 
+import mustache from "mustache";
+
 import { getFeatureProperties } from "./utils";
 
 /*
@@ -42,15 +44,15 @@ info.style.left = "50%";
 info.style.visibility = "hidden";
 info.style.pointerEvents = "none";
 
-function renderFeatureProperties(feature: FeatureLike, prop: string | null): string {
-    if (prop)
-        return feature.get(prop);
-
+function renderFeatureProperties(feature: FeatureLike, template: string | null): string {
     const properties = getFeatureProperties(feature);
+    if (template)
+        return mustache.render(template, properties);
+
     return Object.keys(properties).map((key) => `${key}: ${properties[key]}`).join("</br>");
 }
 
-function addTooltip2(map: Map, prop: string | null): void {
+function addTooltip2(map: Map, template: string | null): void {
     info.id = "ol-tooltip";
     map.getTargetElement().appendChild(info);
     console.log("tooltip element added", info);
@@ -69,7 +71,7 @@ function addTooltip2(map: Map, prop: string | null): void {
             info.style.top = pixel[1] + 'px';
             if (feature !== currentFeature) {
                 info.style.visibility = 'visible';
-                info.innerHTML = renderFeatureProperties(feature, prop);
+                info.innerHTML = renderFeatureProperties(feature, template);
             }
         } else {
             info.style.visibility = 'hidden';
