@@ -11,13 +11,14 @@ from .models.map_options import MapOptions
 from .models.sources import OSM
 from .models.view import View
 from .styles import FlatStyle
+from .abstracts import LayerLike
 
 
 class Map(object):
     def __init__(
         self,
         view: View | dict = View(),
-        layers: list[LayerT | dict] | None = None,
+        layers: list[LayerT | LayerLike | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
     ):
         self._initial_view = view
@@ -25,6 +26,10 @@ class Map(object):
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
 
+        layers = [
+            layer.model_dump() if isinstance(layer, LayerLike) else layer
+            for layer in layers
+        ]
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()
@@ -43,8 +48,8 @@ class Map(object):
         layer_call = dict(method=method_name, args=args)
         self.add_call("applyCallToLayer", layer_id, layer_call)
 
-    def add_layer(self, layer: LayerT | dict) -> None:
-        if isinstance(layer, LayerT):
+    def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
+        if isinstance(layer, (LayerT, LayerLike)):
             layer = layer.model_dump()
 
         self.add_call("addLayer", layer)
