@@ -25,7 +25,7 @@ class IconLayer(LayerLike):
         icon_src: str = None,
         icon_color: str = None,
         icon_opacity: float = 1,
-        id: str = "icon-layer"
+        id: str = "icon-layer",
     ):
         style = FlatStyle(
             icon_src=icon_src, icon_color=icon_color, icon_opacity=icon_opacity
@@ -33,7 +33,17 @@ class IconLayer(LayerLike):
         source = VectorSource(url=url, geojson=data)
         self._model = WebGLVectorLayer(source=source, style=style, id=id)
 
-    def model_dump(self):
-        return self._model.model_dump()
-
+    @property
+    def model(self) -> WebGLVectorLayer:
+        return self._model
+    
     def to_map(self): ...
+
+
+class PolygonLayer(LayerLike): ...
+
+
+class CirleLayer(LayerLike): ...
+
+
+class LineLayer(LayerLike): ...

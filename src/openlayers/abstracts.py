@@ -3,10 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from pydantic import BaseModel
 
-
 class LayerLike(ABC):
+    @property
     @abstractmethod
-    def model_dump(self): ...
+    def model(self): ...
 
 
 class MyBaseModel(BaseModel):

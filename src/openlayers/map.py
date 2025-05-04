@@ -26,10 +26,10 @@ class Map(object):
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
 
-        layers = [
-            layer.model_dump() if isinstance(layer, LayerLike) else layer
-            for layer in layers
-        ]
+        #layers = [
+        #    layer.model_dump() if isinstance(layer, LayerLike) else layer
+        #    for layer in layers
+        #]
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()
@@ -49,7 +49,10 @@ class Map(object):
         self.add_call("applyCallToLayer", layer_id, layer_call)
 
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
-        if isinstance(layer, (LayerT, LayerLike)):
+        if isinstance(layer, LayerLike):
+            layer = layer.model
+
+        if isinstance(layer, LayerT):
             layer = layer.model_dump()
 
         self.add_call("addLayer", layer)
