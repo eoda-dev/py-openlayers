@@ -1,11 +1,21 @@
+from __future__ import annotations
+
 import geopandas as gpd
 import pandas as pd
+
+from typing import Self, TYPE_CHECKING
 
 from .anywidget import MapWidget
 from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
 from .models.view import Projection
 from .styles import FlatStyle, default_style
+from .colors import Color
+
+if TYPE_CHECKING:
+    from .models.controls import ControlT
+
+COLOR_COLUMN = "color"
 
 
 def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERCATOR):
@@ -19,6 +29,7 @@ def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERC
 class OLAccessor:
     def __init__(self, gdf: gpd.GeoDataFrame) -> None:
         self._gdf = gdf
+        self._default_style = default_style()
 
     def to_source(self) -> VectorSource:
         feature_collection = gdf_to_geojson(self._gdf)
@@ -30,9 +41,9 @@ class OLAccessor:
         style: FlatStyle | dict = None,
         layer_id: str = "geopandas",
         webgl: bool = True,
-        **kwargs
+        **kwargs,
     ) -> VectorLayer | WebGLVectorLayer:
-        style = style or default_style()
+        style = style or self._default_style
         layer_class = WebGLVectorLayer if webgl else VectorLayer
         layer = layer_class(id=layer_id, style=style, source=self.to_source(), **kwargs)
         return layer
@@ -41,13 +52,14 @@ class OLAccessor:
         self,
         style: FlatStyle | dict = None,
         tooltip: bool | str = True,
+        controls: list[ControlT | dict] = None,
         layer_id: str = "geopandas",
         webgl: bool = True,
         **kwargs,
     ) -> MapWidget:
         layer = self.to_layer(style=style, layer_id=layer_id, webgl=webgl)
 
-        m = MapWidget(**kwargs)
+        m = MapWidget(controls=controls, **kwargs)
         m.add_layer(layer)
         if isinstance(tooltip, str):
             m.add_tooltip(tooltip)
@@ -55,6 +67,12 @@ class OLAccessor:
             m.add_default_tooltip()
 
         return m
+
+    def color_category(self, column: str) -> Self:
+        self._gdf[COLOR_COLUMN] = Color.random_hex_colors_by_category(self._gdf[column])
+        self._default_style.fill_color = ["get", COLOR_COLUMN]
+        self._default_style.circle_fill_color = ["get", COLOR_COLUMN]
+        return self
 
 
 @pd.api.extensions.register_dataframe_accessor("openlayers")
