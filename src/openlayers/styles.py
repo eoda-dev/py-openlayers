@@ -28,6 +28,8 @@ class FlatStyle(BaseModel):
     def model_dump(self) -> dict:
         return fix_keys(super().model_dump(exclude_none=True))
 
+    def model_dump2(self) -> dict:
+        return super().model_dump(exclude_none=True)
 
 def default_style() -> FlatStyle:
     return FlatStyle(

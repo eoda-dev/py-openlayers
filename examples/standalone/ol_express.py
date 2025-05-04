@@ -9,8 +9,14 @@ icon_layer = olx.IconLayer(
     )
 # print(icon_layer.model.model_dump())
 
-m = ol.Map(layers=[icon_layer])
+polygon_layer = olx.PolygonLayer(
+    url="https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
+    fill_color="steelblue",
+    stroke_width=3
+    )
 
+m = ol.Map(layers=[polygon_layer, icon_layer])
+m.add_tooltip()
 # m = ol.Map()
 # m.add_layer(icon_layer)
 
