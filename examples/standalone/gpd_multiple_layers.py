@@ -1,0 +1,12 @@
+import openlayers as ol
+from openlayers.basemaps import BasemapLayer
+from openlayers.styles import FlatStyle
+
+url = "https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson"
+
+style = FlatStyle(fill_color="green", stroke_color="steelblue")
+
+gpd = ol.GeoDataFrame.from_file(url)
+
+m = ol.Map(layers=[BasemapLayer.carto(), gpd.ol.to_layer(style=style, opacity=0.5)])
+m.save()

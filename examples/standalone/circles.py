@@ -33,6 +33,6 @@ m = gdf.ol.explore(
     style=style,
     tooltip="{{ name }}",
     controls=[ol.controls.ZoomSliderControl()])
-# m.add_default_tooltip()
+m.add_default_tooltip()
 # m.add_tooltip("{{ name }}: {{ pop_max }}")
 m.save(preview=True)

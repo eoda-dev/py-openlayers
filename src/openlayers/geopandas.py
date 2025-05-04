@@ -20,23 +20,33 @@ class OLAccessor:
     def __init__(self, gdf: gpd.GeoDataFrame) -> None:
         self._gdf = gdf
 
+    def to_source(self) -> VectorSource:
+        feature_collection = gdf_to_geojson(self._gdf)
+        source = VectorSource(geojson=feature_collection)
+        return source
+
+    def to_layer(
+        self,
+        style: FlatStyle | dict = None,
+        layer_id: str = "geopandas",
+        webgl: bool = True,
+        **kwargs
+    ) -> VectorLayer | WebGLVectorLayer:
+        style = style or default_style()
+        layer_class = WebGLVectorLayer if webgl else VectorLayer
+        layer = layer_class(id=layer_id, style=style, source=self.to_source(), **kwargs)
+        return layer
+
     def explore(
         self,
-        style: dict | FlatStyle = default_style(),
+        style: FlatStyle | dict = None,
         tooltip: bool | str = True,
         layer_id: str = "geopandas",
         webgl: bool = True,
         **kwargs,
     ) -> MapWidget:
-        # Create geojson source
-        feature_collection = gdf_to_geojson(self._gdf)
-        source = VectorSource(geojson=feature_collection)
+        layer = self.to_layer(style=style, layer_id=layer_id, webgl=webgl)
 
-        # Create layer
-        layer_class = WebGLVectorLayer if webgl else VectorLayer
-        layer = layer_class(id=layer_id, style=style, source=source)
-
-        # Initialize map instance add add components
         m = MapWidget(**kwargs)
         m.add_layer(layer)
         if isinstance(tooltip, str):
