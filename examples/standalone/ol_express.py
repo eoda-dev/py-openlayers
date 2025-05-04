@@ -15,7 +15,18 @@ polygon_layer = olx.PolygonLayer(
     stroke_width=3
     )
 
-m = ol.Map(layers=[polygon_layer, icon_layer])
+circle_layer = olx.CircleLayer(
+    data="https://openlayers.org/data/vector/populated-places.json",
+    circle_fill_color="yellow"
+    )
+
+fill_layer = olx.FillLayer(
+    data="https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
+    stroke_width=4
+    )
+m = fill_layer.to_map()
+
+# m = ol.Map(layers=[fill_layer, circle_layer])
 m.add_tooltip()
 # m = ol.Map()
 # m.add_layer(icon_layer)
