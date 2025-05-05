@@ -24,5 +24,8 @@ jobs:
       - name: Install package
         run: pip install -e .
 
+      - name: Install dev dependencies
+        run: pip install pytest geopandas
+
       - name: Test package
-        run: echo Hi
+        run: pytest
