@@ -1,4 +1,2 @@
 # Layers
 
-::: openlayers.models.layers
-

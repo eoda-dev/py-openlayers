@@ -1,3 +1,1 @@
 # Controls
-
-::: openlayers.controls
