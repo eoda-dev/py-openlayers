@@ -8,6 +8,7 @@ def fix_keys(d: dict) -> dict:
 
 
 # TODO: Move to models folder
+# See https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html
 class FlatStyle(BaseModel):
     model_config = ConfigDict(extra="allow")
 
@@ -48,7 +49,11 @@ def default_style() -> FlatStyle:
 class CircleStyle(FlatStyle): ...
 
 
-class IconStyle(FlatStyle): ...
+class IconStyle(FlatStyle):
+    icon_src: str | None = None
+    icon_color: str | None = None
+    icon_opacity: float | int | None = None
+    icon_scale: float | int | None = None
 
 
 class FillStyle(FlatStyle): ...
