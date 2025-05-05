@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Literal, Union
 from uuid import uuid4
 
-from pydantic import Field
+from pydantic import Field, field_validator
 
 from .core import OLBaseModel
 from .layers import LayerT, TileLayer
@@ -12,7 +12,14 @@ from .sources import OSM
 
 # -- Base control
 class Control(OLBaseModel):
-    id: str = Field(default_factory=lambda x: str(uuid4()))
+    id: str | None = None  # = Field(default_factory=lambda x: str(uuid4()))
+
+    @field_validator("id")
+    def validate_id(cls, v) -> str:
+        if v is None:
+            return uuid4().hex[0:10]
+
+        return v
 
 
 # --- Controls

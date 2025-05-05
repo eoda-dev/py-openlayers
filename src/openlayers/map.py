@@ -4,6 +4,7 @@ import webbrowser
 from pathlib import Path
 from typing import Any
 
+from .abstracts import LayerLike
 from .export import HTMLTemplate, write_file
 from .models.controls import ControlT
 from .models.layers import LayerT, TileLayer
@@ -11,7 +12,6 @@ from .models.map_options import MapOptions
 from .models.sources import OSM
 from .models.view import View
 from .styles import FlatStyle
-from .abstracts import LayerLike
 
 
 class Map(object):
@@ -26,10 +26,10 @@ class Map(object):
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
 
-        #layers = [
+        # layers = [
         #    layer.model_dump() if isinstance(layer, LayerLike) else layer
         #    for layer in layers
-        #]
+        # ]
         self.map_options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()

@@ -1,16 +1,16 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Self
+
 import geopandas as gpd
 import pandas as pd
 
-from typing import Self, TYPE_CHECKING
-
 from .anywidget import MapWidget
+from .colors import Color
 from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
 from .models.view import Projection
 from .styles import FlatStyle, default_style
-from .colors import Color
 
 if TYPE_CHECKING:
     from .models.controls import ControlT

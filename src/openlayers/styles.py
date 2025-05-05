@@ -32,6 +32,7 @@ class FlatStyle(BaseModel):
     def model_dump2(self) -> dict:
         return super().model_dump(exclude_none=True)
 
+
 def default_style() -> FlatStyle:
     return FlatStyle(
         fill_color="rgba(255,255,255,0.4)",

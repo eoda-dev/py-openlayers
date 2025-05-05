@@ -3,9 +3,9 @@ from __future__ import annotations
 import json
 import os
 import random
+from typing import Any
 
 from pydantic import BaseModel
-from typing import Any
 
 COLOR_SCHEMES = "https://raw.githubusercontent.com/python-visualization/branca/refs/heads/main/branca/_schemes.json"
 
