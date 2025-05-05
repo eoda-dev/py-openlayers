@@ -2,7 +2,7 @@ import { Map, View } from "ol";
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
-import { fromLonLat } from "ol/proj";
+import { fromLonLat, transformExtent } from "ol/proj";
 import { JSONConverter } from "./json";
 import { addTooltip2 } from "./tooltip2";
 
@@ -112,8 +112,25 @@ export default class MapWidget {
       this._map.setView(view);
   }
 
-  setExtentFromSource(): void {
+  setExtentFromSource(layerId: string): void {
+    const source = this.getLayer(layerId)?.getSource() as VectorSource;
+    if (source) {
+      // TODO: Only works if event is not already fired
+      source.on("featuresloadend", (e) => {
+        const extent = source.getExtent();
+        console.log("extent", layerId, extent);
+        this.fitBounds(extent);
+      })
+    }
+  }
 
+  fitBounds(extent: any): void {
+    this._map.getView().fit(extent);
+  }
+
+  fitBoundsFromLonLat(extentLonLat: any): void {
+    const exent = transformExtent(extentLonLat, "EPSG:4326", this._map.getView().getProjection());
+    this.fitBounds(exent);
   }
 
   // --- Layer methods

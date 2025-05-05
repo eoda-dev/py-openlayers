@@ -3,9 +3,9 @@ import openlayers as ol
 import openlayers.express as olx
 
 icon_layer = olx.IconLayer(
-    id="icon-layer",
+    # id="icon-layer",
+    data="https://openlayers.org/data/vector/populated-places.json",
     icon_src="https://openlayers.org/en/latest/examples/data/icon.png",
-    url="https://openlayers.org/data/vector/populated-places.json",
     )
 # print(icon_layer.model.model_dump())
 
@@ -21,12 +21,13 @@ circle_layer = olx.CircleLayer(
     )
 
 fill_layer = olx.FillLayer(
-    data="https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
+    data=None ,#"https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
     stroke_width=4,
     fill_color="yellow",
-    id=None
+    id="fill"
     )
 m = fill_layer.to_map()
+m.add_call("setExtentFromSource", "fill")
 # m = circle_layer.to_map()
 # m = ol.Map(layers=[fill_layer, circle_layer])
 m.add_tooltip()

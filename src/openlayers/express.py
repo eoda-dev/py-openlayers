@@ -42,7 +42,7 @@ class OSMBaseLayer(object): ...
 
 
 # TODO: Should also be subclass of GeoJSONLayer
-class IconLayer(LayerLike):
+class XXIconLayer_(LayerLike):
     def __init__(
         self,
         url: str = None,
@@ -113,3 +113,15 @@ class FillLayer(GeoJSONLayer):
 
 
 class LineLayer(GeoJSONLayer): ...
+
+
+class IconLayer(GeoJSONLayer):
+    def __init__(
+        self,
+        data: str | dict,
+        icon_src: str,
+        id: str | None = "icon-layer",
+        style: FlatStyle | None = None,
+        **kwargs,
+    ):
+        super().__init__(data, id, style, icon_src=icon_src, **kwargs)

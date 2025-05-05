@@ -10,7 +10,7 @@ const MAP_CONTAINER = "map";
     console.log("render OL-MapWidget", mapOptions);
     const mapElement = document.getElementById(MAP_CONTAINER) || document.createElement("div");
     console.log("el", mapElement);
-    const mapWidget = new MapWidget(mapElement, mapOptions);
+    const mapWidget = (window as any).olMapWidget = new MapWidget(mapElement, mapOptions);
     const map = mapWidget.getMap();
 
     console.log("calls", mapOptions.calls);
