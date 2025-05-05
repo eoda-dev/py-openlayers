@@ -27,6 +27,7 @@ def read_color_schemes(fn: str = None) -> list[ColorScheme]:
 
             data = requests.get(fn).json()
         except ImportError as e:
+            print(e)
             return
 
     return [ColorScheme(name=k, values=v) for k, v in data.items()]

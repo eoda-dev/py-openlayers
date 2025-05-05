@@ -25,7 +25,7 @@ jobs:
         run: pip install -e .
 
       - name: Install dev dependencies
-        run: pip install pytest geopandas
+        run: pip install -r requirements.dev.txt
 
       - name: Test package
         run: pytest
