@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from .models.layers import WebGLVectorLayer, VectorLayer
+from .abstracts import LayerLike
+from .map import Map
+from .models.layers import VectorLayer, WebGLVectorLayer
 from .models.sources import VectorSource
 from .models.view import View
 from .styles import FlatStyle, default_style
-from .abstracts import LayerLike
-from .map import Map
 
 
 class GeoJSONLayer(LayerLike):
     def __init__(
         self,
         data: str | dict,
-        id: str | None = "geojson-layer",
+        id: str | None = None,
         style: FlatStyle | None = None,
         **kwargs,
     ):
@@ -32,16 +32,18 @@ class GeoJSONLayer(LayerLike):
     def model(self) -> WebGLVectorLayer | VectorLayer:
         return self._model
 
-    def to_map(self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs):
+    def to_map(
+        self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs
+    ) -> Map:
         m = Map(View(center=(lon, lat), zoom=zoom), **kwargs)
         m.add_layer(self)
         return m
 
 
-class TileLayer(object): ...
+# class TileLayer(object): ...
 
 
-class OSMBaseLayer(object): ...
+# class OSMBaseLayer(object): ...
 
 
 class CircleLayer(GeoJSONLayer):
@@ -68,7 +70,7 @@ class FillLayer(GeoJSONLayer):
         super().__init__(data, id, style, fill_color=fill_color, **kwargs)
 
 
-class LineLayer(GeoJSONLayer): ...
+# class LineLayer(GeoJSONLayer): ...
 
 
 class IconLayer(GeoJSONLayer):
