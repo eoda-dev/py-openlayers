@@ -5,13 +5,16 @@ from openlayers.utils import create_icon_src_from_file
 
 url="https://openlayers.org/data/vector/populated-places.json"
 
+icon = "https://maplibre.org/maplibre-gl-js/docs/assets/osgeo-logo.png"
+# icon = "https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png"
+
 style = IconStyle(
     # icon_src="https://openlayers.org/en/latest/examples/data/icon.png",
     # icon_src=create_icon_src_from_file("notebooks/data/icon.png"),
-    icon_src="https://upload.wikimedia.org/wikipedia/commons/7/7c/201408_cat.png",
-    icon_color="steelblue",
-    icon_opacity=0.7,
-    icon_scale=0.2
+    icon_src=icon,
+    # icon_color="steelblue",
+    # icon_opacity=0.7,
+    # icon_scale=0.2
     )
 
 icon_style = FlatStyle(

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from .models.layers import WebGLVectorLayer, VectorLayer
 from .models.sources import VectorSource
+from .models.view import View
 from .styles import FlatStyle, default_style
 from .abstracts import LayerLike
 from .map import Map
@@ -31,61 +32,16 @@ class GeoJSONLayer(LayerLike):
     def model(self) -> WebGLVectorLayer | VectorLayer:
         return self._model
 
-    def to_map(self):
-        return Map(layers=[self])
+    def to_map(self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs):
+        m = Map(View(center=(lon, lat), zoom=zoom), **kwargs)
+        m.add_layer(self)
+        return m
 
 
 class TileLayer(object): ...
 
 
 class OSMBaseLayer(object): ...
-
-
-# TODO: Should also be subclass of GeoJSONLayer
-class XXIconLayer_(LayerLike):
-    def __init__(
-        self,
-        url: str = None,
-        data: dict = None,
-        icon_src: str = None,
-        icon_color: str = None,
-        icon_opacity: float = 1,
-        id: str = "icon-layer",
-        style: FlatStyle = None,
-    ):
-        style = style or FlatStyle(
-            icon_src=icon_src, icon_color=icon_color, icon_opacity=icon_opacity
-        )
-        source = VectorSource(url=url, geojson=data)
-        self._model = WebGLVectorLayer(source=source, style=style, id=id)
-
-    @property
-    def model(self) -> WebGLVectorLayer:
-        return self._model
-
-    def to_map(self): ...
-
-
-# TODO: Deprecated: Use FillLayer instead
-class PolygonLayer(GeoJSONLayer):
-    def __init__(
-        self,
-        url: str,
-        fill_color: str = "rgba(255,255,255,0.4)",
-        stroke_color="#3399CC",
-        stroke_width=1.25,
-        id: str = "polygon-layer",
-        style: FlatStyle = None,
-    ):
-        style = style or FlatStyle(
-            fill_color=fill_color, stroke_color=stroke_color, stroke_width=stroke_width
-        )
-        source = VectorSource(url=url)
-        self._model = WebGLVectorLayer(source=source, style=style, id=id)
-
-    @property
-    def model(self) -> WebGLVectorLayer:
-        return self._model
 
 
 class CircleLayer(GeoJSONLayer):

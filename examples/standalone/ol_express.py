@@ -1,6 +1,7 @@
-import json
-import openlayers as ol
+# import json
+# import openlayers as ol
 import openlayers.express as olx
+from openlayers.basemaps import BasemapLayer
 
 icon_layer = olx.IconLayer(
     # id="icon-layer",
@@ -9,11 +10,25 @@ icon_layer = olx.IconLayer(
     )
 # print(icon_layer.model.model_dump())
 
+"""
 polygon_layer = olx.PolygonLayer(
     url="https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
     fill_color="steelblue",
     stroke_width=3
     )
+"""
+
+line_data = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json"
+
+generic_geojson_layer = olx.GeoJSONLayer(
+    data = line_data,
+    stroke_width = 5,
+    stroke_color = "green",
+    circle_fill_color = "red",
+    circle_stroke_color = "steelblue",
+    circle_stroke_width = 3,
+    circle_radius = 7
+)
 
 circle_layer = olx.CircleLayer(
     data="https://openlayers.org/data/vector/populated-places.json",
@@ -26,8 +41,9 @@ fill_layer = olx.FillLayer(
     fill_color="yellow",
     id="fill"
     )
-m = fill_layer.to_map()
-m.add_call("setExtentFromSource", "fill")
+# m = fill_layer.to_map()
+m = generic_geojson_layer.to_map(lon=-122.4, lat=37.74, zoom=11, layers=[BasemapLayer.carto()])
+# m.add_call("setExtentFromSource", "fill")
 # m = circle_layer.to_map()
 # m = ol.Map(layers=[fill_layer, circle_layer])
 m.add_tooltip()
