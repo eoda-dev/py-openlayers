@@ -15,7 +15,7 @@ from .styles import FlatStyle
 
 
 class Map(object):
-    """Initialize a `Map` instance
+    """Initialize a new `Map` instance
 
     Args:
         view (View): The initial view state of the map
@@ -70,7 +70,7 @@ class Map(object):
         """Remove a layer from the map
 
         Args:
-            layer_id (str): The Id of the layer to be removed
+            layer_id (str): The ID of the layer to be removed
         """
         self.add_call("removeLayer", layer_id)
 
@@ -89,7 +89,7 @@ class Map(object):
         """Remove a control from the map
 
         Args:
-            control_id (str): The Id of the control to be removed
+            control_id (str): The ID of the control to be removed
         """
         self.add_call("removeControl", control_id)
 
@@ -114,26 +114,26 @@ class Map(object):
         """Set the opacity of a layer
 
         Args:
-            layer_id (str): The Id of the layer
+            layer_id (str): The ID of the layer
             opacity (float): The opacity of the layer. A value between 0 and 1
         """
         self.add_layer_call(layer_id, "setOpacity", opacity)
 
     def set_visibility(self, layer_id: str, visible: bool = False) -> None:
-        """Set the visibility of the layer
+        """Set the visibility of a layer
 
         Args:
-            layer_id (str): The Id of the layer
+            layer_id (str): The ID of the layer
             visible (bool): Whether the layer is visible or not
         """
         self.add_layer_call(layer_id, "setVisible", visible)
 
-    def set_style(self, layer_id: str, style: dict | FlatStyle) -> None:
+    def set_style(self, layer_id: str, style: FlatStyle | dict) -> None:
         """Set the style of a layer
 
         Args:
-            layer_id (str): The Id of the layer
-            style (dict | FlatStyle): The style of the layer
+            layer_id (str): The ID of the layer
+            style (FlatStyle | dict): The style of the layer
         """
         if isinstance(style, FlatStyle):
             style = style.model_dump()
@@ -146,10 +146,10 @@ class Map(object):
         return HTMLTemplate().render(data=data, **kwargs)
 
     def save(self, path: Path | str = None, preview: bool = True, **kwargs) -> str:
-        """Save map as HTML document
+        """Save map as an HTML document
 
         Args:
-            path (path | str): The Path to the output file. If `None`, a temporary file is created
+            path (Path | str): The Path to the output file. If `None`, a temporary file is created
             preview (bool): Whether the file should be opened in your default browser after saving
         """
         path = write_file(content=self.to_html(**kwargs), path=path)

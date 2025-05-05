@@ -10,6 +10,13 @@ def fix_keys(d: dict) -> dict:
 # TODO: Move to models folder
 # See https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html
 class FlatStyle(BaseModel):
+    """Flat style
+
+    Note:
+        See [ol-apidoc/module-ol_style_flat](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html)
+        for all available style parameters.
+    """
+
     model_config = ConfigDict(extra="allow")
 
     fill_color: str | list | None = None

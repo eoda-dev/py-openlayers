@@ -9,6 +9,17 @@ from .styles import FlatStyle, default_style
 
 
 class GeoJSONLayer(LayerLike):
+    """Initialize a new `GeoJSONLayer` instance
+
+    Args:
+        data (str | dict): Either an URL to a GeoJSON object
+            or a dictionary representing a GeoJSON object
+        id (str): The ID of the layer. If `None`, a random ID is generated
+        style (FlatStyle): The style to be applied to the layer. If `None` a default style is used
+        **kwargs (Any): Style arguments that are appended to the `Style` object.
+            Latter ones overwrite existing entries
+    """
+
     def __init__(
         self,
         data: str | dict,
@@ -35,6 +46,14 @@ class GeoJSONLayer(LayerLike):
     def to_map(
         self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs
     ) -> Map:
+        """Initialize a new `Map` instance and add the layer to it
+
+        Args:
+            lon (float): The longitude of the initial view state of the map
+            lat (float): The latitude of the initial view state of the map
+            zoom (float | int): The initial zoom level of the map
+            **kwargs (Any): Arguments that are handed over to the `Map` instance
+        """
         m = Map(View(center=(lon, lat), zoom=zoom), **kwargs)
         m.add_layer(self)
         return m

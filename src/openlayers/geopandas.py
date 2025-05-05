@@ -27,11 +27,23 @@ def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERC
 
 @pd.api.extensions.register_dataframe_accessor("ol")
 class OLAccessor:
+    """Create a new `OLAccessor` instance
+
+    Args:
+        gdf (gpd.GeoDataFrame): The `GeoDataFrame`,
+            to which the `openlayers` extension is added
+    """
+
     def __init__(self, gdf: gpd.GeoDataFrame) -> None:
         self._gdf = gdf
         self._default_style = default_style()
 
     def to_source(self) -> VectorSource:
+        """Return data frame as OL vector source
+
+        Returns:
+            An OL vector source
+        """
         feature_collection = gdf_to_geojson(self._gdf)
         source = VectorSource(geojson=feature_collection)
         return source
@@ -43,6 +55,11 @@ class OLAccessor:
         webgl: bool = True,
         **kwargs,
     ) -> VectorLayer | WebGLVectorLayer:
+        """Return data frame as OL vector layer
+
+        Returns:
+            An OL vector layer
+        """
         style = style or self._default_style
         layer_class = WebGLVectorLayer if webgl else VectorLayer
         layer = layer_class(id=layer_id, style=style, source=self.to_source(), **kwargs)
@@ -57,6 +74,19 @@ class OLAccessor:
         webgl: bool = True,
         **kwargs,
     ) -> MapWidget:
+        """Create a vector layer and add it to a new `Map` instance
+
+        Args:
+            style (FlatStyle | dict): The style applied to the layer.
+                If `None`, a default style is used
+            tooltip (bool | str): Whether a tooltip should be added to the map.
+                Either `True` to add a default tooltip,
+                or a mustache template string to add a custom tooltip
+            controls (list[ControlT | dict]): Controls initially added to the map
+            layer_id (str): The ID of the layer
+            webgl (bool): Whether the layer should be added to the map
+                as `WebGLVectorLayer` or as `VectorLayer`
+        """
         layer = self.to_layer(style=style, layer_id=layer_id, webgl=webgl)
 
         m = MapWidget(controls=controls, **kwargs)
