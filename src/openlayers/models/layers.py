@@ -12,11 +12,18 @@ from .sources import SourceT
 
 # --- Base layer
 class Layer(OLBaseModel):
-    id: str = Field(default_factory=lambda x: str(uuid4()))
+    id: str | None = None
     source: dict | SourceT
     background: str | None = None
     opacity: float | None = 1.0
     visible: bool | None = True
+
+    @field_validator("id")
+    def validate_id(cls, v) -> str:
+        if v is None:
+            return uuid4().hex[0:10]
+
+        return v
 
 
 # --- Layers

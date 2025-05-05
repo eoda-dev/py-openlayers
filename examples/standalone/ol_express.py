@@ -22,10 +22,12 @@ circle_layer = olx.CircleLayer(
 
 fill_layer = olx.FillLayer(
     data="https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
-    stroke_width=4
+    stroke_width=4,
+    fill_color="yellow",
+    id=None
     )
 m = fill_layer.to_map()
-
+# m = circle_layer.to_map()
 # m = ol.Map(layers=[fill_layer, circle_layer])
 m.add_tooltip()
 # m = ol.Map()

@@ -6,12 +6,13 @@ from .styles import FlatStyle, default_style
 from .abstracts import LayerLike
 from .map import Map
 
+
 class GeoJSONLayer(LayerLike):
     def __init__(
         self,
         data: str | dict,
-        id: str = "geojson-layer",
-        style: FlatStyle = None,
+        id: str | None = "geojson-layer",
+        style: FlatStyle | None = None,
         **kwargs,
     ):
         if isinstance(data, str):
@@ -33,12 +34,14 @@ class GeoJSONLayer(LayerLike):
     def to_map(self):
         return Map(layers=[self])
 
+
 class TileLayer(object): ...
 
 
 class OSMBaseLayer(object): ...
 
 
+# TODO: Should also be subclass of GeoJSONLayer
 class IconLayer(LayerLike):
     def __init__(
         self,
@@ -85,19 +88,28 @@ class PolygonLayer(GeoJSONLayer):
         return self._model
 
 
-class CircleLayer(GeoJSONLayer, LayerLike):
+class CircleLayer(GeoJSONLayer):
     def __init__(
         self,
         data: str | dict,
-        circle_fill_color: str = None,
-        id: str = "circle-layer",
-        style: FlatStyle = None,
+        circle_fill_color: str | None = None,
+        id: str | None = "circle-layer",
+        style: FlatStyle | None = None,
         **kwargs,
     ):
         super().__init__(data, id, style, circle_fill_color=circle_fill_color, **kwargs)
 
 
-class FillLayer(GeoJSONLayer, LayerLike): ...
+class FillLayer(GeoJSONLayer):
+    def __init__(
+        self,
+        data: str | dict,
+        fill_color: str | None = None,
+        id: str | None = "fill-layer",
+        style: FlatStyle | None = None,
+        **kwargs,
+    ):
+        super().__init__(data, id, style, fill_color=fill_color, **kwargs)
 
 
-class LineLayer(LayerLike): ...
+class LineLayer(GeoJSONLayer): ...
