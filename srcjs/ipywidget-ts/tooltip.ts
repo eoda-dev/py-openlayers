@@ -1,54 +1,101 @@
-// See also https://openlayers.org/en/latest/examples/tooltip-on-hover.html
+/*
+taken from https://openlayers.org/en/latest/examples/tooltip-on-hover.html
+*/
+import { Map } from "ol";
+import type { FeatureLike } from "ol/Feature";
+import type { Pixel } from "ol/pixel";
 
-import { type Map } from "ol";
-import { type FeatureLike } from "ol/Feature";
-import Overlay from "ol/Overlay";
+import mustache from "mustache";
 
-type FeatureProps = {
-    [x: string]: any;
+import { getFeatureProperties } from "./utils";
+
+/*
+#info {
+    position: absolute;
+    display: inline-block;
+    height: auto;
+    width: auto;
+    z-index: 100;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    left: 50%;
+    transform: translateX(3%);
+    visibility: hidden;
+    pointer-events: none;
+}
+*/
+
+const info = document.createElement("div");
+info.style.position = "absolute";
+info.style.display = "inline-block";
+info.style.height = "auto";
+info.style.width = "auto";
+info.style.zIndex = "100";
+info.style.backgroundColor = "#333";
+info.style.color = "#fff";
+// info.style.textAlign = "center";
+info.style.borderRadius = "4px";
+info.style.padding = "7px";
+info.style.left = "50%";
+// info.style.transform = "translateX(3%)";
+info.style.visibility = "hidden";
+info.style.pointerEvents = "none";
+
+function renderFeatureProperties(feature: FeatureLike, template: string | null): string {
+    const properties = getFeatureProperties(feature);
+    if (template)
+        return mustache.render(template, properties);
+
+    return Object.keys(properties).map((key) => `${key}: ${properties[key]}`).join("</br>");
 }
 
-function createElement(cssText?: string | undefined): HTMLElement {
-    const el = document.createElement("div");
-    el.id = "ol-tooltip";
-    el.style.cssText = cssText || "padding: 5px; background-color: #333; color: #fff; border-radius: 4px; z-index: 100;"
-    el.style.visibility = "hidden";
-    return el;
-}
+function addTooltipToMap(map: Map, template: string | null): void {
+    info.id = "ol-tooltip";
+    map.getTargetElement().appendChild(info);
+    console.log("tooltip element added", info);
 
-function getFeatureProperties(feature: FeatureLike): FeatureProps {
-    let { geometry, ...props } = feature.getProperties();
-    return props;
-}
-
-function addTooltipTo(map: Map, prop: string): void {
-    let el = createElement();
-    const overlay = new Overlay({ element: el });
-    map.addOverlay(overlay);
     let currentFeature: FeatureLike | undefined;
-    map.on('pointermove', (e) => {
-        if (e.dragging)
-            return;
-        const feature = map.forEachFeatureAtPixel(e.pixel, (feature) => {
-            return feature;
-        });
+    const displayFeatureInfo = function (pixel: Pixel, target: EventTarget | null) {
+        // @ts-expect-error
+        const feature = target.closest('.ol-control')
+            ? undefined
+            : map.forEachFeatureAtPixel(pixel, function (feature) {
+                return feature;
+            });
         if (feature) {
-            el.style.visibility = "visible";
-            overlay.setPosition(e.coordinate);
+            // console.log("feature props", getFeatureProperties(feature));
+            info.style.left = (pixel[0] + 15) + 'px';
+            info.style.top = pixel[1] + 'px';
             if (feature !== currentFeature) {
-                console.log("feature props", getFeatureProperties(feature));
-                el.innerHTML = feature.get(prop)?.toString() || "";
+                info.style.visibility = 'visible';
+                info.innerHTML = renderFeatureProperties(feature, template);
             }
         } else {
-            el.style.visibility = "hidden";
+            info.style.visibility = 'hidden';
         }
         currentFeature = feature;
+    };
+
+    map.on('pointermove', function (evt) {
+        if (evt.dragging) {
+            info.style.visibility = 'hidden';
+            currentFeature = undefined;
+            return;
+        }
+        displayFeatureInfo(evt.pixel, evt.originalEvent.target);
     });
 
-    map.getTargetElement().addEventListener("pointerleave", () => {
-        el.style.visibility = "hidden";
+    map.on('click', function (evt) {
+        displayFeatureInfo(evt.pixel, evt.originalEvent.target);
+    });
+
+    map.getTargetElement().addEventListener('pointerleave', function () {
         currentFeature = undefined;
+        info.style.visibility = 'hidden';
     });
 }
 
-export { addTooltipTo }
+export { addTooltipToMap };

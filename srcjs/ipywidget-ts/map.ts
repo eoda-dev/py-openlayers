@@ -4,7 +4,7 @@ import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 import { JSONConverter } from "./json";
-import { addTooltip2 } from "./tooltip2";
+import { addTooltipToMap } from "./tooltip";
 
 // --- Types
 import type Layer from "ol/layer/Layer";
@@ -224,17 +224,18 @@ export default class MapWidget {
     }
   }
 
-  // TODO: Test only at the moment
-  addOverlay(position: Coordinate | undefined): void {
+  // ...
+  addOverlay(position: Coordinate | undefined, html: string, cssText: string | undefined, id: string = "ol-overlay"): void {
     const el = document.createElement("div");
-    el.style.cssText = "";
-    el.innerHTML = "We are out here."
+    el.id = id;
+    el.style.cssText = cssText || "";
+    el.innerHTML = html;
     const overlay = new Overlay({ element: el, position: position });
     this._map.addOverlay(overlay);
   }
 
   // ...
   addTooltip(template: string | null): void {
-    addTooltip2(this._map, template);
+    addTooltipToMap(this._map, template);
   }
 }
