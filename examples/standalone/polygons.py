@@ -5,7 +5,7 @@ url = "https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson"
 
 countries = ol.WebGLVectorLayer(source=ol.VectorSource(url=url))
 
-m = ol.Map(layers=[BasemapLayer.carto(), countries])
+m = ol.Map(ol.View(projection="EPSG:4326"), layers=[BasemapLayer.osm(), countries])
 m.add_tooltip("{{ name }}")
 # m.add_tooltip()
 m.add_control(ol.controls.ZoomSliderControl())

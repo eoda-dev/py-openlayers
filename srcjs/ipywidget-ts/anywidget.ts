@@ -10,14 +10,14 @@ import type { Map } from "ol";
 // --- Main function
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   function updateModelMetadata(): void {
-    model.set("map_metadata", mapWidget.getMetadata());
+    model.set("metadata", mapWidget.getMetadata());
     model.save_changes();
   }
 
   function updateModelViewState(): void {
     const view = map.getView();
     const value = parseView(view);
-    model.set("map_view_state", value);
+    model.set("view_state", value);
     model.save_changes()
   }
 
@@ -34,12 +34,13 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   console.log("mapOptions", mapOptions);
   const mapWidget = (window as any).anywidgetMapWidget = new MapWidget(mapElement, mapOptions, model);
 
-  model.set("map_created", true);
+  model.set("created", true);
   model.save_changes();
 
   const calls: OLAnyWidgetCall[] = model.get("calls");
   console.log("calls", calls);
   for (let call of calls) {
+
     // @ts-expect-error
     mapWidget[call.method](...call.args);
   }

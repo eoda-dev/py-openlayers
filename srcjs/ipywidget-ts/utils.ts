@@ -3,7 +3,7 @@ import type { FeatureLike } from "ol/Feature";
 import type { FeatureProps } from ".";
 import type { View } from "ol";
 
-import { toLonLat } from "ol/proj";
+// import { toLonLat } from "ol/proj";
 
 // TODO: get 'info' from 'parseView' 
 function parseClickEvent(e: MapBrowserEvent): any {
@@ -12,8 +12,7 @@ function parseClickEvent(e: MapBrowserEvent): any {
     const info = {
         center: view.getCenter(),
         projection: projectionCode,
-        zoom: view.getZoom(),
-        centerLonLat: toLonLat(e.coordinate)
+        zoom: view.getZoom()
     };
     return info;
 }
@@ -25,7 +24,7 @@ function parseView(view: View): any {
         center: center,
         projection: projectionCode,
         zoom: view.getZoom(),
-        center_lonlat: toLonLat(center)
+        extent: view.calculateExtent()
     };
 }
 
