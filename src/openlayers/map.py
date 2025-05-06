@@ -12,6 +12,7 @@ from .models.map_options import MapOptions
 from .models.sources import OSM
 from .models.view import View
 from .styles import FlatStyle
+from .utils import default_crs_transformer
 
 
 class Map(object):
@@ -55,22 +56,27 @@ class Map(object):
     def add_view_call(self, method_name: str, *args: Any) -> None:
         view_call = dict(method=method_name, args=args)
         self.add_call("applyCallToView", view_call)
-    
 
     def set_zoom(self, zoom_level: float | int) -> None:
         """Set the zoom level ot the map view
-        
+
         Args:
             zoom_level (float | int): The zoom level of the view
         """
         self.add_view_call("setZoom", zoom_level)
 
-    def set_center(self, lonlat: tuple[float, float] = None, center: tuple[float, float] = None) -> None:
-        from .utils import default_crs_transformer
-
+    def set_center(
+        self, lonlat: tuple[float, float] = None, center: tuple[float, float] = None
+    ) -> None:
+        """Set the center of the map view
+        
+        Args:
+            lonlat (tuple[float, float]): center as (lon, lat)
+            center (tuple[float, float]) center as (x, y) of view projection
+        """
         center = center or default_crs_transformer().transform(*lonlat)
         self.add_view_call("setCenter", center)
-    
+
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
         """Add a layer to the map
 
