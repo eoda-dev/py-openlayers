@@ -10,6 +10,7 @@ dependencies = [
     "eval-type-backport>=0.2.2",
     "jinja2>=3.1.6",
     "pydantic>=2.5.3",
+    "pyproj>=3.6.1",
 ]
 
 # [project.scripts]

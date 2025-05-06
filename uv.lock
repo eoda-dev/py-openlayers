@@ -1349,6 +1349,7 @@ dependencies = [
     { name = "eval-type-backport" },
     { name = "jinja2" },
     { name = "pydantic" },
+    { name = "pyproj" },
 ]
 
 [package.dev-dependencies]
@@ -1372,6 +1373,7 @@ requires-dist = [
     { name = "eval-type-backport", specifier = ">=0.2.2" },
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "pydantic", specifier = ">=2.5.3" },
+    { name = "pyproj", specifier = ">=3.6.1" },
 ]
 
 [package.metadata.requires-dev]

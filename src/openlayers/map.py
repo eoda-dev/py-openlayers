@@ -64,6 +64,12 @@ class Map(object):
             zoom_level (float | int): The zoom level of the view
         """
         self.add_view_call("setZoom", zoom_level)
+
+    def set_center(self, lonlat: tuple[float, float] = None, center: tuple[float, float] = None) -> None:
+        from .utils import default_crs_transformer
+
+        center = center or default_crs_transformer().transform(*lonlat)
+        self.add_view_call("setCenter", center)
     
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
         """Add a layer to the map
