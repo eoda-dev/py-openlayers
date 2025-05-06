@@ -2,7 +2,7 @@ import { Map, View } from "ol";
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
-import { fromLonLat, transformExtent } from "ol/proj";
+import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 import { JSONConverter } from "./json";
 import { addTooltip2 } from "./tooltip2";
 
@@ -29,16 +29,21 @@ const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
 
+// ...
+useGeographic();
+
 // --- Helpers
 function parseViewDef(viewDef: JSONDef): View {
   const view = jsonConverter.parse(viewDef) as View;
   const center = view.getCenter();
-  console.log("view center", center)
+  console.log("view center", center);
+  // Not needed anymore because of `useGeographic()`
+  /*
   if (center && view.getProjection().getCode() !== "EPSG:4326") {
     const centerTransformed = fromLonLat(center);
     console.log("view center transformed", centerTransformed);
     view.setCenter(centerTransformed);
-  }
+  }*/
 
   return view;
 }
@@ -128,9 +133,15 @@ export default class MapWidget {
     this._map.getView().fit(extent);
   }
 
+  // TODO: obsolete since `useGeographic()` does this for us
   fitBoundsFromLonLat(extentLonLat: any): void {
     const exent = transformExtent(extentLonLat, "EPSG:4326", this._map.getView().getProjection());
     this.fitBounds(exent);
+  }
+
+  setView(viewDef: JSONDef): void {
+    const view = jsonConverter.parse(viewDef) as View;
+    this._map.setView(view);
   }
 
   // --- View Methods

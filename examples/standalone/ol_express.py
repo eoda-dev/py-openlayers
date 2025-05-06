@@ -1,9 +1,10 @@
 # import json
 # import openlayers as ol
-import openlayers.express as olx
+import openlayers.express as ox
 from openlayers.basemaps import BasemapLayer
+from openlayers import View
 
-icon_layer = olx.IconLayer(
+icon_layer = ox.IconLayer(
     # id="icon-layer",
     data="https://openlayers.org/data/vector/populated-places.json",
     icon_src="https://openlayers.org/en/latest/examples/data/icon.png",
@@ -20,7 +21,7 @@ polygon_layer = olx.PolygonLayer(
 
 line_data = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json"
 
-generic_geojson_layer = olx.GeoJSONLayer(
+generic_geojson_layer = ox.GeoJSONLayer(
     data = line_data,
     #stroke_width = 5,
     #stroke_color = "green",
@@ -30,12 +31,12 @@ generic_geojson_layer = olx.GeoJSONLayer(
     #circle_radius = 7
 )
 
-circle_layer = olx.CircleLayer(
+circle_layer = ox.CircleLayer(
     data="https://openlayers.org/data/vector/populated-places.json",
     circle_fill_color="yellow"
     )
 
-fill_layer = olx.FillLayer(
+fill_layer = ox.FillLayer(
     data=None ,#"https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson",
     stroke_width=4,
     fill_color="yellow",
@@ -53,4 +54,6 @@ m.add_tooltip()
 # print(json.dumps(m.calls))
 # print(json.dumps(m.map_options))
 
+# m.set_center((9.5, 51.31667))
+m.set_view(View(center=(9.5, 51.31667), zoom=14))
 m.save()

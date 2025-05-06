@@ -57,6 +57,14 @@ class Map(object):
         view_call = dict(method=method_name, args=args)
         self.add_call("applyCallToView", view_call)
 
+    def set_view(self, view: View) -> None:
+        """Set the view state of the map
+
+        Args:
+            view (View): The view state of the map
+        """
+        self.add_call("setView", view.model_dump())
+
     def set_zoom(self, zoom_level: float | int) -> None:
         """Set the zoom level ot the map view
 
@@ -66,15 +74,17 @@ class Map(object):
         self.add_view_call("setZoom", zoom_level)
 
     def set_center(
-        self, lonlat: tuple[float, float] = None, center: tuple[float, float] = None
+        self, lonlat: tuple[float, float] = None, transform: bool = True
     ) -> None:
         """Set the center of the map view
-        
+
         Args:
-            lonlat (tuple[float, float]): center as (lon, lat)
-            center (tuple[float, float]) center as (x, y) of view projection
+            lonlat (tuple[float, float]): The centerpoint of the map as `(lon, lat)` pair
+            transform (bool): Whether coordinates should be transformed to `EPSG:3857`,
+                which is the default projection of the view
         """
-        center = center or default_crs_transformer().transform(*lonlat)
+        # center = default_crs_transformer().transform(*lonlat) if transform else lonlat
+        center = lonlat
         self.add_view_call("setCenter", center)
 
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
@@ -164,8 +174,6 @@ class Map(object):
             style = style.model_dump()
 
         self.add_layer_call(layer_id, "setStyle", style)
-
-    def set_view(self, view: View) -> None: ...
 
     def to_html(self, **kwargs) -> str:
         """Render map to HTML"""

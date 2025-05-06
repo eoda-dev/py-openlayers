@@ -12,7 +12,11 @@ from .models.view import View
 
 
 class MapWidget(Map, AnyWidget):
-    """Map widget"""
+    """Initialize a new `MapWidget`instance
+    
+    Note:
+        See [Map](openlayers.Map) for details.
+    """
 
     _esm = Path(__file__).parent / "js" / "openlayers.anywidget.js"
     _css = Path(__file__).parent / "js" / "openlayers.anywidget.css"
