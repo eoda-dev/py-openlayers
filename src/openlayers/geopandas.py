@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 COLOR_COLUMN = "color"
 
 
-def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.WEB_MERCATOR):
+def gdf_to_geojson(data: gpd.GeoDataFrame, crs: str | None = Projection.MERCATOR):
     if crs:
         data = data.to_crs(crs)
 

@@ -10,6 +10,6 @@ m.add_tooltip("{{ name }}")
 # m.add_tooltip()
 m.add_control(ol.controls.ZoomSliderControl())
 m.add_control(ol.controls.InfoBox(
-    html="OpenLayers4Py",
+    html="PyOL",
     css_text="right: .5em; top: .5em; background: white; padding: 5px;"))
 m.save()

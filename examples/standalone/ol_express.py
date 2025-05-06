@@ -55,5 +55,5 @@ m.add_tooltip()
 # print(json.dumps(m.map_options))
 
 # m.set_center((9.5, 51.31667))
-m.set_view(View(center=(9.5, 51.31667), zoom=14))
+# m.set_view(View(center=(9.5, 51.31667), zoom=14))
 m.save()

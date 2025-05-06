@@ -57,6 +57,9 @@ class Map(object):
         view_call = dict(method=method_name, args=args)
         self.add_call("applyCallToView", view_call)
 
+    def fit_bounds(self, bounds: tuple[float, float, float, float]) -> None:
+        self.add_call("fitBounds", bounds)
+
     def set_view(self, view: View) -> None:
         """Set the view state of the map
 
