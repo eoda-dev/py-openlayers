@@ -4,4 +4,5 @@ url = "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/36/
 
 m = ox.GeoTIFFTileLayer(url=url, opacity=0.7).to_map()
 print(m.options)
+print(m.calls)
 m.save()

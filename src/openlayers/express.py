@@ -11,13 +11,12 @@ from .styles import FlatStyle, default_style
 class GeoTIFFTileLayer(LayerLike):
     """Initialize a new `GeoTIFFTileLayer` instance"""
 
-    def __init__(self, url: str, opacity: float = 0.5, webgl: bool = True):
-        tile_layer_callable = WebGLTileLayer if webgl else TileLayer
+    def __init__(self, url: str, opacity: float = 0.5):
         source = GeoTIFFSource(sources=[dict(url=url)])
-        self._model = tile_layer_callable(opacity=opacity, source=source)
+        self._model = WebGLTileLayer(opacity=opacity, source=source)
 
     @property
-    def model(self) -> WebGLTileLayer | TileLayer:
+    def model(self) -> WebGLTileLayer:
         return self._model
 
     def to_map(self, *args, **kwargs) -> Map:
