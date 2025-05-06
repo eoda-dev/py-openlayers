@@ -23,7 +23,8 @@ class GeoTIFFTileLayer(LayerLike):
     def to_map(self, *args, **kwargs) -> Map:
         m = Map(*args, **kwargs)
         m.add_layer(self)
-        m.add_call("setViewFromSource", self.model.id)
+        # m.add_call("setViewFromSource", self.model.id)
+        m.set_view_from_source(self.model.id)
         return m
 
 

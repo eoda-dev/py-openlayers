@@ -68,6 +68,9 @@ class Map(object):
         """
         self.add_call("setView", view.model_dump())
 
+    def set_view_from_source(self, layer_id: str) -> None:
+        self.add_call("setViewFromSource", layer_id)
+
     def set_zoom(self, zoom_level: float | int) -> None:
         """Set the zoom level ot the map view
 
