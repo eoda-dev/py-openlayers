@@ -2,10 +2,29 @@ from __future__ import annotations
 
 from .abstracts import LayerLike
 from .map import Map
-from .models.layers import VectorLayer, WebGLVectorLayer
-from .models.sources import VectorSource
+from .models.layers import VectorLayer, WebGLVectorLayer, WebGLTileLayer, TileLayer
+from .models.sources import VectorSource, GeoTIFFSource
 from .models.view import View
 from .styles import FlatStyle, default_style
+
+
+class GeoTIFFTileLayer(LayerLike):
+    """Initialize a new `GeoTIFFTileLayer` instance"""
+
+    def __init__(self, url: str, opacity: float = 0.5, webgl: bool = True):
+        tile_layer_callable = WebGLTileLayer if webgl else TileLayer
+        source = GeoTIFFSource(sources=[dict(url=url)])
+        self._model = tile_layer_callable(opacity=opacity, source=source)
+
+    @property
+    def model(self) -> WebGLTileLayer | TileLayer:
+        return self._model
+
+    def to_map(self, *args, **kwargs) -> Map:
+        m = Map(*args, **kwargs)
+        m.add_layer(self)
+        m.add_call("setViewFromSource", self.model.id)
+        return m
 
 
 class GeoJSONLayer(LayerLike):
