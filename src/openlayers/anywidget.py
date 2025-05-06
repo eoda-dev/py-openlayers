@@ -13,7 +13,7 @@ from .models.view import View
 
 class MapWidget(Map, AnyWidget):
     """Initialize a new `MapWidget`instance
-    
+
     Note:
         See [Map](openlayers.Map) for details.
     """
@@ -36,7 +36,6 @@ class MapWidget(Map, AnyWidget):
         layers: list[LayerT | dict] | None = None,
         controls: list[ControlT | dict] | None = None,
         height: str = "400px",
-        
         **kwargs,
     ):
         self.created = False
