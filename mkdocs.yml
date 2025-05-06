@@ -33,7 +33,10 @@ markdown_extensions:
 
 nav:
   - Get started: index.md
-  # - Concepts: concept.md
+  - Concepts:
+      - Map: concepts/map.md
+      - Controls: concepts/controls.md
+      - Layers  and sources: concepts/layers.md
   - API documentation:
       - Map: api/map.md
       - Controls: api/controls.md

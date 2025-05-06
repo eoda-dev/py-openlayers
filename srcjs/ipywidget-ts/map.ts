@@ -133,6 +133,15 @@ export default class MapWidget {
     this.fitBounds(exent);
   }
 
+  // --- View Methods
+  applyCallToView(call: OLAnyWidgetCall): void {
+    const view = this._map.getView();
+    console.log("run view method", view);
+
+    // @ts-expect-error
+    view[call.method](...call.args)
+  }
+
   // --- Layer methods
   getLayer(layerId: string): Layer | undefined {
     for (let layer of this._map.getLayers().getArray()) {

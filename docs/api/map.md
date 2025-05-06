@@ -1,5 +1,5 @@
 # Map
 
-::: openlayers.map.Map
+::: openlayers.Map
 
-::: openlayers.anywidget.MapWidget
+::: openlayers.MapWidget

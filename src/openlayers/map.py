@@ -52,6 +52,19 @@ class Map(object):
         layer_call = dict(method=method_name, args=args)
         self.add_call("applyCallToLayer", layer_id, layer_call)
 
+    def add_view_call(self, method_name: str, *args: Any) -> None:
+        view_call = dict(method=method_name, args=args)
+        self.add_call("applyCallToView", view_call)
+    
+
+    def set_zoom(self, zoom_level: float | int) -> None:
+        """Set the zoom level ot the map view
+        
+        Args:
+            zoom_level (float | int): The zoom level of the view
+        """
+        self.add_view_call("setZoom", zoom_level)
+    
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
         """Add a layer to the map
 
@@ -139,6 +152,8 @@ class Map(object):
             style = style.model_dump()
 
         self.add_layer_call(layer_id, "setStyle", style)
+
+    def set_view(self, view: View) -> None: ...
 
     def to_html(self, **kwargs) -> str:
         """Render map to HTML"""
