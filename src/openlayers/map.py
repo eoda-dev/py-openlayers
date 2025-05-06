@@ -30,7 +30,7 @@ class Map(object):
         layers: list[LayerT | LayerLike | dict] = None,
         controls: list[ControlT | dict] = None,
     ):
-        self._initial_view = view
+        self._initial_view_state = view.to_dict(exclude="type", exclude_none=True)
         self.calls = []
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
@@ -40,8 +40,8 @@ class Map(object):
         ).model_dump()
 
     @property
-    def initial_view(self):
-        return self._initial_view
+    def initial_view_state(self):
+        return self._initial_view_state
 
     # 'apply_call_to_map'
     def add_call(self, method_name: str, *args: Any) -> None:
