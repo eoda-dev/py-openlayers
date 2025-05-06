@@ -30,7 +30,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   mapElement.id = "ol-map-widget";
   mapElement.style.height = height;
   // ...
-  const mapOptions = model.get("map_options");
+  const mapOptions = model.get("options");
   console.log("mapOptions", mapOptions);
   const mapWidget = (window as any).anywidgetMapWidget = new MapWidget(mapElement, mapOptions, model);
 
@@ -58,7 +58,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   map.on("click", (e) => {
     const info = parseClickEvent(e);
     console.log(info);
-    model.set("map_clicked", info);
+    model.set("clicked", info);
     model.save_changes();
   });
   */

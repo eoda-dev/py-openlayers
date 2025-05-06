@@ -35,7 +35,7 @@ class Map(object):
         if layers is None:
             layers = [TileLayer(id="osm", source=OSM())]
 
-        self.map_options = MapOptions(
+        self.options = MapOptions(
             view=view, layers=layers, controls=controls
         ).model_dump()
 
@@ -180,7 +180,7 @@ class Map(object):
 
     def to_html(self, **kwargs) -> str:
         """Render map to HTML"""
-        data = self.map_options | dict(calls=self.calls)
+        data = self.options | dict(calls=self.calls)
         return HTMLTemplate().render(data=data, **kwargs)
 
     def save(self, path: Path | str = None, preview: bool = True, **kwargs) -> str:

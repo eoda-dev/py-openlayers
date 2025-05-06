@@ -10,7 +10,7 @@ def test_map() -> None:
     m = Map(view)
 
     # Assert
-    print(m.map_options)
-    assert m.map_options["view"] == view.model_dump()
+    print(m.options)
+    assert m.options["view"] == view.model_dump()
 
     assert m.initial_view.center == (2, 2)
