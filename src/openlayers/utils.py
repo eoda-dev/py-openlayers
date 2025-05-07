@@ -14,7 +14,7 @@ def create_icon_src_from_file(filename: str) -> bytes:
     return f"data:image/{image_type};base64," + encoded_image
 
 
-def default_crs_transformer() -> Transformer:
-    crs_from = CRS.from_epsg(4326)
-    crs_to = CRS.from_epsg(3857)
+def crs_transformer(src_epsg=3857, dest_epsg=4326) -> Transformer:
+    crs_from = CRS.from_epsg(src_epsg)
+    crs_to = CRS.from_epsg(dest_epsg)
     return Transformer.from_crs(crs_from=crs_from, crs_to=crs_to, always_xy=True)

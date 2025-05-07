@@ -12,7 +12,6 @@ from .models.map_options import MapOptions
 from .models.sources import OSM
 from .models.view import View
 from .styles import FlatStyle
-from .utils import default_crs_transformer
 
 
 class Map(object):
@@ -79,19 +78,13 @@ class Map(object):
         """
         self.add_view_call("setZoom", zoom_level)
 
-    def set_center(
-        self, lonlat: tuple[float, float] = None, transform: bool = True
-    ) -> None:
+    def set_center(self, lonlat: tuple[float, float]) -> None:
         """Set the center of the map view
 
         Args:
             lonlat (tuple[float, float]): The centerpoint of the map as `(lon, lat)` pair
-            transform (bool): Whether coordinates should be transformed to `EPSG:3857`,
-                which is the default projection of the view
         """
-        # center = default_crs_transformer().transform(*lonlat) if transform else lonlat
-        center = lonlat
-        self.add_view_call("setCenter", center)
+        self.add_view_call("setCenter", lonlat)
 
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
         """Add a layer to the map

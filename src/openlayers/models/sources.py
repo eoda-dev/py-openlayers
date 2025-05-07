@@ -3,7 +3,7 @@ from typing import Union
 from pydantic import Field
 
 from .core import OLBaseModel
-from .formats import GeoJSON
+from .formats import GeoJSON, FormatT
 
 # from ..constants import CARTO_ATTRIBUTION
 
@@ -17,7 +17,7 @@ class VectorSource(Source):
     url: str | None = None
     # features: list[dict] | None = None
     geojson: dict | None = Field(None, serialization_alias="@@geojson")
-    format: dict | GeoJSON = GeoJSON()
+    format: FormatT | dict = GeoJSON()
 
 
 class OSM(Source): ...
