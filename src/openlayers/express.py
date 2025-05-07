@@ -44,14 +44,16 @@ class GeoJSONLayer(LayerLike):
         data: str | dict,
         id: str | None = None,
         style: FlatStyle | None = None,
+        webgl: bool = True,
         **kwargs,
     ):
+        vector_layer_class = WebGLVectorLayer if webgl else VectorLayer
         if isinstance(data, str):
             source = VectorSource(url=data)
         else:
             source = VectorSource(geojson=data)
 
-        self._model = WebGLVectorLayer(
+        self._model = vector_layer_class(
             source=source,
             style=style
             or default_style().model_copy(update=FlatStyle(**kwargs).model_dump2()),

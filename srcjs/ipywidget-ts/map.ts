@@ -5,6 +5,7 @@ import Overlay from "ol/Overlay";
 import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 import { JSONConverter } from "./json";
 import { addTooltipToMap } from "./tooltip";
+import { addSelectFeaturesToMap } from "./select-features";
 
 // --- Types
 import type Layer from "ol/layer/Layer";
@@ -237,5 +238,9 @@ export default class MapWidget {
   // ...
   addTooltip(template: string | null): void {
     addTooltipToMap(this._map, template);
+  }
+
+  addSelectFeatures(): void {
+    addSelectFeaturesToMap(this._map);
   }
 }
