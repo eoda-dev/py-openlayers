@@ -86,6 +86,9 @@ class OLAccessor:
             layer_id (str): The ID of the layer
             webgl (bool): Whether the layer should be added to the map
                 as `WebGLVectorLayer` or as `VectorLayer`
+
+        Returns:
+            A new `MapWidget` instance
         """
         layer = self.to_layer(style=style, layer_id=layer_id, webgl=webgl)
 
@@ -104,10 +107,11 @@ class OLAccessor:
         self._default_style.circle_fill_color = ["get", COLOR_COLUMN]
         return self
 
-
     def icon(self, icon_src: str, icon_scale: float = 1, **kwargs) -> Self:
-        # TODO: implement 
+        # TODO: Use style model instead
+        self._default_style = {"icon-src": icon_src, "icon-scale": icon_scale} | kwargs
         return self
+
 
 @pd.api.extensions.register_dataframe_accessor("openlayers")
 class OpenLayersAccessor(OLAccessor): ...
