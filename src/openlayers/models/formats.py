@@ -16,7 +16,6 @@ class GeoJSON(Format): ...
 
 class KML(Format):
     extract_styles: bool = Field(True, serialization_alias="extractStyles")
-    
 
 
 # --- Format type

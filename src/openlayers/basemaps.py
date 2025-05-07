@@ -56,7 +56,7 @@ class BasemapLayer(LayerLike):
     @property
     def model(self) -> TileLayer:
         return self._model
-        
+
     @staticmethod
     def osm() -> TileLayer:
         return TileLayer(id="osm", source=OSM())

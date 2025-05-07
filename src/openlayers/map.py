@@ -146,7 +146,7 @@ class Map(object):
 
     def add_select_features(self) -> None:
         """Add `Select-Features` interaction to the map
-        
+
         Note:
             At the moment highlighting of selected features only works for `VectorLayer` type
         """
