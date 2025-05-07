@@ -30,7 +30,7 @@ const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
 
-// ...
+// --- Use [lon, lat] coordinates as input
 useGeographic();
 
 // --- Helpers
@@ -241,6 +241,6 @@ export default class MapWidget {
   }
 
   addSelectFeatures(): void {
-    addSelectFeaturesToMap(this._map);
+    addSelectFeaturesToMap(this._map, this._model);
   }
 }

@@ -1,10 +1,14 @@
-import { Map } from "ol";
-import { FeatureLike } from "ol/Feature";
-import Feature from "ol/Feature";
-import Style, { StyleLike } from "ol/style/Style";
+import type { AnyModel } from "@anywidget/types";
+import type { Map } from "ol";
+import type Feature from "ol/Feature";
+
+import Style from "ol/style/Style";
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import VectorLayer from "ol/layer/Vector";
+
+
+import { featureToGeoJSON } from "./utils";
 
 // TODO: Should be a parameter
 const highlightStyle = new Style({
@@ -19,34 +23,37 @@ const highlightStyle = new Style({
     })
 });
 
-function addSelectFeaturesToMap(map: Map): void {
+// TODO: Setting new style only works for 'VectorLayer'
+// For 'WebGLVectorLayer' we need to add complete highlight-layer on topt of the current one 
+function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
     const selected = [] as Feature[];
 
     map.on('singleclick', function (e) {
         map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
             const isVectorLayer = layer instanceof VectorLayer;
-            console.log("isVectorLayer", isVectorLayer);
+
+            // console.log("isVectorLayer", isVectorLayer);
             const f = feature as Feature;
             const selIndex = selected.indexOf(f);
             if (selIndex < 0) {
                 console.log("push");
                 selected.push(f);
-
-                // Does not work for WebGLVectorLayer
                 if (isVectorLayer)
                     f.setStyle(highlightStyle);
             } else {
                 console.log("delete");
                 selected.splice(selIndex, 1);
-
-                // Does not work for WebGLVectorLayer
                 if (isVectorLayer)
                     f.setStyle();
             }
         });
-
-        const output = selected.map(f => { return f.getProperties(); });
-        console.log(output);
+        const output = selected.map(f => featureToGeoJSON(f));
+        // console.log("model", model);
+        if (model) {
+            model.set("features_selected", output);
+            model.save_changes();
+        } else
+            console.log(output);
     });
 }
 

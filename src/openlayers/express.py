@@ -6,6 +6,7 @@ from .models.layers import VectorLayer, WebGLVectorLayer, WebGLTileLayer, TileLa
 from .models.sources import VectorSource, GeoTIFFSource
 from .models.view import View
 from .styles import FlatStyle, default_style
+from .anywidget import MapWidget
 
 
 class GeoTIFFTileLayer(LayerLike):
@@ -66,7 +67,7 @@ class GeoJSONLayer(LayerLike):
 
     def to_map(
         self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs
-    ) -> Map:
+    ) -> Map | MapWidget:
         """Initialize a new `Map` instance and add the layer to it
 
         Args:
@@ -75,7 +76,7 @@ class GeoJSONLayer(LayerLike):
             zoom (float | int): The initial zoom level of the map
             **kwargs (Any): Arguments that are handed over to the `Map` instance
         """
-        m = Map(View(center=(lon, lat), zoom=zoom), **kwargs)
+        m = MapWidget(View(center=(lon, lat), zoom=zoom), **kwargs)
         m.add_layer(self)
         return m
 

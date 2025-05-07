@@ -1,7 +1,9 @@
-import type { MapBrowserEvent } from "ol";
+import type { Feature, MapBrowserEvent } from "ol";
 import type { FeatureLike } from "ol/Feature";
 import type { FeatureProps } from ".";
 import type { View } from "ol";
+
+import { GeoJSON } from "ol/format";
 
 // import { toLonLat } from "ol/proj";
 
@@ -33,4 +35,8 @@ function getFeatureProperties(feature: FeatureLike): FeatureProps {
     return props;
 }
 
-export { parseClickEvent, getFeatureProperties, parseView }
+function featureToGeoJSON(feature: Feature): any {
+    return new GeoJSON().writeFeature(feature);
+}
+
+export { parseClickEvent, getFeatureProperties, parseView, featureToGeoJSON }
