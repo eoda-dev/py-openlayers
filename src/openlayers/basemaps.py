@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from .models.layers import TileLayer
 from .models.sources import OSM, ImageTileSource
+from .abstracts import LayerLike
 
 # light_all,
 # dark_all,
@@ -45,7 +46,17 @@ class CartoRasterStyle(BaseModel):
         )
 
 
-class BasemapLayer(object):
+class BasemapLayer(LayerLike):
+    def __init__(self, style: str | Carto = None) -> None:
+        if isinstance(style, Carto):
+            self._model = BasemapLayer.carto(style)
+        else:
+            self._model = BasemapLayer.osm()
+
+    @property
+    def model(self) -> TileLayer:
+        return self._model
+        
     @staticmethod
     def osm() -> TileLayer:
         return TileLayer(id="osm", source=OSM())
@@ -56,7 +67,7 @@ class BasemapLayer(object):
     ) -> TileLayer:
         style = CartoRasterStyle(style=style_name, double_resolution=double_resolution)
         return TileLayer(
-            id=f"carto-{Carto(style_name).value.replace('_', '-')}",
+            id=f"carto-{Carto(style_name).value.replace('_', '-').replace('/', '-')}",
             source=ImageTileSource(url=style.url, attributions=style.attribution),
         )
 

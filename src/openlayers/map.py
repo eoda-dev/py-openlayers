@@ -144,6 +144,14 @@ class Map(object):
         """
         self.add_call("addTooltip", template)
 
+    def add_select_features(self) -> None:
+        """Add `Select-Features` interaction to the map
+        
+        Note:
+            At the moment highlighting of selected features only works for `VectorLayer` type
+        """
+        self.add_call("addSelectFeatures")
+
     def set_opacity(self, layer_id: str, opacity: float = 1) -> None:
         """Set the opacity of a layer
 

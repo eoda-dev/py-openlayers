@@ -9,4 +9,6 @@ from .models.layers import (
     WebGLVectorLayer,
 )
 
-__all__ = ["TileLayer", "VectorLayer", "WebGLTileLayer", "WebGLVectorLayer"]
+from .basemaps import BasemapLayer
+
+__all__ = ["TileLayer", "VectorLayer", "WebGLTileLayer", "WebGLVectorLayer", "BasemapLayer"]
