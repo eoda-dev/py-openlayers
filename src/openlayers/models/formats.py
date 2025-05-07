@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pydantic import Field
+
 from typing import Union
 from .core import OLBaseModel
 
@@ -12,7 +14,9 @@ class Format(OLBaseModel): ...
 class GeoJSON(Format): ...
 
 
-class KML(Format): ...
+class KML(Format):
+    extract_styles: bool = Field(True, serialization_alias="extractStyles")
+    
 
 
 # --- Format type
