@@ -69,6 +69,8 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     try {
       // @ts-expect-error
       mapWidget[msg.method](...msg.args);
+
+      // TODO: Move to 'map.ts'
       updateModelMetadata();
     } catch (error) {
       console.log("error in anywidget msg call", error);

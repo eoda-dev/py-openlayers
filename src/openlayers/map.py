@@ -9,7 +9,7 @@ from .export import HTMLTemplate, write_file
 from .models.controls import ControlT
 from .models.layers import LayerT, TileLayer
 from .models.map_options import MapOptions
-from .models.sources import OSM
+from .models.sources import OSM, SourceT
 from .models.view import View
 from .styles import FlatStyle
 
@@ -181,6 +181,18 @@ class Map(object):
             style = style.model_dump()
 
         self.add_layer_call(layer_id, "setStyle", style)
+
+    def set_source(self, layer_id: str, source: SourceT | dict) -> None:
+        """Set / Update the source of a layer
+        
+        Args:
+            layer_id {str}: The ID of the layer
+            source (SourceT | dict): The source of the layer
+        """
+        if isinstance(source, SourceT):
+            source = source.model_dump()
+
+        self.add_call("setSource", layer_id, source)
 
     def to_html(self, **kwargs) -> str:
         """Render map to HTML"""

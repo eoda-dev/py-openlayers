@@ -197,6 +197,17 @@ export default class MapWidget {
     layer[call.method](...call.args)
   }
 
+  setSource(layerId: string, sourceDef: JSONDef): void {
+    const layer = this.getLayer(layerId);
+    if (layer) {
+      const source = jsonConverter.parse(sourceDef);
+      layer.setSource(source);
+      const features = sourceDef[GEOJSON_IDENTIFIER];
+      if (features)
+        source.addFeatures(new GeoJSON().readFeatures(features));
+    }
+  }
+
   // --- Control methods
   getControl(controlId: string): Control | undefined {
     for (let control of this._map.getControls().getArray()) {
