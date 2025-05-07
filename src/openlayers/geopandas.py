@@ -105,6 +105,10 @@ class OLAccessor:
         return self
 
 
+    def icon(self, icon_src: str, icon_scale: float = 1, **kwargs) -> Self:
+        # TODO: implement 
+        return self
+
 @pd.api.extensions.register_dataframe_accessor("openlayers")
 class OpenLayersAccessor(OLAccessor): ...
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import Self
 from .abstracts import LayerLike
 from .map import Map
 from .models.layers import VectorLayer, WebGLVectorLayer, WebGLTileLayer, TileLayer
@@ -64,6 +65,10 @@ class GeoJSONLayer(LayerLike):
     @property
     def model(self) -> WebGLVectorLayer | VectorLayer:
         return self._model
+
+    def set_icon_style(self) -> Self:
+        # TODO: implement
+        return self
 
     def to_map(
         self, lon: float = 0, lat: float = 0, zoom: float | int = 0, **kwargs
