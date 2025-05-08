@@ -2,11 +2,14 @@ import { Map, View } from "ol";
 import { defaults as defaultControls } from 'ol/control/defaults.js';
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
+import Draw from 'ol/interaction/Draw.js';
 import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
+
 import { JSONConverter } from "./json";
 import { addTooltipToMap } from "./tooltip";
 import { addSelectFeaturesToMap } from "./select-features";
 import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
+import { drawSource, drawVectorLayer } from "./layers";
 
 // --- Types
 import type Layer from "ol/layer/Layer";
@@ -20,6 +23,7 @@ import type { FlatStyle } from "ol/style/flat";
 import type { MyMapOptions } from ".";
 
 import type { AnyModel } from "@anywidget/types";
+import type { Type as GeomType } from "ol/geom/Geometry";
 
 type Metadata = {
   layers: any[];
@@ -73,6 +77,7 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
+  _draw: Draw | undefined;
   _model: AnyModel | undefined;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
@@ -111,6 +116,10 @@ export default class MapWidget {
 
   getMetadata(): Metadata {
     return this._metadata;
+  }
+
+  updateMetadata(): void {
+
   }
 
   setViewFromSource(layerId: string): void {
@@ -262,5 +271,20 @@ export default class MapWidget {
     const formats = formatsDef?.map(item => jsonConverter.parse(item));
     console.log("drag and drop formats", formats);
     addDragAndDropVectorLayersToMap(this._map, formats, style);
+  }
+
+  // See https://openlayers.org/en/latest/examples/draw-and-modify-features.html
+  addDrawInteraction(type: GeomType): void {
+    if (this._draw)
+      this._map.removeInteraction(this._draw);
+    else
+      this._map.addLayer(drawVectorLayer);
+
+    this._draw = new Draw({
+      source: drawSource,
+      type: type
+    });
+    this._map.addInteraction(this._draw);
+    console.log("draw interaction added", type);
   }
 }

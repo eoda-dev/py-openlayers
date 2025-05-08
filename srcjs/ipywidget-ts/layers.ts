@@ -3,6 +3,8 @@ import VectorLayer from "ol/layer/Vector";
 import WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import WebGLTileLayer from 'ol/layer/WebGLTile.js';
 
+import VectorSource from "ol/source/Vector";
+
 const layerCatalog: LayerCatalog = {
     TileLayer: TileLayer,
     VectorLayer: VectorLayer,
@@ -10,4 +12,11 @@ const layerCatalog: LayerCatalog = {
     WebGLTileLayer: WebGLTileLayer
 };
 
-export { layerCatalog };
+// Draw interaction
+const drawSource = new VectorSource({ wrapX: false });
+const drawVectorLayer = new VectorLayer({
+    source: drawSource
+});
+drawVectorLayer.set("id", "draw-features");
+
+export { layerCatalog, drawSource, drawVectorLayer };
