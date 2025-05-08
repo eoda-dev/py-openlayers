@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from .basemaps import BasemapLayer
 from .models.layers import (
     Layer,
     LayerT,
@@ -8,8 +9,6 @@ from .models.layers import (
     WebGLTileLayer,
     WebGLVectorLayer,
 )
-
-from .basemaps import BasemapLayer
 
 __all__ = [
     "TileLayer",

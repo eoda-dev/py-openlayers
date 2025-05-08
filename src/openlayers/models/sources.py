@@ -3,7 +3,7 @@ from typing import Union
 from pydantic import Field
 
 from .core import OLBaseModel
-from .formats import GeoJSON, FormatT
+from .formats import FormatT, GeoJSON
 
 # from ..constants import CARTO_ATTRIBUTION
 

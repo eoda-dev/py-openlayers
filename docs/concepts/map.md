@@ -6,4 +6,10 @@ The [Map](../../api/map/#openlayers.Map) is the core component of your visualiza
 -8<-- "concepts/basic_map.py"
 ```
 
+## View
+
 The view state of the map ...
+
+## Basemaps
+
+> See [BasemapLayer](../../api/basemaps/#openlayers.Basemaps.BasemapLayer)

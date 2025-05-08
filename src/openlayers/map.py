@@ -184,7 +184,7 @@ class Map(object):
 
     def set_source(self, layer_id: str, source: SourceT | dict) -> None:
         """Set / Update the source of a layer
-        
+
         Args:
             layer_id {str}: The ID of the layer
             source (SourceT | dict): The source of the layer

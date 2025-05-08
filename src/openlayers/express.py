@@ -1,13 +1,17 @@
 from __future__ import annotations
 
-from typing import Self
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
+
 from .abstracts import LayerLike
+from .anywidget import MapWidget
 from .map import Map
-from .models.layers import VectorLayer, WebGLVectorLayer, WebGLTileLayer, TileLayer
-from .models.sources import VectorSource, GeoTIFFSource
+from .models.layers import TileLayer, VectorLayer, WebGLTileLayer, WebGLVectorLayer
+from .models.sources import GeoTIFFSource, VectorSource
 from .models.view import View
 from .styles import FlatStyle, default_style
-from .anywidget import MapWidget
 
 
 class GeoTIFFTileLayer(LayerLike):
@@ -22,9 +26,9 @@ class GeoTIFFTileLayer(LayerLike):
         return self._model
 
     def to_map(self, *args, **kwargs) -> Map:
+        """Initialize a new `Map` instance and add the layer to it"""
         m = Map(*args, **kwargs)
         m.add_layer(self)
-        # m.add_call("setViewFromSource", self.model.id)
         m.set_view_from_source(self.model.id)
         return m
 

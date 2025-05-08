@@ -4,9 +4,9 @@ from enum import Enum
 
 from pydantic import BaseModel
 
+from .abstracts import LayerLike
 from .models.layers import TileLayer
 from .models.sources import OSM, ImageTileSource
-from .abstracts import LayerLike
 
 # light_all,
 # dark_all,

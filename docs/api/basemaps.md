@@ -1,0 +1,3 @@
+# Basemaps
+
+::: openlayers.basemaps.BasemapLayer

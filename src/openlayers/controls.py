@@ -5,10 +5,10 @@ from .models.controls import (
     ControlT,
     FullScreenControl,
     InfoBox,
+    MousePositionControl,
     OverviewMapControl,
     ScaleLineControl,
     ZoomSliderControl,
-    MousePositionControl,
 )
 
 __all__ = [

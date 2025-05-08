@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from typing import Union
+
 from pydantic import Field
 
-from typing import Union
 from .core import OLBaseModel
 
 
