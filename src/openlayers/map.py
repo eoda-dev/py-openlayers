@@ -12,6 +12,7 @@ from .models.map_options import MapOptions
 from .models.sources import OSM, SourceT
 from .models.view import View
 from .styles import FlatStyle
+from .models.formats import FormatT, GeoJSON, GPX, TopoJSON, KML
 
 
 class Map(object):
@@ -152,8 +153,17 @@ class Map(object):
         """
         self.add_call("addSelectFeatures")
 
-    def add_drag_and_drop_vector_layers_interaction(self, style: FlatStyle | dict = None) -> None:
-        return self.add_call("addDragAndDropVectorLayers")
+    def add_drag_and_drop_vector_layers_interaction(
+        self,
+        formats: list[FormatT] = [GeoJSON(), TopoJSON(), GPX(), KML()],
+        style: FlatStyle | dict = None,
+    ) -> None:
+        """Add drag and drop interaction to map"""
+        formats = [f.model_dump() for f in formats]
+        if isinstance(style, FlatStyle):
+            style = style.model_dump()
+        
+        return self.add_call("addDragAndDropVectorLayers", formats, style)
 
     def set_opacity(self, layer_id: str, opacity: float = 1) -> None:
         """Set the opacity of a layer

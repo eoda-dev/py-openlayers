@@ -15,6 +15,8 @@ import type VectorSource from "ol/source/Vector";
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 import type { Coordinate } from "ol/coordinate";
+import type FeatureFormat from "ol/format/Feature";
+import type { FlatStyle } from "ol/style/flat";
 import type { MyMapOptions } from ".";
 
 import type { AnyModel } from "@anywidget/types";
@@ -256,7 +258,9 @@ export default class MapWidget {
     addSelectFeaturesToMap(this._map, this._model);
   }
 
-  addDragAndDropVectorLayers(formats?: any[]): void {
-    addDragAndDropVectorLayersToMap(this._map);
+  addDragAndDropVectorLayers(formatsDef?: JSONDef[], style?: FlatStyle): void {
+    const formats = formatsDef?.map(item => jsonConverter.parse(item));
+    console.log("drag and drop formats", formats);
+    addDragAndDropVectorLayersToMap(this._map, formats, style);
   }
 }

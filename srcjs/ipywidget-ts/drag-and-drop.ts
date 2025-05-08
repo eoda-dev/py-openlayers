@@ -1,6 +1,7 @@
 // See https://openlayers.org/en/latest/examples/drag-and-drop.html
 // ---
 import type { Map } from "ol";
+import type FeatureFormat from "ol/format/Feature";
 
 import GPX from 'ol/format/GPX.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
@@ -10,8 +11,17 @@ import TopoJSON from 'ol/format/TopoJSON.js';
 import DragAndDrop from 'ol/interaction/DragAndDrop.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
+import { FlatStyle } from "ol/style/flat";
 
-function addDragAndDropToMap(map: Map): void {
+const defaultFormats = [
+    new GPX(),
+    new GeoJSON(),
+    new IGC(),
+    new KML(),
+    new TopoJSON(),
+];
+
+function addDragAndDropToMap(map: Map, formats?: FeatureFormat[], style?: FlatStyle): void {
     let dragAndDropInteraction: any;
 
     function setInteraction() {
@@ -19,13 +29,7 @@ function addDragAndDropToMap(map: Map): void {
             map.removeInteraction(dragAndDropInteraction);
         }
         dragAndDropInteraction = new DragAndDrop({
-            formatConstructors: [
-                new GPX(),
-                new GeoJSON(),
-                new IGC(),
-                new KML(),
-                new TopoJSON(),
-            ],
+            formatConstructors: formats || defaultFormats
         });
         dragAndDropInteraction.on('addfeatures', function (event: any) {
             const vectorSource = new VectorSource({
@@ -34,6 +38,7 @@ function addDragAndDropToMap(map: Map): void {
             map.addLayer(
                 new VectorLayer({
                     source: vectorSource,
+                    style: style || undefined
                 }),
             );
             map.getView().fit(vectorSource.getExtent());
