@@ -13,4 +13,6 @@ kml_layer = ol.VectorLayer(
 m = ol.Map()
 m.add_layer(kml_layer)
 m.add_tooltip()
+# m.add_call("addDragAndDropVectorLayers")
+m.add_drag_and_drop_vector_layers_interaction()
 m.save("/tmp/ol-example.html")

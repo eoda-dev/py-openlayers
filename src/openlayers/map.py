@@ -152,6 +152,9 @@ class Map(object):
         """
         self.add_call("addSelectFeatures")
 
+    def add_drag_and_drop_vector_layers_interaction(self, style: FlatStyle | dict = None) -> None:
+        return self.add_call("addDragAndDropVectorLayers")
+
     def set_opacity(self, layer_id: str, opacity: float = 1) -> None:
         """Set the opacity of a layer
 

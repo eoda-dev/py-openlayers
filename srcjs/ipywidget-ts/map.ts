@@ -6,6 +6,7 @@ import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 import { JSONConverter } from "./json";
 import { addTooltipToMap } from "./tooltip";
 import { addSelectFeaturesToMap } from "./select-features";
+import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
 
 // --- Types
 import type Layer from "ol/layer/Layer";
@@ -253,5 +254,9 @@ export default class MapWidget {
 
   addSelectFeatures(): void {
     addSelectFeaturesToMap(this._map, this._model);
+  }
+
+  addDragAndDropVectorLayers(formats?: any[]): void {
+    addDragAndDropVectorLayersToMap(this._map);
   }
 }
