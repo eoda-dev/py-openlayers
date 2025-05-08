@@ -9,4 +9,4 @@ from .models.sources import (
     VectorSource,
 )
 
-__all__ = ["OSM", "GeoTIFFSource", "VectorSource"]
+__all__ = ["OSM", "GeoTIFFSource", "VectorSource", "ImageTileSource"]

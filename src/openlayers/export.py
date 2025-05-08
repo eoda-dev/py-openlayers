@@ -22,6 +22,9 @@ def read_file(filename) -> str:
 
 def write_file(content: str, path: Path | str = None) -> str:
     if path:
+        with open(path, "w") as f:
+            f.write(content)
+        
         return path
 
     fd, path = tempfile.mkstemp(prefix="ol_")

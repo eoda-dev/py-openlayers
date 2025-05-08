@@ -15,9 +15,15 @@ class Format(OLBaseModel): ...
 class GeoJSON(Format): ...
 
 
+class TopoJSON(Format): ...
+
+
 class KML(Format):
     extract_styles: bool = Field(True, serialization_alias="extractStyles")
 
 
+class GPX(Format): ...
+
+
 # --- Format type
-FormatT = Union[Format, GeoJSON, KML]
+FormatT = Union[Format, GeoJSON, KML, GPX, TopoJSON]

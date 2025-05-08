@@ -2,7 +2,7 @@ import { layerCatalog } from "./layers"
 import { sourceCatalog } from "./sources"
 import { controlCatalog } from "./controls"
 
-import { GeoJSON, KML } from "ol/format";
+import { GeoJSON, KML, GPX, TopoJSON, IGC } from "ol/format";
 import { View } from "ol";
 
 import Feature from 'ol/Feature.js';
@@ -13,10 +13,16 @@ class JSONConverter {
 
     // constructor(layerCatalog?: LayerCatalog, sourceCatalog?: SourceCatalog, controlCatalog?: ControlCatalog) {
     constructor() {
-        this._catalog = { ...controlCatalog, ...layerCatalog, ...sourceCatalog, GeoJSON, KML, View };
+        this._catalog = {
+            ...controlCatalog,
+            ...layerCatalog,
+            ...sourceCatalog,
+            GeoJSON, KML, GPX, TopoJSON, IGC,
+            View
+        };
     }
 
-    // TODO: Remove, noot needed
+    // TODO: Remove, not needed anymore
     moveTypeDefToTop(options: JSONDef): JSONDef {
         let sortedOptions = {} as any
         Object.keys(options).sort().forEach(key => sortedOptions[key] = options[key]);

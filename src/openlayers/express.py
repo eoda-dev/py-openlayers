@@ -33,6 +33,16 @@ class GeoTIFFTileLayer(LayerLike):
         return m
 
 
+#class VectorLayer(LayerLike): ...
+
+#class GPXLayer(VectorLayer): ...
+
+#class GeoJSONLayer(VectorLayer): ...
+
+#class TopoJSONLayer(VectorLayer): ...
+
+
+# TODO: Move to VectorLayer
 class GeoJSONLayer(LayerLike):
     """Initialize a new `GeoJSONLayer` instance
 
