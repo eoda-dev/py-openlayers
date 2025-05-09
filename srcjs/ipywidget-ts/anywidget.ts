@@ -9,10 +9,12 @@ import type { Map } from "ol";
 
 // --- Main function
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
+  /*
   function updateModelMetadata(): void {
     model.set("metadata", mapWidget.getMetadata());
     model.save_changes();
   }
+  */
 
   function updateModelViewState(): void {
     const view = map.getView();
@@ -45,7 +47,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     mapWidget[call.method](...call.args);
   }
 
-  updateModelMetadata();
+  // updateModelMetadata();
 
   const map = mapWidget.getMap();
   updateModelViewState();
@@ -71,7 +73,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
       mapWidget[msg.method](...msg.args);
 
       // TODO: Move to 'map.ts'
-      updateModelMetadata();
+      // updateModelMetadata();
     } catch (error) {
       console.log("error in anywidget msg call", error);
     }

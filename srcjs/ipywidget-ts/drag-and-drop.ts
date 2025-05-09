@@ -35,12 +35,13 @@ function addDragAndDropToMap(map: Map, formats?: FeatureFormat[], style?: FlatSt
             const vectorSource = new VectorSource({
                 features: event.features,
             });
-            map.addLayer(
-                new VectorLayer({
-                    source: vectorSource,
-                    style: style || undefined
-                }),
-            );
+            const vectorLayer = new VectorLayer({
+                source: vectorSource,
+                style: style || undefined
+            });
+            vectorLayer.set("id", `drag-and-drop-${Date.now()}`);
+            vectorLayer.set("type", "VectorLayer");
+            map.addLayer(vectorLayer);
             map.getView().fit(vectorSource.getExtent());
         });
         map.addInteraction(dragAndDropInteraction);

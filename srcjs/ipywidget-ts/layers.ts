@@ -18,5 +18,6 @@ const drawVectorLayer = new VectorLayer({
     source: drawSource
 });
 drawVectorLayer.set("id", "draw-features");
+drawVectorLayer.set("type", "VectorLayer");
 
 export { layerCatalog, drawSource, drawVectorLayer };

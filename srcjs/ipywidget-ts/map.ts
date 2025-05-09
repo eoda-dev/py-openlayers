@@ -60,6 +60,7 @@ function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
   console.log("layerDef", layerDef);
   layer.set("id", layerDef.id);
+  layer.set("type", layerDef[TYPE_IDENTIFIER]);
   addGeojsonFeatures(layer, layerDef["source"][GEOJSON_IDENTIFIER]);
   return layer;
 }
@@ -95,6 +96,17 @@ export default class MapWidget {
       layers: baseLayers,
     });
 
+    this._map.on("loadend", () => this.updateMetadata());
+    this._map.getControls().on("propertychange", (e) => {
+      this.updateMetadata();
+      console.log("control added or removed", this._metadata);
+    });
+
+    this._map.getLayers().on("propertychange", (e) => {
+      this.updateMetadata();
+      console.log("layer added or removed", this._metadata);
+    });
+
     // Add controls
     for (let controlDef of mapOptions.controls || []) {
       this.addControl(controlDef);
@@ -119,7 +131,24 @@ export default class MapWidget {
   }
 
   updateMetadata(): void {
-
+    const layers = this._map.getLayers().getArray().map(l => ({
+      id: l.get("id"),
+      type: l.get("type"),
+      // extent: l.getExtent()
+      // properties: l.getProperties()
+    }));
+    this._metadata.layers = layers;
+    const controls = this._map.getControls().getArray().map(c => ({
+      id: c.get("id"),
+      type: c.get("type"),
+      // properties: c.getProperties()
+    }));
+    this._metadata.controls = controls;
+    if (this._model) {
+      this._model.set("metadata", this._metadata);
+      this._model.save_changes();
+      console.log("model data updated", this._metadata, this._map.getLayers().getArray());
+    }
   }
 
   setViewFromSource(layerId: string): void {
@@ -133,7 +162,7 @@ export default class MapWidget {
   setExtentFromSource(layerId: string): void {
     const source = this.getLayer(layerId)?.getSource() as VectorSource;
     if (source) {
-      // TODO: Only works if event is not already fired
+      // TODO: Only works if event is not already fired?
       source.on("featuresloadend", (e) => {
         const extent = source.getExtent();
         console.log("extent", layerId, extent);
@@ -177,10 +206,13 @@ export default class MapWidget {
   addLayer(layerDef: JSONDef): void {
     const layer = parseLayerDef(layerDef);
     this._map.addLayer(layer);
+    /*
     this._metadata.layers.push({
       id: layer.get("id"),
       type: layerDef[TYPE_IDENTIFIER]
     });
+    */
+    // this.updateMetadata();
     console.log("layer", layer.get("id"), "added", this._metadata);
   }
 
@@ -188,7 +220,8 @@ export default class MapWidget {
     const layer = this.getLayer(layerId);
     if (layer) {
       this._map.removeLayer(layer);
-      this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
+      // this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
+      // this.updateMetadata();
       console.log("layer", layerId, "removed", this._metadata);
     }
   }
@@ -231,11 +264,14 @@ export default class MapWidget {
   addControl(controlDef: JSONDef): void {
     const control = jsonConverter.parse(controlDef);
     control.set("id", controlDef.id);
+    control.set("type", controlDef[TYPE_IDENTIFIER])
     this._map.addControl(control);
+    /*
     this._metadata.controls.push({
       id: control.get("id"),
       type: controlDef[TYPE_IDENTIFIER],
     });
+    */
     console.log("control", control.get("id"), "added", this._metadata);
   }
 
@@ -243,7 +279,7 @@ export default class MapWidget {
     const control = this.getControl(controlId);
     if (control) {
       this._map.removeControl(control);
-      this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
+      // this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
       console.log("control", controlId, "removed", this._metadata);
     }
   }
