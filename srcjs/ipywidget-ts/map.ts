@@ -4,8 +4,10 @@ import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import Draw from 'ol/interaction/Draw.js';
 import { transformExtent, useGeographic } from "ol/proj";
-
+// import { State as SourceState } from "ol/source/Source";
+import { isEmpty } from "ol/extent";
 import { JSONConverter } from "./json";
+import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
 import { defaultControls } from "./controls";
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
@@ -33,37 +35,26 @@ type Metadata = {
 
 // --- Constants
 // TODO: Move to constants
-const TYPE_IDENTIFIER = "@@type";
-const GEOJSON_IDENTIFIER = "@@geojson";
+// const TYPE_IDENTIFIER = "@@type";
+// const GEOJSON_IDENTIFIER = "@@geojson";
 
 const jsonConverter = new JSONConverter();
 
-// --- Use [lon, lat] coordinates as input
+// --- Use geographic coordinates (WGS-84) in all methods
 useGeographic();
-
-// --- Helpers
-// TODO: Remove
-function parseViewDef(viewDef: JSONDef): View {
-  const view = jsonConverter.parse(viewDef) as View;
-  const center = view.getCenter();
-  console.log("view center", center);
-  // Not needed anymore because of `useGeographic()`
-  /*
-  if (center && view.getProjection().getCode() !== "EPSG:4326") {
-    const centerTransformed = fromLonLat(center);
-    console.log("view center transformed", centerTransformed);
-    view.setCenter(centerTransformed);
-  }*/
-
-  return view;
-}
 
 function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
   console.log("layerDef", layerDef);
-  layer.set("id", layerDef.id);
-  layer.set("type", layerDef[TYPE_IDENTIFIER]);
-  addGeojsonFeatures(layer, layerDef["source"][GEOJSON_IDENTIFIER]);
+  // Use setProperties instead
+  layer.setProperties({
+    id: layerDef.id,
+    type: layerDef[TYPE_IDENTIFIER]
+  });
+  // layer.set("id", layerDef.id);
+  // layer.set("type", layerDef[TYPE_IDENTIFIER]);
+
+  addGeojsonFeatures(layer, layerDef.source[GEOJSON_IDENTIFIER]);
   return layer;
 }
 
@@ -86,22 +77,23 @@ export default class MapWidget {
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
     this._model = model;
 
-    // const view = parseViewDef(mapOptions.view);
     const view = jsonConverter.parse(mapOptions.view) as View;
     // let baseControls: Control[] = [];
-    let baseLayers: Layer[] = [];
+    // let baseLayers: Layer[] = [];
 
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
       view: view,
-      controls: defaultControls,
-      // controls: defaultControls().extend(baseControls),
-      layers: baseLayers,
+      controls: [], // defaultControls,
+      layers: [] // baseLayers,
     });
 
     // events
     addEventListernersToMapWidget(this);
+
+    for (const defaultControl of defaultControls)
+      this._map.addControl(defaultControl);
     /*
     this._map.getLayers().on("add", (e) => {
       const layer = e.element;
@@ -175,22 +167,28 @@ export default class MapWidget {
   */
 
   setViewFromSource(layerId: string): void {
-    const layer = this.getLayer(layerId);
-    const source = layer?.getSource();
-    const view = source?.getView();
+    const view = this.getLayer(layerId)?.getSource()?.getView();
+    // const source = layer?.getSource();
+    // const view = source?.getView();
     if (view)
       this._map.setView(view);
   }
 
-  setExtentFromSource(layerId: string): void {
+  setExtendByLayerId(layerId: string): void {
     const source = this.getLayer(layerId)?.getSource() as VectorSource;
+    this.setExtentFromSource(source)
+  }
+
+  setExtentFromSource(source?: VectorSource): void {
     if (source) {
-      // TODO: Only works if event is not already fired?
-      source.on("featuresloadend", (e) => {
-        const extent = source.getExtent();
-        console.log("extent", layerId, extent);
-        this.fitBounds(extent);
-      })
+      if (isEmpty(source.getExtent())) {
+        source.on("featuresloadend", (e) => {
+          this._map.getView().fit(source.getExtent());
+        });
+      }
+      else {
+        this._map.getView().fit(source.getExtent());
+      }
     }
   }
 
@@ -199,10 +197,12 @@ export default class MapWidget {
   }
 
   // TODO: obsolete since `useGeographic()` does this for us
+  /*
   fitBoundsFromLonLat(extentLonLat: any): void {
     const exent = transformExtent(extentLonLat, "EPSG:4326", this._map.getView().getProjection());
     this.fitBounds(exent);
   }
+  */
 
   setView(viewDef: JSONDef): void {
     const view = jsonConverter.parse(viewDef) as View;
@@ -228,42 +228,40 @@ export default class MapWidget {
 
   addLayer(layerDef: JSONDef): void {
     const layer = parseLayerDef(layerDef);
+
     // Fit bounds for VectorSources
     if (layer.get("fitBounds")) {
       const source = layer.getSource() as VectorSource;
+      this.setExtentFromSource(source);
+      /*
       if (source) {
-        source.on("featuresloadend", (e) => {
+        if (isEmpty(source.getExtent())) {
+          source.on("featuresloadend", (e) => {
+            this._map.getView().fit(source.getExtent());
+          });
+        }
+        else {
           this._map.getView().fit(source.getExtent());
-        });
+        }
       }
+      */
     }
 
     this._map.addLayer(layer);
-    /*
-    this._metadata.layers.push({
-      id: layer.get("id"),
-      type: layerDef[TYPE_IDENTIFIER]
-    });
-    */
-    // this.updateMetadata();
-    // console.log("layer", layer.get("id"), "added", this._metadata);
   }
 
   removeLayer(layerId: string): void {
     const layer = this.getLayer(layerId);
     if (layer) {
       this._map.removeLayer(layer);
-      // this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
-      // this.updateMetadata();
-      // console.log("layer", layerId, "removed", this._metadata);
     }
   }
 
   setLayerStyle(layerId: string, style: any): void {
     const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
     if (layer) {
-      console.log("set layer style", layerId, style);
-      layer.setStyle(style)
+      layer.setStyle(style);
+      console.log("style", layerId, "updated", style);
     }
   }
 

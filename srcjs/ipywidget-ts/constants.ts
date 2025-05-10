@@ -1,0 +1,4 @@
+const TYPE_IDENTIFIER = "@@type";
+const GEOJSON_IDENTIFIER = "@@geojson";
+
+export { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER };

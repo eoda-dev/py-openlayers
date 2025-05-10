@@ -52,6 +52,7 @@ class OLAccessor:
         self,
         style: FlatStyle | dict = None,
         layer_id: str = "geopandas",
+        fit_bounds: bool = True,
         webgl: bool = True,
         **kwargs,
     ) -> VectorLayer | WebGLVectorLayer:
@@ -62,7 +63,13 @@ class OLAccessor:
         """
         style = style or self._default_style
         layer_class = WebGLVectorLayer if webgl else VectorLayer
-        layer = layer_class(id=layer_id, style=style, source=self.to_source(), **kwargs)
+        layer = layer_class(
+            id=layer_id,
+            style=style,
+            fit_bounds=fit_bounds,
+            source=self.to_source(),
+            **kwargs,
+        )
         return layer
 
     def explore(
@@ -71,6 +78,7 @@ class OLAccessor:
         tooltip: bool | str = True,
         controls: list[ControlT | dict] = None,
         layer_id: str = "geopandas",
+        fit_bounds: bool = True,
         webgl: bool = True,
         **kwargs,
     ) -> MapWidget:
@@ -84,13 +92,16 @@ class OLAccessor:
                 or a mustache template string to add a custom tooltip
             controls (list[ControlT | dict]): Controls initially added to the map
             layer_id (str): The ID of the layer
+            fit_bounds (bool): Whether to fit bounds
             webgl (bool): Whether the layer should be added to the map
                 as `WebGLVectorLayer` or as `VectorLayer`
 
         Returns:
             A new `MapWidget` instance
         """
-        layer = self.to_layer(style=style, layer_id=layer_id, webgl=webgl)
+        layer = self.to_layer(
+            style=style, layer_id=layer_id, fit_bounds=fit_bounds, webgl=webgl
+        )
 
         m = MapWidget(controls=controls, **kwargs)
         m.add_layer(layer)
