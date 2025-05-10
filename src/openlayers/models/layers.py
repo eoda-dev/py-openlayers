@@ -55,9 +55,15 @@ class VectorTileLayer(Layer):
 
         return v
 
+
+class WebGLVectorTileLayer(VectorTileLayer): ...
+
+
 class WebGLTileLayer(Layer):
     style: dict | None = None
 
 
 # --- Layer type
-LayerT = Union[Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer]
+LayerT = Union[
+    Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer
+]

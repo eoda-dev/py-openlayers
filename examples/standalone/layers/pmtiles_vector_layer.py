@@ -4,7 +4,10 @@ from openlayers.styles import default_style
 
 url = "https://r2-public.protomaps.com/protomaps-sample-datasets/nz-buildings-v3.pmtiles"
 
-pmtiles = ol.layers.VectorTileLayer(
+LayerModel = ol.layers.VectorTileLayer
+LayerModel = ol.layers.WebGLVectorTileLayer
+
+pmtiles = LayerModel(
     id="pmtiles",
     style=default_style(stroke_color="green", stroke_with=3),
     source=PMTilesVectorSource(

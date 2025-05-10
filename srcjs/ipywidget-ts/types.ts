@@ -14,7 +14,8 @@ type LayerCatalog = {
     VectorLayer: any;
     WebGLVectorLayer: any;
     WebGLTileLayer: any;
-    VectorTileLayer: any
+    VectorTileLayer: any;
+    [key: string]: any;
 }
 type LayerCatalogKey = keyof LayerCatalog;
 

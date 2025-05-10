@@ -1,8 +1,13 @@
-import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
+import TileLayer from "ol/layer/Tile";
+import VectorTileLayer from "ol/layer/VectorTile";
+
+import ImageLayer from "ol/layer/Image";
+
+// WebGL
 import WebGLVectorLayer from 'ol/layer/WebGLVector.js';
 import WebGLTileLayer from 'ol/layer/WebGLTile.js';
-import VectorTileLayer from "ol/layer/VectorTile";
+import WebGLVectorTileLayer from 'ol/layer/WebGLVectorTile.js';
 
 import VectorSource from "ol/source/Vector";
 
@@ -11,7 +16,9 @@ const layerCatalog: LayerCatalog = {
     VectorLayer: VectorLayer,
     WebGLVectorLayer: WebGLVectorLayer,
     WebGLTileLayer: WebGLTileLayer,
-    VectorTileLayer: VectorTileLayer
+    VectorTileLayer: VectorTileLayer,
+    WebGLVectorTileLayer: WebGLVectorTileLayer,
+    ImageLayer: ImageLayer
 };
 
 // Draw interaction
