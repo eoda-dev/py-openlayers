@@ -8,6 +8,7 @@ from .models.layers import (
     VectorLayer,
     WebGLTileLayer,
     WebGLVectorLayer,
+    VectorTileLayer
 )
 
 __all__ = [

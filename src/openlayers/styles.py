@@ -40,7 +40,7 @@ class FlatStyle(BaseModel):
         return super().model_dump(exclude_none=True)
 
 
-def default_style() -> FlatStyle:
+def default_style(**kwargs) -> FlatStyle:
     return FlatStyle(
         fill_color="rgba(255,255,255,0.4)",
         # ---
@@ -51,7 +51,7 @@ def default_style() -> FlatStyle:
         circle_fill_color="rgba(255,255,255,0.4)",
         circle_stroke_width=1.25,
         circle_stroke_color="#3399CC",
-    )
+    ).model_copy(update=kwargs)
 
 
 class CircleStyle(FlatStyle): ...

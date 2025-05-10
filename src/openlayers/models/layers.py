@@ -45,9 +45,19 @@ class VectorLayer(Layer):
 class WebGLVectorLayer(VectorLayer): ...
 
 
+class VectorTileLayer(Layer):
+    style: dict | FlatStyle | None = None
+
+    @field_validator("style")
+    def validate_style(cls, v):
+        if isinstance(v, FlatStyle):
+            return v.model_dump()
+
+        return v
+
 class WebGLTileLayer(Layer):
     style: dict | None = None
 
 
 # --- Layer type
-LayerT = Union[Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer]
+LayerT = Union[Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer]

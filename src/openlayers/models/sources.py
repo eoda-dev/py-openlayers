@@ -34,6 +34,19 @@ class ImageTileSource(Source):
     min_zoom: float | int | None = Field(0, serialization_alias="minZoom")
     max_zoom: float | int | None = Field(20, serialization_alias="maxZoom")
 
+"""
+const vectorLayer = new VectorTile({
+  declutter: true,
+  source: new PMTilesVectorSource({
+    url: "https://r2-public.protomaps.com/protomaps-sample-datasets/nz-buildings-v3.pmtiles",
+    attributions: ["© Land Information New Zealand"],
+  }),
+"""
+
+class PMTilesVectorSource(Source):
+    url: str
+    attributions: list[str] = None
+
 
 # --- Source type
-SourceT = Union[OSM, VectorSource, GeoTIFFSource, ImageTileSource]
+SourceT = Union[OSM, VectorSource, GeoTIFFSource, ImageTileSource, PMTilesVectorSource]

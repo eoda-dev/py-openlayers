@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "mustache": "^4.2.0",
-    "ol": "latest"
+    "ol": "latest",
+    "ol-pmtiles": "^2.0.2"
   }
 }
