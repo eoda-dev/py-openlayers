@@ -147,6 +147,11 @@ export default class MapWidget {
     return this._metadata;
   }
 
+  getAnywidgetModel(): AnyModel | undefined {
+    return this._model;
+  }
+
+  /*
   updateMetadata(): void {
     const layers = this._map.getLayers().getArray().map(l => ({
       id: l.get("id"),
@@ -167,6 +172,7 @@ export default class MapWidget {
       console.log("model data updated", this._metadata, this._map.getLayers().getArray());
     }
   }
+  */
 
   setViewFromSource(layerId: string): void {
     const layer = this.getLayer(layerId);

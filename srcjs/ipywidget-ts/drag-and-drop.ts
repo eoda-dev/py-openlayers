@@ -39,8 +39,12 @@ function addDragAndDropToMap(map: Map, formats?: FeatureFormat[], style?: FlatSt
                 source: vectorSource,
                 style: style || undefined
             });
-            vectorLayer.set("id", `drag-and-drop-${Date.now()}`);
-            vectorLayer.set("type", "VectorLayer");
+            // vectorLayer.set("id", `drag-and-drop-${Date.now()}`);
+            // vectorLayer.set("type", "VectorLayer");
+            vectorLayer.setProperties({
+                id: `drag-and-drop-${Date.now()}`,
+                type: "VectorLayer"
+            });
             map.addLayer(vectorLayer);
             map.getView().fit(vectorSource.getExtent());
         });

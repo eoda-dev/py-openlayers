@@ -13,6 +13,14 @@ function filter(obj: any): any {
 function addEventListernersToMapWidget(mapWidget: MapWidget): void {
     const map = mapWidget.getMap();
     const metadata = mapWidget.getMetadata();
+    const model = mapWidget.getAnywidgetModel();
+
+    const updateModel = (): void => {
+        if (model) {
+            model.set("metadata", metadata);
+            model.save_changes();
+        }
+    }
 
     // --- Layers
     map.getLayers().on("add", (e) => {
@@ -20,6 +28,7 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
         const props = filter(layer.getProperties());
         metadata.layers.push(props);
         console.log("layer", layer.get("id"), "added", metadata);
+        updateModel();
     });
 
     map.getLayers().on("remove", (e) => {
@@ -27,6 +36,7 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
         const layerId = layer.get("id");
         metadata.layers = metadata.layers.filter(item => item.id != layerId);
         console.log("layer", layerId, "removed", metadata);
+        updateModel();
     });
 
     // --- Controls
@@ -34,6 +44,7 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
         const control = e.element;
         metadata.controls.push(control.getProperties());
         console.log("control", control.get("id"), "added", metadata);
+        updateModel();
     });
 
     map.getControls().on("remove", (e) => {
@@ -41,6 +52,7 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
         const controlId = control.get("id");
         metadata.controls = metadata.controls.filter(item => item.id != controlId);
         console.log("control", controlId, "removed", metadata);
+        updateModel();
     });
 }
 
