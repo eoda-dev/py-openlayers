@@ -15,7 +15,7 @@ topojson_layer = ol.VectorLayer(
 
 zoom_slider = ol.ZoomSliderControl()
 
-m = ol.Map(layers=[ol.BasemapLayer.carto()])
+m = ol.Map(ol.View(rotation=3.14 / 8), layers=[ol.BasemapLayer.carto()])
 m.add_control(zoom_slider)
 m.add_layer(topojson_layer)
 m.add_tooltip()

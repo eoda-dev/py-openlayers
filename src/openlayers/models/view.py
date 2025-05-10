@@ -16,17 +16,6 @@ class Projection(object):
         return f"EPSG:{code}"
 
 
-# TODO: Obsolete, remove
-"""
-class ViewOptions(MyBaseModel):
-    center: tuple[float, float] | None = (0, 0)
-    zoom: float | None = 0
-    projection: str | None = Projection.WEB_MERCATOR
-    min_zoom: int | float | None = None
-    max_zoom: int | float | None = None
-"""
-
-
 class View(OLBaseModel):
     """View object
 
@@ -36,6 +25,8 @@ class View(OLBaseModel):
     Attributes:
         center (tuple[float, float]): The centerpoint of the map as `(lon, lat)` pair
         zoom (float | int): The zoom level of the map
+        projection (str): ...
+        rotation (float | int): ...
         extent (tuple[float, float, float, float] | list[float, float, float, float]): ...
         min_zoom (float | int): The minimum zoom level of the map
         max_zoom (float | int): The maximum zoom level of the map
@@ -44,6 +35,7 @@ class View(OLBaseModel):
     center: tuple[float, float] | None = (0, 0)
     zoom: float | int | None = 0
     projection: str | None = Projection.WEB_MERCATOR
+    rotation: float | int | None = None
     extent: (
         tuple[float, float, float, float] | list[float, float, float, float] | None
     ) = None
