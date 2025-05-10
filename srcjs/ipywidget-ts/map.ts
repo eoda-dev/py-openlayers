@@ -1,11 +1,12 @@
 import { Map, View } from "ol";
-import { defaults as defaultControls } from 'ol/control/defaults.js';
+// import { defaults as defaultControls } from 'ol/control/defaults.js';
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import Draw from 'ol/interaction/Draw.js';
 import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 
 import { JSONConverter } from "./json";
+import { defaultControls } from "./controls";
 import { addTooltipToMap } from "./tooltip";
 import { addSelectFeaturesToMap } from "./select-features";
 import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
@@ -85,14 +86,15 @@ export default class MapWidget {
     this._model = model;
 
     const view = parseViewDef(mapOptions.view);
-    let baseControls: Control[] = [];
+    // let baseControls: Control[] = [];
     let baseLayers: Layer[] = [];
 
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
       view: view,
-      controls: defaultControls().extend(baseControls),
+      controls: defaultControls,
+      // controls: defaultControls().extend(baseControls),
       layers: baseLayers,
     });
 

@@ -44,6 +44,14 @@ class OverviewMapControl(Control):
     layers: list[dict | LayerT] = [TileLayer(source=OSM())]
 
 
+class ZoomControl(Control):
+    zoom_in_label: str = Field("+", serialization_alias="zoomInLabel")
+    zoom_out_label: str = Field("-", serialization_alias="zoomOutLabel")
+
+
+class RotateControl(Control): ...
+
+
 # --- Custom controls
 class InfoBox(Control):
     html: str
@@ -59,5 +67,7 @@ ControlT = Union[
     ScaleLineControl,
     ZoomSliderControl,
     OverviewMapControl,
+    ZoomControl,
+    RotateControl,
     InfoBox,
 ]

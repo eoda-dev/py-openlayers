@@ -8,6 +8,8 @@ countries = ol.WebGLVectorLayer(source=ol.VectorSource(url=url))
 m = ol.Map(ol.View(projection="EPSG:4326"), layers=[BasemapLayer.osm(), countries])
 m.add_tooltip("{{ name }}")
 # m.add_tooltip()
+m.remove_control("zoom")
+m.add_control(ol.controls.ZoomControl(zoom_in_label="I", zoom_out_label="O"))
 m.add_control(ol.controls.ZoomSliderControl())
 m.add_control(ol.controls.InfoBox(
     html="PyOL",

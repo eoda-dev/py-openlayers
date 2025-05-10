@@ -9,6 +9,8 @@ from .models.controls import (
     OverviewMapControl,
     ScaleLineControl,
     ZoomSliderControl,
+    ZoomControl,
+    RotateControl
 )
 
 __all__ = [
