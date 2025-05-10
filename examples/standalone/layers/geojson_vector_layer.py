@@ -11,7 +11,11 @@ topojson_layer = ol.VectorLayer(
     fit_bounds=True
 )
 
+zoom_slider = ol.ZoomSliderControl()
+
 m = ol.Map(layers=[ol.BasemapLayer.carto()])
+m.add_control(zoom_slider)
 m.add_layer(topojson_layer)
 m.add_tooltip()
+# m.remove_control(zoom_slider.id)
 m.save("/tmp/ol-example.html")

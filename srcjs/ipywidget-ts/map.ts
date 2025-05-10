@@ -3,11 +3,12 @@ import { Map, View } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import Draw from 'ol/interaction/Draw.js';
-import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
+import { transformExtent, useGeographic } from "ol/proj";
 
 import { JSONConverter } from "./json";
 import { defaultControls } from "./controls";
 import { addTooltipToMap } from "./tooltip";
+import { addEventListernersToMapWidget } from "./events";
 import { addSelectFeaturesToMap } from "./select-features";
 import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
 import { drawSource, drawVectorLayer } from "./layers";
@@ -19,7 +20,6 @@ import type VectorSource from "ol/source/Vector";
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 import type { Coordinate } from "ol/coordinate";
-import type FeatureFormat from "ol/format/Feature";
 import type { FlatStyle } from "ol/style/flat";
 import type { MyMapOptions } from ".";
 
@@ -42,6 +42,7 @@ const jsonConverter = new JSONConverter();
 useGeographic();
 
 // --- Helpers
+// TODO: Remove
 function parseViewDef(viewDef: JSONDef): View {
   const view = jsonConverter.parse(viewDef) as View;
   const center = view.getCenter();
@@ -85,7 +86,8 @@ export default class MapWidget {
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
     this._model = model;
 
-    const view = parseViewDef(mapOptions.view);
+    // const view = parseViewDef(mapOptions.view);
+    const view = jsonConverter.parse(mapOptions.view) as View;
     // let baseControls: Control[] = [];
     let baseLayers: Layer[] = [];
 
@@ -99,10 +101,15 @@ export default class MapWidget {
     });
 
     // events
+    addEventListernersToMapWidget(this);
+    /*
     this._map.getLayers().on("add", (e) => {
       const layer = e.element;
       console.log("layer add", layer.getProperties());
     });
+    */
+
+    /*
     this._map.on("loadend", () => this.updateMetadata());
 
     this._map.getControls().on("propertychange", (e) => {
@@ -114,6 +121,7 @@ export default class MapWidget {
       this.updateMetadata();
       console.log("layer added or removed", this._metadata);
     });
+    */
     // ---
 
     // Add controls
@@ -232,7 +240,7 @@ export default class MapWidget {
     });
     */
     // this.updateMetadata();
-    console.log("layer", layer.get("id"), "added", this._metadata);
+    // console.log("layer", layer.get("id"), "added", this._metadata);
   }
 
   removeLayer(layerId: string): void {
@@ -241,7 +249,7 @@ export default class MapWidget {
       this._map.removeLayer(layer);
       // this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
       // this.updateMetadata();
-      console.log("layer", layerId, "removed", this._metadata);
+      // console.log("layer", layerId, "removed", this._metadata);
     }
   }
 
@@ -282,8 +290,9 @@ export default class MapWidget {
 
   addControl(controlDef: JSONDef): void {
     const control = jsonConverter.parse(controlDef);
-    control.set("id", controlDef.id);
-    control.set("type", controlDef[TYPE_IDENTIFIER])
+    // control.set("id", controlDef.id);
+    // control.set("type", controlDef[TYPE_IDENTIFIER])
+    control.setProperties({ id: controlDef.id, type: controlDef[TYPE_IDENTIFIER] });
     this._map.addControl(control);
     /*
     this._metadata.controls.push({
@@ -291,7 +300,7 @@ export default class MapWidget {
       type: controlDef[TYPE_IDENTIFIER],
     });
     */
-    console.log("control", control.get("id"), "added", this._metadata);
+    // console.log("control", control.get("id"), "added", this._metadata);
   }
 
   removeControl(controlId: string): void {
@@ -299,7 +308,7 @@ export default class MapWidget {
     if (control) {
       this._map.removeControl(control);
       // this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
-      console.log("control", controlId, "removed", this._metadata);
+      // console.log("control", controlId, "removed", this._metadata);
     }
   }
 
