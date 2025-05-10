@@ -32,6 +32,7 @@ class TileLayer(Layer): ...
 
 class VectorLayer(Layer):
     style: dict | FlatStyle = default_style()
+    fit_bounds: bool = Field(False, serialization_alias="fitBounds")
 
     @field_validator("style")
     def validate_style(cls, v):

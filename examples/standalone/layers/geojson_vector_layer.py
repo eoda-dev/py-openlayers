@@ -7,7 +7,8 @@ topojson_layer = ol.VectorLayer(
         url=data,
         format=ol.formats.GeoJSON()
     ),
-    style=ol.FlatStyle(fill_color="rgba(255,210,120,0.5)", stroke_color="green", stroke_width=3, circle_radius=5)
+    style=ol.FlatStyle(fill_color="rgba(255,210,120,0.5)", stroke_color="green", stroke_width=3, circle_radius=5),
+    fit_bounds=True
 )
 
 m = ol.Map(layers=[ol.BasemapLayer.carto()])

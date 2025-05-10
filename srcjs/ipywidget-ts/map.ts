@@ -98,7 +98,13 @@ export default class MapWidget {
       layers: baseLayers,
     });
 
+    // events
+    this._map.getLayers().on("add", (e) => {
+      const layer = e.element;
+      console.log("layer add", layer.getProperties());
+    });
     this._map.on("loadend", () => this.updateMetadata());
+
     this._map.getControls().on("propertychange", (e) => {
       this.updateMetadata();
       console.log("control added or removed", this._metadata);
@@ -108,6 +114,7 @@ export default class MapWidget {
       this.updateMetadata();
       console.log("layer added or removed", this._metadata);
     });
+    // ---
 
     // Add controls
     for (let controlDef of mapOptions.controls || []) {
@@ -207,6 +214,16 @@ export default class MapWidget {
 
   addLayer(layerDef: JSONDef): void {
     const layer = parseLayerDef(layerDef);
+    // Fit bounds for VectorSources
+    if (layer.get("fitBounds")) {
+      const source = layer.getSource() as VectorSource;
+      if (source) {
+        source.on("featuresloadend", (e) => {
+          this._map.getView().fit(source.getExtent());
+        });
+      }
+    }
+
     this._map.addLayer(layer);
     /*
     this._metadata.layers.push({
