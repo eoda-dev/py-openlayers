@@ -5,17 +5,10 @@ import { parseClickEvent, parseView } from "./utils";
 
 // --- Types
 import type { AnyModel } from "@anywidget/types";
-import type { Map } from "ol";
 
 // --- Main function
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
-  /*
-  function updateModelMetadata(): void {
-    model.set("metadata", mapWidget.getMetadata());
-    model.save_changes();
-  }
-  */
-
+  // TODO: Move to events?
   function updateModelViewState(): void {
     const view = map.getView();
     const value = parseView(view);
@@ -47,12 +40,10 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     mapWidget[call.method](...call.args);
   }
 
-  // updateModelMetadata();
-
   const map = mapWidget.getMap();
   updateModelViewState();
+
   map.on("moveend", (e) => {
-    // console.log("change event", map.getView());
     updateModelViewState();
   })
 
@@ -71,9 +62,6 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
     try {
       // @ts-expect-error
       mapWidget[msg.method](...msg.args);
-
-      // TODO: Move to 'map.ts'
-      // updateModelMetadata();
     } catch (error) {
       console.log("error in anywidget msg call", error);
     }
