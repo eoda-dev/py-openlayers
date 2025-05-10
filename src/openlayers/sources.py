@@ -7,6 +7,7 @@ from .models.sources import (
     Source,
     SourceT,
     VectorSource,
+    PMTilesVectorSource
 )
 
 __all__ = ["OSM", "GeoTIFFSource", "VectorSource", "ImageTileSource"]

@@ -34,6 +34,7 @@ class ImageTileSource(Source):
     min_zoom: float | int | None = Field(0, serialization_alias="minZoom")
     max_zoom: float | int | None = Field(20, serialization_alias="maxZoom")
 
+
 """
 const vectorLayer = new VectorTile({
   declutter: true,
@@ -43,10 +44,16 @@ const vectorLayer = new VectorTile({
   }),
 """
 
+# PMTiles extension
+# See https://docs.protomaps.com/pmtiles/openlayers
 class PMTilesVectorSource(Source):
     url: str
     attributions: list[str] = None
 
 
+class PMTilesRasterSource(PMTilesVectorSource):
+    tile_size: tuple[int, int] = Field(None, serialization_alias="tileSize")
+
+
 # --- Source type
-SourceT = Union[OSM, VectorSource, GeoTIFFSource, ImageTileSource, PMTilesVectorSource]
+SourceT = Union[OSM, VectorSource, GeoTIFFSource, ImageTileSource, PMTilesVectorSource, PMTilesRasterSource]

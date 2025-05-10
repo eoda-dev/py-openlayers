@@ -2,7 +2,7 @@ import OSM from "ol/source/OSM";
 import VectorSource from "ol/source/Vector";
 import GeoTIFFSource from 'ol/source/GeoTIFF.js';
 import ImageTileSource from "ol/source/ImageTile";
-import { PMTilesVectorSource } from "ol-pmtiles";
+import { PMTilesVectorSource, PMTilesRasterSource } from "ol-pmtiles";
 
 const sourceCatalog: SourceCatalog = {
     OSM: OSM,
@@ -10,7 +10,8 @@ const sourceCatalog: SourceCatalog = {
     GeoTIFFSource: GeoTIFFSource,
     GeoJSONSource: VectorSource,
     ImageTileSource: ImageTileSource,
-    PMTilesVectorSource: PMTilesVectorSource
+    PMTilesVectorSource: PMTilesVectorSource,
+    PMTilesRasterSource: PMTilesRasterSource
 };
 
 export { sourceCatalog };

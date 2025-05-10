@@ -3,12 +3,14 @@ import openlayers as ol
 data = "https://openlayers.org/en/latest/examples/data/geojson/roads-seoul.geojson"
 
 topojson_layer = ol.VectorLayer(
-    source=ol.VectorSource(
-        url=data,
-        format=ol.formats.GeoJSON()
+    source=ol.VectorSource(url=data, format=ol.formats.GeoJSON()),
+    style=ol.FlatStyle(
+        fill_color="rgba(255,210,120,0.5)",
+        stroke_color="green",
+        stroke_width=3,
+        circle_radius=5,
     ),
-    style=ol.FlatStyle(fill_color="rgba(255,210,120,0.5)", stroke_color="green", stroke_width=3, circle_radius=5),
-    fit_bounds=True
+    fit_bounds=True,
 )
 
 zoom_slider = ol.ZoomSliderControl()
