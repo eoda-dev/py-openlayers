@@ -7,7 +7,6 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import VectorLayer from "ol/layer/Vector";
 
-
 import { featureToGeoJSON } from "./utils";
 
 // TODO: Should be a parameter
@@ -24,7 +23,7 @@ const highlightStyle = new Style({
 });
 
 // TODO: Setting new style only works for 'VectorLayer'
-// For 'WebGLVectorLayer' we need to add complete highlight-layer on topt of the current one 
+// For 'WebGLVectorLayer' we need to add complete highlight-layer on top of the current one 
 function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
     const selected = [] as Feature[];
 

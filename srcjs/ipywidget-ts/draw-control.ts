@@ -1,10 +1,20 @@
+/**
+ * See https://openlayers.org/en/latest/examples/draw-features.html
+ * and https://openlayers.org/en/latest/examples/draw-and-modify-features.html
+ * */
 import type { Map } from "ol";
 import type { Type as GeomType } from "ol/geom/Geometry";
 
 import Control from "ol/control/Control";
+
 import Draw from "ol/interaction/Draw";
+import Modify from 'ol/interaction/Modify.js';
+import Snap from 'ol/interaction/Snap.js';
+
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
+
+import { featureToGeoJSON } from "./utils";
 
 type DrawOptions = {
     target?: string | HTMLElement | undefined;
@@ -39,25 +49,34 @@ function createSelectElement(): HTMLSelectElement {
     return select;
 }
 
-function x(map: Map, select: HTMLSelectElement): void {
+function toggleDrawInteraction(map: Map, select: HTMLSelectElement): void {
     let draw: Draw;
+    let snap: Snap;
+
+    const modify = new Modify({ source: source });
+    map.addInteraction(modify);
 
     function addInteraction() {
         const value = select.value;
-        if (value !== 'None') {
-            draw = new Draw({
-                source: source,
-                type: select.value as GeomType
+        if (value === "None")
+            return;
 
-            });
-            map.addInteraction(draw);
-        }
+        draw = new Draw({
+            source: source,
+            type: value as GeomType
+
+        });
+        map.addInteraction(draw);
+        snap = new Snap({ source: source });
+        map.addInteraction(snap);
     }
 
-    select.onchange = function () {
+    select.onchange = () => {
         map.removeInteraction(draw);
+        map.removeInteraction(snap);
         addInteraction();
     };
+
     addInteraction();
 }
 
@@ -72,22 +91,20 @@ class DrawControl extends Control {
             target: options.target
         });
         this.setProperties({ id: "draw", type: "DrawControl" });
-        this.once("change", (e) => {
-            console.log("draw map", e.target.getMap());
-        });
     }
 
     y(): void {
-        console.log("map", this.getMap());
+        // console.log("map", this.getMap());
         const map = this.getMap();
         map?.addLayer(vectorLayer);
         const select = createSelectElement();
 
         // @ts-expect-error
-        x(map, select);
+        toggleDrawInteraction(map, select);
         this.element.appendChild(select);
-
     }
+
+    getGeoJSONFeatures(): any { }
 }
 
 export { DrawControl };
