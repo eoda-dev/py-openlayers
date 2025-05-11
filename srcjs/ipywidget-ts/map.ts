@@ -9,6 +9,9 @@ import { isEmpty } from "ol/extent";
 import { JSONConverter } from "./json";
 import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
 import { defaultControls } from "./controls";
+
+import { DrawControl } from "./draw-control";
+
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
 import { addSelectFeaturesToMap } from "./select-features";
@@ -91,6 +94,8 @@ export default class MapWidget {
 
     // events
     addEventListernersToMapWidget(this);
+
+    this._map.addControl(new DrawControl({}));
 
     for (const defaultControl of defaultControls)
       this._map.addControl(defaultControl);
