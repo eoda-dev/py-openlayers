@@ -1,4 +1,5 @@
 import type { Map } from "ol";
+import type { Type as GeomType } from "ol/geom/Geometry";
 
 import Control from "ol/control/Control";
 import Draw from "ol/interaction/Draw";
@@ -28,6 +29,7 @@ const selectOptions = [
 
 function createSelectElement(): HTMLSelectElement {
     const select = document.createElement("select");
+    select.style.padding = "2px";
     for (const item of selectOptions) {
         const option = document.createElement("option");
         option.value = item.value;
@@ -45,9 +47,7 @@ function x(map: Map, select: HTMLSelectElement): void {
         if (value !== 'None') {
             draw = new Draw({
                 source: source,
-
-                // @ts-expect-error
-                type: select.value
+                type: select.value as GeomType
 
             });
             map.addInteraction(draw);
@@ -65,22 +65,16 @@ class DrawControl extends Control {
     constructor(options?: DrawOptions) {
         options = options || {};
         const el = document.createElement("div");
-        el.className = "ol-control ol-unselectable draw-control";
-        el.style.cssText = options.cssText || "top: .5em; left: 35px; padding: 5px;";
+        el.className = "ol-draw ol-control ol-unselectable";
+        el.style.cssText = options.cssText || "top: .5em; left: 35px;";
         super({
             element: el,
             target: options.target
-        })
-
-        // const map = this.getMap();
-        // console.log("map", map);
-        // map?.addLayer(vectorLayer);
-
-        // const select = createSelectElement();
-        // ts-expect-error
-        // x(map, select);
-        // el.appendChild(select);
-        // this.y()
+        });
+        this.setProperties({ id: "draw", type: "DrawControl" });
+        this.once("change", (e) => {
+            console.log("draw map", e.target.getMap());
+        });
     }
 
     y(): void {

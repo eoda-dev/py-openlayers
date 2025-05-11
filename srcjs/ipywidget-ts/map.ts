@@ -16,6 +16,8 @@ import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
 import { addSelectFeaturesToMap } from "./select-features";
 import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
+
+// TODO: Remove draw from here
 import { drawSource, drawVectorLayer } from "./layers";
 
 // --- Types
