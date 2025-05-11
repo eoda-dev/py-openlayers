@@ -95,7 +95,9 @@ export default class MapWidget {
     // events
     addEventListernersToMapWidget(this);
 
-    this._map.addControl(new DrawControl({}));
+    const d = new DrawControl()
+    this._map.addControl(d);
+    d.y();
 
     for (const defaultControl of defaultControls)
       this._map.addControl(defaultControl);
