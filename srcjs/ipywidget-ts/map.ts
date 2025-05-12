@@ -99,7 +99,7 @@ export default class MapWidget {
 
     const d = new DrawControl()
     this._map.addControl(d);
-    d.y();
+    d.onAdd();
 
     for (const defaultControl of defaultControls)
       this._map.addControl(defaultControl);

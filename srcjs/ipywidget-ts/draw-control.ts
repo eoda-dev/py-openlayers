@@ -25,6 +25,10 @@ let draw: Draw;
 let snap: Snap;
 
 const source = new VectorSource({ wrapX: false });
+source.on("addfeature", (e) => {
+    const features = source.getFeatures().map(f => featureToGeoJSON(f));
+    console.log("draw features", features);
+})
 const modify = new Modify({ source: source });
 const vectorLayer = new VectorLayer({
     source: source,
@@ -96,8 +100,7 @@ class DrawControl extends Control {
         this.setProperties({ id: "draw", type: "DrawControl" });
     }
 
-    y(): void {
-        // console.log("map", this.getMap());
+    onAdd(): void {
         const map = this.getMap();
         map?.addLayer(vectorLayer);
         const select = createSelectElement();
@@ -116,7 +119,13 @@ class DrawControl extends Control {
         return snap;
     }
 
-    getGeoJSONFeatures(): any { }
+    getGeoJSONFeatures(): any[] {
+        return source.getFeatures().map(f => featureToGeoJSON(f));
+    }
+
+    getLayer(): VectorLayer {
+        return vectorLayer;
+    }
 }
 
 export { DrawControl };
