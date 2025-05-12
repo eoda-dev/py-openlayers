@@ -25,10 +25,12 @@ let draw: Draw;
 let snap: Snap;
 
 const source = new VectorSource({ wrapX: false });
+/*
 source.on("addfeature", (e) => {
     const features = source.getFeatures().map(f => featureToGeoJSON(f));
     console.log("draw features", features);
-})
+});
+*/
 const modify = new Modify({ source: source });
 const vectorLayer = new VectorLayer({
     source: source,

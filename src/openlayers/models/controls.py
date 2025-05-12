@@ -59,6 +59,8 @@ class InfoBox(Control):
         "top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText"
     )
 
+class DrawControl(Control): ...
+
 
 # --- Control type
 ControlT = Union[
@@ -70,4 +72,5 @@ ControlT = Union[
     ZoomControl,
     RotateControl,
     InfoBox,
+    DrawControl
 ]

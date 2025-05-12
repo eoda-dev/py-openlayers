@@ -10,7 +10,8 @@ from .models.controls import (
     ScaleLineControl,
     ZoomSliderControl,
     ZoomControl,
-    RotateControl
+    RotateControl,
+    DrawControl
 )
 
 __all__ = [
@@ -20,4 +21,5 @@ __all__ = [
     "ScaleLineControl",
     "ZoomSliderControl",
     "MousePositionControl",
+    "DrawControl"
 ]

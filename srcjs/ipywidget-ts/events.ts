@@ -1,3 +1,5 @@
+import { DrawControl } from "./custom-controls/draw";
+
 import MapWidget from "./map";
 
 function filter(obj: any): any {
@@ -42,6 +44,20 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
     // --- Controls
     map.getControls().on("add", (e) => {
         const control = e.element;
+        // if (control.get("type") === "DrawControl")
+        if (control instanceof DrawControl) {
+            control.onAdd();
+            // TODO: `if (model)`!
+            if (true) {
+                for (const event of ["addfeature", "changefeature"]) {
+                    // @ts-expect-error
+                    control.getLayer().getSource()?.on(event, (e) => {
+                        console.log(control.getGeoJSONFeatures());
+                    });
+                }
+            }
+        }
+
         metadata.controls.push(control.getProperties());
         console.log("control", control.get("id"), "added", metadata);
         updateModel();

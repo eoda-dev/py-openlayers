@@ -8,6 +8,7 @@ import Rotate from 'ol/control/Rotate';
 import Attribution from 'ol/control/Attribution.js';
 
 import { InfoBox } from './custom-controls/info-box';
+import { DrawControl } from './custom-controls/draw';
 
 const zoom = new Zoom();
 zoom.setProperties({ id: "zoom", type: "ZoomControl" });
@@ -29,7 +30,8 @@ const controlCatalog: ControlCatalog = {
     ZoomControl: Zoom,
     RotateControl: Rotate,
     AttributionControl: Attribution,
-    InfoBox: InfoBox
+    InfoBox: InfoBox,
+    DrawControl: DrawControl
 };
 
 export { controlCatalog, defaultControls };
