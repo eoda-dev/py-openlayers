@@ -38,11 +38,6 @@ type Metadata = {
   controls: any[];
 };
 
-// --- Constants
-// TODO: Move to constants
-// const TYPE_IDENTIFIER = "@@type";
-// const GEOJSON_IDENTIFIER = "@@geojson";
-
 const jsonConverter = new JSONConverter();
 
 // --- Use geographic coordinates (WGS-84) in all methods
@@ -51,14 +46,10 @@ useGeographic();
 function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
   console.log("layerDef", layerDef);
-  // Use setProperties instead
   layer.setProperties({
     id: layerDef.id,
     type: layerDef[TYPE_IDENTIFIER]
   });
-  // layer.set("id", layerDef.id);
-  // layer.set("type", layerDef[TYPE_IDENTIFIER]);
-
   addGeojsonFeatures(layer, layerDef.source[GEOJSON_IDENTIFIER]);
   return layer;
 }
@@ -83,47 +74,28 @@ export default class MapWidget {
     this._model = model;
 
     const view = jsonConverter.parse(mapOptions.view) as View;
-    // let baseControls: Control[] = [];
-    // let baseLayers: Layer[] = [];
 
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
       view: view,
-      controls: [], // defaultControls,
-      layers: [] // baseLayers,
+      controls: [],
+      layers: []
     });
 
-    // events
+    // Add event listeners
     addEventListernersToMapWidget(this);
 
+    /*
     const d = new DrawControl()
     this._map.addControl(d);
     d.onAdd();
+    */
 
+    // Add default controls
     for (const defaultControl of defaultControls)
       this._map.addControl(defaultControl);
-    /*
-    this._map.getLayers().on("add", (e) => {
-      const layer = e.element;
-      console.log("layer add", layer.getProperties());
-    });
-    */
 
-    /*
-    this._map.on("loadend", () => this.updateMetadata());
-
-    this._map.getControls().on("propertychange", (e) => {
-      this.updateMetadata();
-      console.log("control added or removed", this._metadata);
-    });
-
-    this._map.getLayers().on("propertychange", (e) => {
-      this.updateMetadata();
-      console.log("layer added or removed", this._metadata);
-    });
-    */
-    // ---
 
     // Add controls
     for (let controlDef of mapOptions.controls || []) {
@@ -136,6 +108,7 @@ export default class MapWidget {
     }
   }
 
+  // --- Functions
   getElement(): HTMLElement {
     return this._container;
   }
@@ -152,33 +125,8 @@ export default class MapWidget {
     return this._model;
   }
 
-  /*
-  updateMetadata(): void {
-    const layers = this._map.getLayers().getArray().map(l => ({
-      id: l.get("id"),
-      type: l.get("type"),
-      // extent: l.getExtent()
-      // properties: l.getProperties()
-    }));
-    this._metadata.layers = layers;
-    const controls = this._map.getControls().getArray().map(c => ({
-      id: c.get("id"),
-      type: c.get("type"),
-      // properties: c.getProperties()
-    }));
-    this._metadata.controls = controls;
-    if (this._model) {
-      this._model.set("metadata", this._metadata);
-      this._model.save_changes();
-      console.log("model data updated", this._metadata, this._map.getLayers().getArray());
-    }
-  }
-  */
-
   setViewFromSource(layerId: string): void {
     const view = this.getLayer(layerId)?.getSource()?.getView();
-    // const source = layer?.getSource();
-    // const view = source?.getView();
     if (view)
       this._map.setView(view);
   }
@@ -204,14 +152,6 @@ export default class MapWidget {
   fitBounds(extent: any): void {
     this._map.getView().fit(extent);
   }
-
-  // TODO: obsolete since `useGeographic()` does this for us
-  /*
-  fitBoundsFromLonLat(extentLonLat: any): void {
-    const exent = transformExtent(extentLonLat, "EPSG:4326", this._map.getView().getProjection());
-    this.fitBounds(exent);
-  }
-  */
 
   setView(viewDef: JSONDef): void {
     const view = jsonConverter.parse(viewDef) as View;
@@ -242,18 +182,6 @@ export default class MapWidget {
     if (layer.get("fitBounds")) {
       const source = layer.getSource() as VectorSource;
       this.setExtentFromSource(source);
-      /*
-      if (source) {
-        if (isEmpty(source.getExtent())) {
-          source.on("featuresloadend", (e) => {
-            this._map.getView().fit(source.getExtent());
-          });
-        }
-        else {
-          this._map.getView().fit(source.getExtent());
-        }
-      }
-      */
     }
 
     this._map.addLayer(layer);
@@ -303,25 +231,14 @@ export default class MapWidget {
 
   addControl(controlDef: JSONDef): void {
     const control = jsonConverter.parse(controlDef);
-    // control.set("id", controlDef.id);
-    // control.set("type", controlDef[TYPE_IDENTIFIER])
     control.setProperties({ id: controlDef.id, type: controlDef[TYPE_IDENTIFIER] });
     this._map.addControl(control);
-    /*
-    this._metadata.controls.push({
-      id: control.get("id"),
-      type: controlDef[TYPE_IDENTIFIER],
-    });
-    */
-    // console.log("control", control.get("id"), "added", this._metadata);
   }
 
   removeControl(controlId: string): void {
     const control = this.getControl(controlId);
     if (control) {
       this._map.removeControl(control);
-      // this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
-      // console.log("control", controlId, "removed", this._metadata);
     }
   }
 
@@ -351,6 +268,7 @@ export default class MapWidget {
   }
 
   // See https://openlayers.org/en/latest/examples/draw-and-modify-features.html
+  // TODO: Remove: Use DrawControl instead
   addDrawInteraction(type: GeomType): void {
     if (this._draw)
       this._map.removeInteraction(this._draw);
