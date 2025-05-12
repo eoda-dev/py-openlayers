@@ -21,8 +21,11 @@ type DrawOptions = {
     cssText?: string;
 };
 
-const source = new VectorSource({ wrapX: false });
+let draw: Draw;
+let snap: Snap;
 
+const source = new VectorSource({ wrapX: false });
+const modify = new Modify({ source: source });
 const vectorLayer = new VectorLayer({
     source: source,
     zIndex: 1000,
@@ -50,10 +53,10 @@ function createSelectElement(): HTMLSelectElement {
 }
 
 function toggleDrawInteraction(map: Map, select: HTMLSelectElement): void {
-    let draw: Draw;
-    let snap: Snap;
+    // let draw: Draw;
+    // let snap: Snap;
 
-    const modify = new Modify({ source: source });
+    // const modify = new Modify({ source: source });
     map.addInteraction(modify);
 
     function addInteraction() {
@@ -99,9 +102,18 @@ class DrawControl extends Control {
         map?.addLayer(vectorLayer);
         const select = createSelectElement();
 
-        // @ts-expect-error
-        toggleDrawInteraction(map, select);
-        this.element.appendChild(select);
+        if (map) {
+            toggleDrawInteraction(map, select);
+            this.element.appendChild(select);
+        }
+    }
+
+    getDraw(): Draw | undefined {
+        return draw;
+    }
+
+    getSnap(): Snap | undefined {
+        return snap;
     }
 
     getGeoJSONFeatures(): any { }
