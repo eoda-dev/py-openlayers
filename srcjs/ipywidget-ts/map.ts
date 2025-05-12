@@ -4,13 +4,15 @@ import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import Draw from 'ol/interaction/Draw.js';
 import { useGeographic } from "ol/proj";
-// import { State as SourceState } from "ol/source/Source";
 import { isEmpty } from "ol/extent";
+import Modify from "ol/interaction/Modify";
+import Snap from "ol/interaction/Snap";
+
 import { JSONConverter } from "./json";
 import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
 import { defaultControls } from "./controls";
 
-import { DrawControl } from "./custom-controls/draw";
+// import { DrawControl } from "./custom-controls/draw";
 
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
@@ -85,12 +87,6 @@ export default class MapWidget {
 
     // Add event listeners
     addEventListernersToMapWidget(this);
-
-    /*
-    const d = new DrawControl()
-    this._map.addControl(d);
-    d.onAdd();
-    */
 
     // Add default controls
     for (const defaultControl of defaultControls)
@@ -265,6 +261,16 @@ export default class MapWidget {
     const formats = formatsDef?.map(item => jsonConverter.parse(item));
     console.log("drag and drop formats", formats);
     addDragAndDropVectorLayersToMap(this._map, formats, style);
+  }
+
+  addModifyInteraction(layerId: string): void {
+    const source = this.getLayer(layerId)?.getSource() as VectorSource;
+    if (source) {
+      const snap = new Snap({ source: source });
+      this._map.addInteraction(snap);
+      const modify = new Modify({ source: source });
+      this._map.addInteraction(modify);
+    }
   }
 
   // See https://openlayers.org/en/latest/examples/draw-and-modify-features.html

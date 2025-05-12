@@ -162,8 +162,18 @@ class Map(object):
         formats = [f.model_dump() for f in formats]
         if isinstance(style, FlatStyle):
             style = style.model_dump()
-        
+
         return self.add_call("addDragAndDropVectorLayers", formats, style)
+
+    def add_modify_interaction(self, layer_id) -> None:
+        """Add a modify interaction to the map
+
+        Modify features of a vector layer.
+
+        Args:
+            layer_id (str): The ID of the layer you want to modify
+        """
+        return self.add_call("addModifyInteraction", layer_id)
 
     def set_opacity(self, layer_id: str, opacity: float = 1) -> None:
         """Set the opacity of a layer
