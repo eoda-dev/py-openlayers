@@ -59,10 +59,6 @@ function createSelectElement(): HTMLSelectElement {
 }
 
 function toggleDrawInteraction(map: Map, select: HTMLSelectElement): void {
-    // let draw: Draw;
-    // let snap: Snap;
-
-    // const modify = new Modify({ source: source });
     map.addInteraction(modify);
 
     function addInteraction() {
