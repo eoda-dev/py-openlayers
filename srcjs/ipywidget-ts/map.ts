@@ -3,14 +3,14 @@ import { Map, View } from "ol";
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
 import Draw from 'ol/interaction/Draw.js';
-import { transformExtent, useGeographic } from "ol/proj";
+import { useGeographic } from "ol/proj";
 // import { State as SourceState } from "ol/source/Source";
 import { isEmpty } from "ol/extent";
 import { JSONConverter } from "./json";
 import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
 import { defaultControls } from "./controls";
 
-import { DrawControl } from "./draw-control";
+import { DrawControl } from "./custom-controls/draw";
 
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";

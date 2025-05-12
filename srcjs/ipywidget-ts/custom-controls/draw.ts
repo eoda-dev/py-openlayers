@@ -14,7 +14,7 @@ import Snap from 'ol/interaction/Snap.js';
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 
-import { featureToGeoJSON } from "./utils";
+import { featureToGeoJSON } from "../utils";
 
 type DrawOptions = {
     target?: string | HTMLElement | undefined;

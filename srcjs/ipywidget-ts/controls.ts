@@ -7,7 +7,7 @@ import Zoom from 'ol/control/Zoom';
 import Rotate from 'ol/control/Rotate';
 import Attribution from 'ol/control/Attribution.js';
 
-import { InfoBox } from './custom-controls';
+import { InfoBox } from './custom-controls/info-box';
 
 const zoom = new Zoom();
 zoom.setProperties({ id: "zoom", type: "ZoomControl" });
