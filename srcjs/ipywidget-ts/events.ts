@@ -15,6 +15,7 @@ function filter(obj: any): any {
 function addEventListernersToMapWidget(mapWidget: MapWidget): void {
     const map = mapWidget.getMap();
     const metadata = mapWidget.getMetadata();
+    // const features = mapWidget._features;
     const model = mapWidget.getAnywidgetModel();
 
     const updateModel = (): void => {
@@ -47,14 +48,17 @@ function addEventListernersToMapWidget(mapWidget: MapWidget): void {
         // if (control.get("type") === "DrawControl")
         if (control instanceof DrawControl) {
             control.onAdd();
-            // TODO: `if (model)`!
-            if (true) {
-                for (const event of ["addfeature", "changefeature"]) {
-                    // @ts-expect-error
-                    control.getLayer().getSource()?.on(event, (e) => {
-                        console.log(control.getGeoJSONFeatures());
-                    });
-                }
+            for (const event of ["addfeature", "changefeature"]) {
+                const layer = control.getLayer();
+                // @ts-expect-error
+                layer.getSource()?.on(event, (e) => {
+                    const features = control.getGeoJSONFeatures();
+                    console.log(features);
+                    if (model) {
+                        model.set("features", { [layer.get("id")]: features });
+                        model.save_changes();
+                    }
+                });
             }
         }
 

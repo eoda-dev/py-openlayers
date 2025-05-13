@@ -28,7 +28,10 @@ class MapWidget(Map, AnyWidget):
     # clicked = traitlets.Dict().tag(sync=True)
     view_state = traitlets.Dict().tag(sync=True)
     metadata = traitlets.Dict().tag(sync=True)
+
+    # TODO: Move to features as well
     features_selected = traitlets.List().tag(sync=True)
+    features = traitlets.Dict().tag(sync=True)
 
     def __init__(
         self,

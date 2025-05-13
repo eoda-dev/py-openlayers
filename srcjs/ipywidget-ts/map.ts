@@ -35,6 +35,11 @@ type Metadata = {
   controls: any[];
 };
 
+// TODO: Rename to something like `FeatureStore`
+type Features = {
+  [key: string]: any[];
+}
+
 const jsonConverter = new JSONConverter();
 
 // --- Use geographic coordinates (WGS-84) in all methods
@@ -64,6 +69,7 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
+  // _features: Features = {};
   _model: AnyModel | undefined;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
