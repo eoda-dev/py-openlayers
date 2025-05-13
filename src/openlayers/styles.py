@@ -69,12 +69,12 @@ def default_style(**kwargs) -> FlatStyle:
 
 # class CircleStyle(FlatStyle): ...
 
-
+"""
 class IconStyle(FlatStyle):
     icon_src: str | None = None
     icon_color: str | None = None
     icon_opacity: float | int | None = None
     icon_scale: float | int | None = None
-
+"""
 
 # class FillStyle(FlatStyle): ...
