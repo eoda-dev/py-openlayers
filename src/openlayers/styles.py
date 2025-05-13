@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field
+import os
+
+from pathlib import Path
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+from .utils import create_icon_src_from_file
 
 
 def fix_keys(d: dict) -> dict:
@@ -29,9 +34,17 @@ class FlatStyle(BaseModel):
     circle_stroke_width: float | int | list | None = None
     circle_stroke_color: str | list | None = None
 
-    icon_src: str | list | None = None
+    icon_src: str | Path | list | None = None
+    icon_scale: float | int | None = None
     icon_color: str | list | None = None
     icon_opacity: float | int | None = Field(None, gt=0, le=1)
+
+    @field_validator("icon_src")
+    def validate_icon_src(cls, v) -> str:
+        if os.path.isfile(v):
+            return create_icon_src_from_file(v)
+
+        return v
 
     def model_dump(self) -> dict:
         return fix_keys(super().model_dump(exclude_none=True))
@@ -54,7 +67,7 @@ def default_style(**kwargs) -> FlatStyle:
     ).model_copy(update=kwargs)
 
 
-class CircleStyle(FlatStyle): ...
+# class CircleStyle(FlatStyle): ...
 
 
 class IconStyle(FlatStyle):
@@ -64,4 +77,4 @@ class IconStyle(FlatStyle):
     icon_scale: float | int | None = None
 
 
-class FillStyle(FlatStyle): ...
+# class FillStyle(FlatStyle): ...
