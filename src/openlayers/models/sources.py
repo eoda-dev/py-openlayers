@@ -5,8 +5,6 @@ from pydantic import Field
 from .core import OLBaseModel
 from .formats import FormatT, GeoJSON
 
-# from ..constants import CARTO_ATTRIBUTION
-
 
 # --- Base source
 class Source(OLBaseModel): ...
@@ -35,6 +33,7 @@ class ImageTileSource(Source):
     max_zoom: float | int | None = Field(20, serialization_alias="maxZoom")
 
 
+class VectorTileSource(ImageTileSource): ...
 """
 const vectorLayer = new VectorTile({
   declutter: true,
@@ -43,6 +42,7 @@ const vectorLayer = new VectorTile({
     attributions: ["© Land Information New Zealand"],
   }),
 """
+
 
 # PMTiles extension
 # See https://docs.protomaps.com/pmtiles/openlayers
@@ -56,4 +56,12 @@ class PMTilesRasterSource(PMTilesVectorSource):
 
 
 # --- Source type
-SourceT = Union[OSM, VectorSource, GeoTIFFSource, ImageTileSource, PMTilesVectorSource, PMTilesRasterSource]
+SourceT = Union[
+    OSM,
+    VectorSource,
+    GeoTIFFSource,
+    ImageTileSource,
+    ImageTileSource,
+    PMTilesVectorSource,
+    PMTilesRasterSource,
+]

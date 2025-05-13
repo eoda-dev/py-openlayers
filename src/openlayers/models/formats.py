@@ -25,5 +25,8 @@ class KML(Format):
 class GPX(Format): ...
 
 
+class MVT(Format): ...
+
+
 # --- Format type
-FormatT = Union[Format, GeoJSON, KML, GPX, TopoJSON]
+FormatT = Union[Format, GeoJSON, KML, GPX, TopoJSON, MVT]

@@ -1,5 +1,5 @@
 # Get started
 
 ```python
-import openlayers as ol
+-8<-- "concepts/basic_map.py"
 ```

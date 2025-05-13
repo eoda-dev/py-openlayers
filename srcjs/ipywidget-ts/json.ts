@@ -2,7 +2,7 @@ import { layerCatalog } from "./layers"
 import { sourceCatalog } from "./sources"
 import { controlCatalog } from "./controls"
 
-import { GeoJSON, KML, GPX, TopoJSON, IGC } from "ol/format";
+import { GeoJSON, KML, GPX, TopoJSON, IGC, MVT } from "ol/format";
 import { View } from "ol";
 
 import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
@@ -22,7 +22,7 @@ class JSONConverter {
             ...controlCatalog,
             ...layerCatalog,
             ...sourceCatalog,
-            GeoJSON, KML, GPX, TopoJSON, IGC,
+            GeoJSON, KML, GPX, TopoJSON, IGC, MVT,
             View
         };
     }
