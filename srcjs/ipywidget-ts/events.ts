@@ -1,6 +1,6 @@
 import { DrawControl } from "./custom-controls/draw";
 
-import MapWidget from "./map";
+import type MapWidget from "./map";
 
 function filter(obj: any): any {
     let objFiltered: any = {}

@@ -36,7 +36,7 @@ function getFeatureProperties(feature: FeatureLike): FeatureProps {
 }
 
 function featureToGeoJSON(feature: Feature): any {
-    return new GeoJSON().writeFeature(feature);
+    return new GeoJSON().writeFeatureObject(feature);
 }
 
 export { parseClickEvent, getFeatureProperties, parseView, featureToGeoJSON }

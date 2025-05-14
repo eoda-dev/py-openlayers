@@ -70,7 +70,7 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
-  _features: Features = {};
+  // _features: Features = {};
   _model: AnyModel | undefined;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
@@ -279,8 +279,9 @@ export default class MapWidget {
           const feature = featureToGeoJSON(e.feature);
           console.log("feature changed", feature);
           if (this._model) {
-            this._features[layerId] = [feature];
-            this._model.set("features", this._features);
+            // this._features[layerId] = [feature];
+            // this._model.set("features", this._features);
+            this._model.set("features", { [layerId]: [feature] });
             this._model.save_changes();
           }
         }

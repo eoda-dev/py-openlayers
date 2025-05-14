@@ -30,7 +30,8 @@ class MapWidget(Map, AnyWidget):
     metadata = traitlets.Dict().tag(sync=True)
 
     # TODO: Move to features as well
-    features_selected = traitlets.List().tag(sync=True)
+    # features_selected = traitlets.List().tag(sync=True)
+    
     features = traitlets.Dict().tag(sync=True)
 
     def __init__(

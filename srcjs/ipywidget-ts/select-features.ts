@@ -33,6 +33,7 @@ function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
 
             // console.log("isVectorLayer", isVectorLayer);
             const f = feature as Feature;
+            f.set("layer", layer.get("id"));
             const selIndex = selected.indexOf(f);
             if (selIndex < 0) {
                 console.log("push");
@@ -49,7 +50,8 @@ function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
         const output = selected.map(f => featureToGeoJSON(f));
         // console.log("model", model);
         if (model) {
-            model.set("features_selected", output);
+            // model.set("features_selected", output);
+            model.set("features", { selected: output });
             model.save_changes();
         } else
             console.log(output);
