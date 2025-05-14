@@ -17,6 +17,7 @@ class Layer(OLBaseModel):
     background: str | None = None
     opacity: float | None = 1.0
     visible: bool | None = True
+    z_index: int | None = Field(None, serialization_alias="zIndex")
 
     @field_validator("id")
     def validate_id(cls, v) -> str:
