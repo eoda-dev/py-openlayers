@@ -13,6 +13,7 @@ import { defaultControls } from "./controls";
 
 // import { DrawControl } from "./custom-controls/draw";
 
+import { featureToGeoJSON } from "./utils";
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
 import { addSelectFeaturesToMap } from "./select-features";
@@ -37,7 +38,7 @@ type Metadata = {
 
 // TODO: Rename to something like `FeatureStore`
 type Features = {
-  [key: string]: any[];
+  [layerId: string]: any[];
 }
 
 const jsonConverter = new JSONConverter();
@@ -69,7 +70,7 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
-  // _features: Features = {};
+  _features: Features = {};
   _model: AnyModel | undefined;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
@@ -263,6 +264,7 @@ export default class MapWidget {
     addDragAndDropVectorLayersToMap(this._map, formats, style);
   }
 
+  // Does not work for `WebGLVectorLayer`
   addModifyInteraction(layerId: string): void {
     const source = this.getLayer(layerId)?.getSource() as VectorSource;
     if (source) {
@@ -270,6 +272,19 @@ export default class MapWidget {
       this._map.addInteraction(snap);
       const modify = new Modify({ source: source });
       this._map.addInteraction(modify);
+
+      // Add event listener
+      source.on("changefeature", (e) => {
+        if (e.feature) {
+          const feature = featureToGeoJSON(e.feature);
+          console.log("feature changed", feature);
+          if (this._model) {
+            this._features[layerId] = [feature];
+            this._model.set("features", this._features);
+            this._model.save_changes();
+          }
+        }
+      });
     }
   }
 }
