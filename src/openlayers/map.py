@@ -149,7 +149,8 @@ class Map(object):
         """Add `Select-Features` interaction to the map
 
         Note:
-            At the moment highlighting of selected features only works for `VectorLayer` type
+            Currently, highlighting selected features is not supported
+            for layers of type `WebGLVectorLayer`.
         """
         self.add_call("addSelectFeatures")
 
@@ -158,7 +159,7 @@ class Map(object):
         formats: list[FormatT] = [GeoJSON(), TopoJSON(), GPX(), KML()],
         style: FlatStyle | dict = None,
     ) -> None:
-        """Add drag and drop interaction to map"""
+        """Add a drag and drop interaction to the map"""
         formats = [f.model_dump() for f in formats]
         if isinstance(style, FlatStyle):
             style = style.model_dump()
@@ -169,6 +170,9 @@ class Map(object):
         """Add a modify interaction to the map
 
         Modify features of a vector layer.
+
+        Note:
+            Layers of type `WebGLVectorLayer` are not supported.
 
         Args:
             layer_id (str): The ID of the layer you want to modify
@@ -206,7 +210,7 @@ class Map(object):
         self.add_layer_call(layer_id, "setStyle", style)
 
     def set_source(self, layer_id: str, source: SourceT | dict) -> None:
-        """Set / Update the source of a layer
+        """Set the source of a layer
 
         Args:
             layer_id {str}: The ID of the layer
