@@ -1,3 +1,4 @@
+# VectorTileLayer: https://unpkg.com/world-atlas@1.1.4/world/50m.json
 import openlayers as ol
 
 mvt_layer = ol.layers.VectorTileLayer(

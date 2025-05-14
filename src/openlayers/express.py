@@ -12,6 +12,7 @@ from .models.layers import TileLayer, VectorLayer, WebGLTileLayer, WebGLVectorLa
 from .models.sources import GeoTIFFSource, VectorSource
 from .models.view import View
 from .styles import FlatStyle, default_style
+from .models.formats import Format, GeoJSON, KML, GPX
 
 
 class GeoTIFFTileLayer(LayerLike):
@@ -33,13 +34,55 @@ class GeoTIFFTileLayer(LayerLike):
         return m
 
 
-#class VectorLayer(LayerLike): ...
+# class VectorLayer(LayerLike): ...
 
-#class GPXLayer(VectorLayer): ...
+# class GPXLayer(VectorLayer): ...
 
-#class GeoJSONLayer(VectorLayer): ...
+# class GeoJSONLayer(VectorLayer): ...
 
-#class TopoJSONLayer(VectorLayer): ...
+# class TopoJSONLayer(VectorLayer): ...
+
+
+class Vector(LayerLike):
+    def __init__(
+        self,
+        data: str | dict,
+        id: str = None,
+        style=default_style(),
+        fit_bounds: bool = True,
+        format: Format = None,
+        webgl: bool = True,
+        **kwargs,
+    ) -> None:
+        source = (
+            VectorSource(url=data)
+            if isinstance(data, str)
+            else VectorSource(geojson=data)
+        )
+        if not format and source.url:
+            url = source.url.lower()
+            if url.endswith(".kml"):
+                format = KML()
+            elif url.endswith(".gpx"):
+                format = GPX()
+
+        source.format = format or GeoJSON()
+        Layer = WebGLVectorLayer if webgl else VectorLayer
+        self._model = Layer(
+            source=source, id=id, fit_bounds=fit_bounds, style=style, **kwargs
+        )
+
+    def explore(self, tooltip: bool = True, **kwargs) -> Map | MapWidget:
+        m = Map(**kwargs)
+        m.add_layer(self._model)
+        if tooltip:
+            m.add_default_tooltip()
+
+        return m
+
+    @property
+    def model(self) -> VectorLayer | WebGLVectorLayer:
+        return self._model
 
 
 # TODO: Move to VectorLayer
