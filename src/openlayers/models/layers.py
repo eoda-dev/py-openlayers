@@ -31,6 +31,7 @@ class Layer(OLBaseModel):
 class TileLayer(Layer): ...
 
 
+# TODO: Inherit from `VectorTileLayer`
 class VectorLayer(Layer):
     style: dict | FlatStyle | None = default_style()
     fit_bounds: bool = Field(False, serialization_alias="fitBounds")
@@ -61,10 +62,17 @@ class WebGLVectorTileLayer(VectorTileLayer): ...
 
 
 class WebGLTileLayer(Layer):
+    # See https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.html#~Style
     style: dict | None = None
 
 
 # --- Layer type
 LayerT = Union[
-    Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer, WebGLVectorTileLayer
+    Layer,
+    TileLayer,
+    VectorLayer,
+    WebGLVectorLayer,
+    WebGLTileLayer,
+    VectorTileLayer,
+    WebGLVectorTileLayer,
 ]
