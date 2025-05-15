@@ -18,4 +18,6 @@ __all__ = [
     "WebGLTileLayer",
     "WebGLVectorLayer",
     "BasemapLayer",
+    "VectorTileLayer",
+    "WebGLVectorTileLayer"
 ]

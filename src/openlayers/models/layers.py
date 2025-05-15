@@ -66,5 +66,5 @@ class WebGLTileLayer(Layer):
 
 # --- Layer type
 LayerT = Union[
-    Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer
+    Layer, TileLayer, VectorLayer, WebGLVectorLayer, WebGLTileLayer, VectorTileLayer, WebGLVectorTileLayer
 ]

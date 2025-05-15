@@ -34,15 +34,6 @@ class GeoTIFFTileLayer(LayerLike):
         return m
 
 
-# class VectorLayer(LayerLike): ...
-
-# class GPXLayer(VectorLayer): ...
-
-# class GeoJSONLayer(VectorLayer): ...
-
-# class TopoJSONLayer(VectorLayer): ...
-
-
 class Vector(LayerLike):
     def __init__(
         self,

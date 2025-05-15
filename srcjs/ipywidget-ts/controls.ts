@@ -6,6 +6,7 @@ import OverviewMapControl from 'ol/control/OverviewMap.js';
 import Zoom from 'ol/control/Zoom';
 import Rotate from 'ol/control/Rotate';
 import Attribution from 'ol/control/Attribution.js';
+import ZoomToExtent from 'ol/control/ZoomToExtent.js';
 
 import { InfoBox } from './custom-controls/info-box';
 import { DrawControl } from './custom-controls/draw';
@@ -31,7 +32,8 @@ const controlCatalog: ControlCatalog = {
     RotateControl: Rotate,
     AttributionControl: Attribution,
     InfoBox: InfoBox,
-    DrawControl: DrawControl
+    DrawControl: DrawControl,
+    ZoomToExtentControl: ZoomToExtent
 };
 
 export { controlCatalog, defaultControls };

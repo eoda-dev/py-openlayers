@@ -11,6 +11,7 @@ from .models.controls import (
     ZoomSliderControl,
     ZoomControl,
     RotateControl,
+    ZoomToExtentControl,
     DrawControl
 )
 

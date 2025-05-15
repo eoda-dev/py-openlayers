@@ -14,4 +14,5 @@ m.add_control(ol.controls.ZoomSliderControl())
 m.add_control(ol.controls.InfoBox(
     html="PyOL",
     css_text="right: .5em; top: .5em; background: white; padding: 5px;"))
+m.add_control(ol.controls.ZoomToExtentControl())
 m.save()

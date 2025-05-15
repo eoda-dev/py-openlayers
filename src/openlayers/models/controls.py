@@ -12,7 +12,7 @@ from .sources import OSM
 
 # -- Base control
 class Control(OLBaseModel):
-    id: str | None = None  # = Field(default_factory=lambda x: str(uuid4()))
+    id: str | None = None
 
     @field_validator("id")
     def validate_id(cls, v) -> str:
@@ -52,12 +52,21 @@ class ZoomControl(Control):
 class RotateControl(Control): ...
 
 
+class ZoomToExtentControl(Control):
+    extent: (
+        tuple[float | float | float | float]
+        | list[float | float | float | float]
+        | None
+    ) = None
+
+
 # --- Custom controls
 class InfoBox(Control):
     html: str
     css_text: str = Field(
         "top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText"
     )
+
 
 class DrawControl(Control): ...
 
@@ -71,6 +80,7 @@ ControlT = Union[
     OverviewMapControl,
     ZoomControl,
     RotateControl,
+    ZoomToExtentControl,
     InfoBox,
-    DrawControl
+    DrawControl,
 ]
