@@ -12,6 +12,7 @@ from .sources import SourceT
 
 # --- Base layer
 class Layer(OLBaseModel):
+    """A base class for creating OL layers"""
     id: str | None = None
     source: dict | SourceT
     background: str | None = None
@@ -31,31 +32,34 @@ class Layer(OLBaseModel):
 class TileLayer(Layer): ...
 
 
-# TODO: Inherit from `VectorTileLayer`
-class VectorLayer(Layer):
+class VectorTileLayer(Layer):
     style: dict | FlatStyle | None = default_style()
+
+    @field_validator("style")
+    def validate_style(cls, v):
+        if isinstance(v, FlatStyle):
+            return v.model_dump()
+
+        return v
+
+# TODO: Inherit from `VectorTileLayer`
+class VectorLayer(VectorTileLayer):
+    """A layer for rendering vector sources"""
+    #style: dict | FlatStyle | None = default_style()
     fit_bounds: bool = Field(False, serialization_alias="fitBounds")
 
+    """
     @field_validator("style")
     def validate_style(cls, v):
         if isinstance(v, FlatStyle):
             return v.model_dump()
 
         return v
+    """
 
-
-class WebGLVectorLayer(VectorLayer): ...
-
-
-class VectorTileLayer(Layer):
-    style: dict | FlatStyle | None = None
-
-    @field_validator("style")
-    def validate_style(cls, v):
-        if isinstance(v, FlatStyle):
-            return v.model_dump()
-
-        return v
+class WebGLVectorLayer(VectorLayer):
+    """A layer for rendering vector sources using WebGL"""
+    ...
 
 
 class WebGLVectorTileLayer(VectorTileLayer): ...

@@ -9,7 +9,7 @@ from .models.layers import (
     WebGLTileLayer,
     WebGLVectorLayer,
     VectorTileLayer,
-    WebGLVectorTileLayer
+    WebGLVectorTileLayer,
 )
 
 __all__ = [
@@ -19,5 +19,5 @@ __all__ = [
     "WebGLVectorLayer",
     "BasemapLayer",
     "VectorTileLayer",
-    "WebGLVectorTileLayer"
+    "WebGLVectorTileLayer",
 ]
