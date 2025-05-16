@@ -57,6 +57,18 @@ class VectorLayer(VectorTileLayer):
         return v
     """
 
+class VectorImageLayer(VectorLayer):
+    """A layer for rendering vector sources
+    
+    This layer type provides great performance during panning and zooming,
+    but point symbols and texts are always rotated with the view and pixels are scaled during zoom animations.
+    
+    Note:
+        See also [VectorImageLayer](https://openlayers.org/en/latest/apidoc/module-ol_layer_VectorImage-VectorImageLayer.html)
+    """
+    image_ratio: int | None = Field(None, serialization_alias="imageRatio")
+
+
 class WebGLVectorLayer(VectorLayer):
     """A layer for rendering vector sources using WebGL"""
     ...
@@ -79,4 +91,5 @@ LayerT = Union[
     WebGLTileLayer,
     VectorTileLayer,
     WebGLVectorTileLayer,
+    VectorImageLayer
 ]
