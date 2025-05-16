@@ -1,7 +1,6 @@
 # See https://openlayers.org/en/latest/examples/image-vector-layer.html
 
 import openlayers as ol
-# from openlayers.models.layers import VectorImageLayer
 
 data = "https://openlayers.org/data/vector/ecoregions.json"
 

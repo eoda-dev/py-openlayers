@@ -15,11 +15,13 @@ def fix_keys(d: dict) -> dict:
 # TODO: Move to models folder
 # See https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html
 class FlatStyle(BaseModel):
-    """Flat style
+    """A style object for vector layers
+
+    Underscores in the property names are automatically converted to hyphens.
 
     Note:
-        See [ol-apidoc/module-ol_style_flat](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html)
-        for all available style parameters.
+        See [ol/style/flat](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html)
+        for all available style properties.
     """
 
     model_config = ConfigDict(extra="allow")
@@ -54,6 +56,15 @@ class FlatStyle(BaseModel):
 
 
 def default_style(**kwargs) -> FlatStyle:
+    """Create a default style object for vector layers
+
+    Args:
+        **kwargs (Any): Additional style properties or
+            updates of the default properties
+
+    Returns:
+        A style object
+    """
     return FlatStyle(
         fill_color="rgba(255,255,255,0.4)",
         # ---
@@ -65,16 +76,3 @@ def default_style(**kwargs) -> FlatStyle:
         circle_stroke_width=1.25,
         circle_stroke_color="#3399CC",
     ).model_copy(update=kwargs)
-
-
-# class CircleStyle(FlatStyle): ...
-
-"""
-class IconStyle(FlatStyle):
-    icon_src: str | None = None
-    icon_color: str | None = None
-    icon_opacity: float | int | None = None
-    icon_scale: float | int | None = None
-"""
-
-# class FillStyle(FlatStyle): ...

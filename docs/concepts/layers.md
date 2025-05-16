@@ -24,4 +24,25 @@ Sources state which data the map should display.
 
 ## Styles
 
-...
+Vector layers can be styled with a style object containing properties for _stroke_, _fill_, etc.:
+
+```python
+style = ol.FlatStyle(
+    stroke_color = "yellow",
+    stroke_width = 1.5,
+    fill_color = "orange" 
+)
+```
+
+It is also possible to use a simple dictonary instead. In this case property names must use hyphens instead
+of underscores:
+
+```python
+const style = {
+  "stroke-color": "yellow",
+  "stroke-width": 1.5,
+  "fill-color": "orange",
+}
+```
+
+> See [Styles API](../../api/styles/) and [ol/style/flat](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html) for details.
