@@ -43,6 +43,7 @@ nav:
       - Map: api/map.md
       - Controls: api/controls.md
       - Layers: api/layers.md
+      - Sources: api/sources.md
       - Styles: api/styles.md
       - Basemaps: api/basemaps.md
       - GeoPandas: api/geopandas.md

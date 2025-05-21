@@ -10,7 +10,7 @@ Sources state which data the map should display.
 -8<-- "concepts/sources.py"
 ```
 
-> See [Sources API](../../api/layers/)
+> See [Sources API](../../api/sources/)
 
 ## Layers
 

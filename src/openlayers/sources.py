@@ -10,6 +10,7 @@ from .models.sources import (
     VectorTileSource,
     TileJSONSource,
     PMTilesVectorSource,
+    PMTilesRasterSource,
 )
 
 __all__ = [
@@ -20,4 +21,5 @@ __all__ = [
     "VectorTileSource",
     "TileJSONSource",
     "PMTilesVectorSource",
+    "PMTilesRasterSource",
 ]

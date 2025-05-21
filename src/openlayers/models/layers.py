@@ -44,21 +44,11 @@ class VectorTileLayer(Layer):
         return v
 
 
-# TODO: Inherit from `VectorTileLayer`
 class VectorLayer(VectorTileLayer):
     """A layer for rendering vector sources"""
 
     # style: dict | FlatStyle | None = default_style()
     fit_bounds: bool = Field(False, serialization_alias="fitBounds")
-
-    """
-    @field_validator("style")
-    def validate_style(cls, v):
-        if isinstance(v, FlatStyle):
-            return v.model_dump()
-
-        return v
-    """
 
 
 class VectorImageLayer(VectorLayer):
@@ -84,7 +74,11 @@ class WebGLVectorTileLayer(VectorTileLayer): ...
 
 
 class WebGLTileLayer(Layer):
-    # See https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.html#~Style
+    """WebGLTile layer
+    
+    Note:
+        See [WebGLTile](https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.html) for details.
+    """
     style: dict | None = None
 
 
