@@ -21,5 +21,5 @@ __all__ = [
     "BasemapLayer",
     "VectorTileLayer",
     "WebGLVectorTileLayer",
-    "VectorImageLayer"
+    "VectorImageLayer",
 ]

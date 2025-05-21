@@ -24,7 +24,7 @@ Sources state which data the map should display.
 
 ## Styles
 
-Vector layers can be styled with a style object containing properties for _stroke_, _fill_, etc.:
+Vector layers are styled with an object containing properties for the different styles, such as _stroke_, _fill_, _circle_ or _icon_:
 
 ```python
 style = ol.FlatStyle(

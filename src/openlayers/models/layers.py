@@ -13,6 +13,7 @@ from .sources import SourceT
 # --- Base layer
 class Layer(OLBaseModel):
     """A base class for creating OL layers"""
+
     id: str | None = None
     source: dict | SourceT
     background: str | None = None
@@ -42,10 +43,12 @@ class VectorTileLayer(Layer):
 
         return v
 
+
 # TODO: Inherit from `VectorTileLayer`
 class VectorLayer(VectorTileLayer):
     """A layer for rendering vector sources"""
-    #style: dict | FlatStyle | None = default_style()
+
+    # style: dict | FlatStyle | None = default_style()
     fit_bounds: bool = Field(False, serialization_alias="fitBounds")
 
     """
@@ -57,20 +60,23 @@ class VectorLayer(VectorTileLayer):
         return v
     """
 
+
 class VectorImageLayer(VectorLayer):
     """A layer for rendering vector sources
-    
+
     This layer type provides great performance during panning and zooming,
     but point symbols and texts are always rotated with the view and pixels are scaled during zoom animations.
-    
+
     Note:
         See also [VectorImageLayer](https://openlayers.org/en/latest/apidoc/module-ol_layer_VectorImage-VectorImageLayer.html)
     """
+
     image_ratio: int | None = Field(None, serialization_alias="imageRatio")
 
 
 class WebGLVectorLayer(VectorLayer):
     """A layer for rendering vector sources using WebGL"""
+
     ...
 
 
@@ -91,5 +97,5 @@ LayerT = Union[
     WebGLTileLayer,
     VectorTileLayer,
     WebGLVectorTileLayer,
-    VectorImageLayer
+    VectorImageLayer,
 ]

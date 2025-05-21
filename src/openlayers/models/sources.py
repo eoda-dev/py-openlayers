@@ -34,14 +34,10 @@ class ImageTileSource(Source):
 
 
 class VectorTileSource(ImageTileSource): ...
-"""
-const vectorLayer = new VectorTile({
-  declutter: true,
-  source: new PMTilesVectorSource({
-    url: "https://r2-public.protomaps.com/protomaps-sample-datasets/nz-buildings-v3.pmtiles",
-    attributions: ["© Land Information New Zealand"],
-  }),
-"""
+
+
+class TileJSON(ImageTileSource):
+    cross_origin: str = Field("anonymous", serialization_alias="crossOrigin")
 
 
 # PMTiles extension
@@ -62,6 +58,7 @@ SourceT = Union[
     GeoTIFFSource,
     ImageTileSource,
     ImageTileSource,
+    TileJSON,
     PMTilesVectorSource,
     PMTilesRasterSource,
 ]

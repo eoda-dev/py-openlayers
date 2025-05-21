@@ -1,3 +1,5 @@
+# Controls
+
 Controls are user interface elements that you can add to your map:
 
 ```python

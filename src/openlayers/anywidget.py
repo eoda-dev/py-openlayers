@@ -31,7 +31,7 @@ class MapWidget(Map, AnyWidget):
 
     # TODO: Move to features as well
     # features_selected = traitlets.List().tag(sync=True)
-    
+
     features = traitlets.Dict().tag(sync=True)
 
     def __init__(

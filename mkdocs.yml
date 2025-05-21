@@ -37,6 +37,7 @@ nav:
       - Map: concepts/map.md
       - Controls: concepts/controls.md
       - Layers and sources: concepts/layers.md
+      # - Interactions: concepts/interactions.md
       - GeoPandas: concepts/geopandas.md
   - API documentation:
       - Map: api/map.md

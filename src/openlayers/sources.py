@@ -8,7 +8,16 @@ from .models.sources import (
     SourceT,
     VectorSource,
     VectorTileSource,
-    PMTilesVectorSource
+    TileJSON,
+    PMTilesVectorSource,
 )
 
-__all__ = ["OSM", "GeoTIFFSource", "VectorSource", "ImageTileSource", "PMTilesVectorSource"]
+__all__ = [
+    "OSM",
+    "GeoTIFFSource",
+    "VectorSource",
+    "ImageTileSource",
+    "VectorTileSource",
+    "TileJSON",
+    "PMTilesVectorSource",
+]
