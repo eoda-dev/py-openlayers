@@ -3,17 +3,17 @@ from __future__ import annotations
 from .models.controls import (
     Control,
     ControlT,
+    DrawControl,
     FullScreenControl,
     InfoBox,
+    MapTilerGeocodingControl,
     MousePositionControl,
     OverviewMapControl,
-    ScaleLineControl,
-    ZoomSliderControl,
-    ZoomControl,
     RotateControl,
+    ScaleLineControl,
+    ZoomControl,
+    ZoomSliderControl,
     ZoomToExtentControl,
-    MapTilerGeocodingControl,
-    DrawControl,
 )
 
 __all__ = [

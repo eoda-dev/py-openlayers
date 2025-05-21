@@ -5,12 +5,12 @@ from .models.layers import (
     Layer,
     LayerT,
     TileLayer,
+    VectorImageLayer,
     VectorLayer,
+    VectorTileLayer,
     WebGLTileLayer,
     WebGLVectorLayer,
-    VectorTileLayer,
     WebGLVectorTileLayer,
-    VectorImageLayer,
 )
 
 __all__ = [

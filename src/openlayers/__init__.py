@@ -9,9 +9,9 @@ except ImportError as e:
 from . import controls, layers
 from .controls import *
 from .layers import *
+from .map import Map
 from .models import formats
 from .sources import *
-from .map import Map
 from .styles import FlatStyle
 from .view import View
 

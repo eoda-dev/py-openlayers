@@ -7,12 +7,12 @@ from typing import Any
 from .abstracts import LayerLike
 from .export import HTMLTemplate, write_file
 from .models.controls import ControlT
+from .models.formats import GPX, KML, FormatT, GeoJSON, TopoJSON
 from .models.layers import LayerT, TileLayer
 from .models.map_options import MapOptions
 from .models.sources import OSM, SourceT
 from .models.view import View
 from .styles import FlatStyle
-from .models.formats import FormatT, GeoJSON, GPX, TopoJSON, KML
 
 
 class Map(object):

@@ -4,13 +4,13 @@ from .models.sources import (
     OSM,
     GeoTIFFSource,
     ImageTileSource,
+    PMTilesRasterSource,
+    PMTilesVectorSource,
     Source,
     SourceT,
+    TileJSONSource,
     VectorSource,
     VectorTileSource,
-    TileJSONSource,
-    PMTilesVectorSource,
-    PMTilesRasterSource,
 )
 
 __all__ = [

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import os
-
 from pathlib import Path
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from .utils import create_icon_src_from_file

@@ -8,11 +8,11 @@ except ImportError:
 from .abstracts import LayerLike
 from .anywidget import MapWidget
 from .map import Map
+from .models.formats import GPX, KML, Format, GeoJSON
 from .models.layers import TileLayer, VectorLayer, WebGLTileLayer, WebGLVectorLayer
 from .models.sources import GeoTIFFSource, VectorSource
 from .models.view import View
 from .styles import FlatStyle, default_style
-from .models.formats import Format, GeoJSON, KML, GPX
 
 
 class GeoTIFFTileLayer(LayerLike):
