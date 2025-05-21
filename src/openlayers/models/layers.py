@@ -75,10 +75,11 @@ class WebGLVectorTileLayer(VectorTileLayer): ...
 
 class WebGLTileLayer(Layer):
     """WebGLTile layer
-    
+
     Note:
         See [WebGLTile](https://openlayers.org/en/latest/apidoc/module-ol_layer_WebGLTile.html) for details.
     """
+
     style: dict | None = None
 
 
