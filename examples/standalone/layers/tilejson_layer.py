@@ -3,7 +3,7 @@
 import openlayers as ol
 
 layer = ol.TileLayer(
-    source=ol.TileJSON(
+    source=ol.TileJSONSource(
         url="https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:raster:HYP_HR_SR_OB_DR/map/tiles/WebMercatorQuad?f=tilejson"
     )
 )
