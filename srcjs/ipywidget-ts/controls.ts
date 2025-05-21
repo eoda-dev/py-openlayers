@@ -8,8 +8,18 @@ import Rotate from 'ol/control/Rotate';
 import Attribution from 'ol/control/Attribution.js';
 import ZoomToExtent from 'ol/control/ZoomToExtent.js';
 
+import { GeocodingControl } from "@maptiler/geocoding-control/openlayers";
+
 import { InfoBox } from './custom-controls/info-box';
 import { DrawControl } from './custom-controls/draw';
+
+// MapTiler Geocoding css
+import "@maptiler/geocoding-control/style.css";
+
+const olSearchStyle = document.createElement("style");
+olSearchStyle.innerText = ".ol-search {position: absolute; top: .5em; right: .5em;}";
+document.head.appendChild(olSearchStyle);
+// ---
 
 const zoom = new Zoom();
 zoom.setProperties({ id: "zoom", type: "ZoomControl" });
@@ -33,7 +43,8 @@ const controlCatalog: ControlCatalog = {
     AttributionControl: Attribution,
     InfoBox: InfoBox,
     DrawControl: DrawControl,
-    ZoomToExtentControl: ZoomToExtent
+    ZoomToExtentControl: ZoomToExtent,
+    MapTilerGeocodingControl: GeocodingControl
 };
 
 export { controlCatalog, defaultControls };

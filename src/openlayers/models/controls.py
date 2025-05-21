@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import os
+
 from typing import Literal, Union
 from uuid import uuid4
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, ConfigDict
 
 from .core import OLBaseModel
 from .layers import LayerT, TileLayer
@@ -58,6 +60,16 @@ class ZoomToExtentControl(Control):
         | list[float | float | float | float]
         | None
     ) = None
+
+
+# --- MapTiler
+class MapTilerGeocodingControl(Control):
+    api_key: str = Field(os.getenv("MAPTILER_API_TOKEN"), serialization_alias="apiKey", validate_default=True)
+    collapsed: bool | None = False
+    country: str | None = None
+    limit: int | None = 5
+    marker_on_selected: bool | None = Field(True, serialization_alias="markerOnSelected")
+    placeholder: str | None = "Search"
 
 
 # --- Custom controls

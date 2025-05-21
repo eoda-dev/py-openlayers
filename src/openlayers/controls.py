@@ -12,6 +12,7 @@ from .models.controls import (
     ZoomControl,
     RotateControl,
     ZoomToExtentControl,
+    MapTilerGeocodingControl,
     DrawControl,
 )
 
@@ -22,5 +23,6 @@ __all__ = [
     "ScaleLineControl",
     "ZoomSliderControl",
     "MousePositionControl",
+    "MapTilerGeocodingControl",
     "DrawControl",
 ]

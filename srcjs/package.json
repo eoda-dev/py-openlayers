@@ -23,6 +23,7 @@
     "vite": "^6.2.4"
   },
   "dependencies": {
+    "@maptiler/geocoding-control": "^2.1.6",
     "mustache": "^4.2.0",
     "ol": "^10.5.0",
     "ol-pmtiles": "^2.0.2"
