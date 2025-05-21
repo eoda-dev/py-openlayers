@@ -4,7 +4,7 @@ import os
 from typing import Literal, Union
 from uuid import uuid4
 
-from pydantic import ConfigDict, Field, field_validator
+from pydantic import Field, field_validator
 
 from .core import OLBaseModel
 from .layers import LayerT, TileLayer
@@ -24,36 +24,64 @@ class Control(OLBaseModel):
 
 
 # --- Controls
-class FullScreenControl(Control): ...
+class FullScreenControl(Control):
+    """Full screen control
+
+    Provides a button that fills the entire screen with the map when clicked.
+    """
+
+    ...
 
 
 class ScaleLineControl(Control):
+    """Scale line control
+
+    Displays rough y-axis distances that are calculated for the centre of the viewport.
+    """
+
     bar: bool | None = False
     steps: int | None = None
     units: Literal["metric", "degrees", "imperial", "us", "nautical"] | None = None
     text: bool = False
 
 
-class ZoomSliderControl(Control): ...
+class ZoomSliderControl(Control):
+    """Zoom slider control"""
+
+    ...
 
 
 class MousePositionControl(Control):
+    """Mouse position control"""
+
     projection: str | None = "EPSG:4326"
 
 
 class OverviewMapControl(Control):
+    """Overview map control"""
+
     layers: list[dict | LayerT] = [TileLayer(source=OSM())]
 
 
 class ZoomControl(Control):
+    """Zoom control"""
+
     zoom_in_label: str = Field("+", serialization_alias="zoomInLabel")
     zoom_out_label: str = Field("-", serialization_alias="zoomOutLabel")
 
 
-class RotateControl(Control): ...
+class RotateControl(Control):
+    """Rotate control"""
+
+    ...
 
 
 class ZoomToExtentControl(Control):
+    """Zoom to extent control
+
+    Provides a button that changes the map view to a specific extent when clicked.
+    """
+
     extent: (
         tuple[float | float | float | float]
         | list[float | float | float | float]
@@ -81,13 +109,18 @@ class MapTilerGeocodingControl(Control):
 
 # --- Custom controls
 class InfoBox(Control):
+    """Info box"""
+
     html: str
     css_text: str = Field(
         "top: 65px; left: .5em; padding: 5px;", serialization_alias="cssText"
     )
 
 
-class DrawControl(Control): ...
+class DrawControl(Control):
+    """Draw control"""
+
+    ...
 
 
 # --- Control type
@@ -100,6 +133,7 @@ ControlT = Union[
     ZoomControl,
     RotateControl,
     ZoomToExtentControl,
+    MapTilerGeocodingControl,
     InfoBox,
     DrawControl,
 ]

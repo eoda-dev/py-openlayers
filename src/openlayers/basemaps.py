@@ -21,6 +21,8 @@ from .models.sources import OSM, ImageTileSource
 
 
 class Carto(Enum):
+    """CartoDB basemap styles"""
+
     LIGHT_ALL = "light_all"
     DARK_ALL = "dark_all"
     VOYAGER_NO_LABLES = "rastertiles/voyager_nolabels"
@@ -59,12 +61,37 @@ class BasemapLayer(LayerLike):
 
     @staticmethod
     def osm() -> TileLayer:
+        """Create a OSM tile layer object
+
+        Returns:
+            An OSM raster tile layer
+
+        Examples:
+            >>> from openlayers.basemaps import BasemapLayer
+            >>> osm = BasemapLayer.osm()
+        """
         return TileLayer(id="osm", source=OSM())
 
     @staticmethod
     def carto(
         style_name: str | Carto = Carto.DARK_ALL, double_resolution: bool = True
     ) -> TileLayer:
+        """Create a CartoDB tile layer object
+
+        Note:
+            See [CartoDB/basemap-styles](https://github.com/CartoDB/basemap-styles) for available styles.
+
+        Args:
+            style_name (str | Carto): The name of the style
+            double_resolution (bool): Whether to use double resolution tiles
+
+        Returns:
+            A CartoDB raster tile layer
+
+        Examples:
+            >>> from openlayers.basemaps import BasemapLayer
+            >>> carto = BasemapLayer.carto()
+        """
         style = CartoRasterStyle(style=style_name, double_resolution=double_resolution)
         return TileLayer(
             id=f"carto-{Carto(style_name).value.replace('_', '-').replace('/', '-')}",

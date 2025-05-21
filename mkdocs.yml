@@ -47,5 +47,5 @@ nav:
       - Styles: api/styles.md
       - Basemaps: api/basemaps.md
       - GeoPandas: api/geopandas.md
-      - Express: api/express.md
+      # - Express: api/express.md
   - Changelog: changelog.md
