@@ -105,3 +105,12 @@ class BasemapLayer(LayerLike):
     crossOrigin: '',
   }),
 """
+
+
+class CartoBasemapLayer(LayerLike):
+    def __init__(self, style_name: Carto | str = Carto.DARK_ALL):
+        self._model = BasemapLayer.carto(style_name)
+
+    @property
+    def model(self) -> TileLayer:
+        return self._model
