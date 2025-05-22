@@ -72,20 +72,21 @@ class Map(object):
         self.add_call("setViewFromSource", layer_id)
 
     def set_zoom(self, zoom_level: float | int) -> None:
-        """Set the zoom level ot the map view
+        """Set the zoom level of the view
 
         Args:
-            zoom_level (float | int): The zoom level of the view
+            zoom_level (float | int): The zoom level
         """
         self.add_view_call("setZoom", zoom_level)
 
-    def set_center(self, lonlat: tuple[float, float]) -> None:
-        """Set the center of the map view
+    def set_center(self, lon: float = 0, lat: float = 0) -> None:
+        """Set the center of the view
 
         Args:
-            lonlat (tuple[float, float]): The centerpoint of the map as `(lon, lat)` pair
+            lon (float): The center's longitude
+            lat (float): The center's latitude
         """
-        self.add_view_call("setCenter", lonlat)
+        self.add_view_call("setCenter", (lon, lat))
 
     def add_layer(self, layer: LayerT | LayerLike | dict) -> None:
         """Add a layer to the map

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pydantic import Field
 
-# from ..abstracts import MyBaseModel
 from .core import OLBaseModel
 
 
@@ -17,19 +16,20 @@ class Projection(object):
 
 
 class View(OLBaseModel):
-    """View object
+    """A View object represents a simple 2D view of the map
 
     Note:
         See [module-ol_View-View.html](https://openlayers.org/en/latest/apidoc/module-ol_View-View.html) for details.
 
     Attributes:
-        center (tuple[float, float]): The centerpoint of the map as `(lon, lat)` pair
-        zoom (float | int): The zoom level of the map
-        projection (str): ...
-        rotation (float | int): ...
-        extent (tuple[float, float, float, float] | list[float, float, float, float]): ...
-        min_zoom (float | int): The minimum zoom level of the map
-        max_zoom (float | int): The maximum zoom level of the map
+        center (tuple[float, float]): The center for the view as (lon, lat) pair
+        zoom (float | int): The Zoom level used to calculate the resolution for the view
+        projection (str): The projection
+        rotation (float | int): The rotation for the view in radians (positive rotation clockwise, 0 means north).
+        extent (tuple[float, float, float, float] | list[float, float, float, float]): The extent that constrains the view,
+            in other words, nothing outside of this extent can be visible on the map
+        min_zoom (float | int): The minimum zoom level used to determine the resolution constraint
+        max_zoom (float | int): The maximum zoom level used to determine the resolution constraint
     """
 
     center: tuple[float, float] | None = (0, 0)
