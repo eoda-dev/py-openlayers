@@ -1,12 +1,12 @@
-from openlayers.basemaps import Carto
+from openlayers.basemaps import Carto, CartoBasemapLayer
 from openlayers.layers import TileLayer, BasemapLayer
 
 def test_basemap_layer() -> None:
-    layer = BasemapLayer.carto()
+    layer = BasemapLayer()
 
     # print(layer)
 
-    layer = BasemapLayer(Carto.DARK_ALL)
+    layer = CartoBasemapLayer(Carto.DARK_ALL)
     print(layer.model.model_dump())
 
     assert isinstance(layer.model, TileLayer)
