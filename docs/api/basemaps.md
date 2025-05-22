@@ -2,4 +2,6 @@
 
 ::: openlayers.basemaps.BasemapLayer
 
-::: openlayers.basemaps.Carto
+::: openlayers.basemaps.CartoBasemapLayer
+
+::: openlayers.basemaps.MapTilerBasemapLayer

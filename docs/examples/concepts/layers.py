@@ -11,6 +11,6 @@ vector = ol.VectorLayer(
 
 m = ol.Map(
     ol.View(rotation=3.14 / 8),
-    layers=[ol.BasemapLayer.carto(), vector]
+    layers=[ol.BasemapLayer(), vector]
 )
 m.add_default_tooltip()
