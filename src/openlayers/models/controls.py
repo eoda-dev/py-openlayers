@@ -9,6 +9,7 @@ from pydantic import Field, field_validator
 from .core import OLBaseModel
 from .layers import LayerT, TileLayer
 from .sources import OSM
+from ..constants import MAPTILER_API_KEY_ENV_VAR
 
 
 # -- Base control
@@ -94,7 +95,7 @@ class MapTilerGeocodingControl(Control):
     """MapTiler geocoding control"""
 
     api_key: str = Field(
-        os.getenv("MAPTILER_API_TOKEN"),
+        os.getenv(MAPTILER_API_KEY_ENV_VAR),
         serialization_alias="apiKey",
         validate_default=True,
     )

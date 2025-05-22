@@ -64,6 +64,7 @@ class TileJSONSource(ImageTileSource):
         See [TileJSON](https://openlayers.org/en/latest/apidoc/module-ol_source_TileJSON-TileJSON.html) for details.
     """
 
+    tile_size: int | None = Field(None, serialization_alias="tileSize")
     cross_origin: str = Field("anonymous", serialization_alias="crossOrigin")
 
     @property
