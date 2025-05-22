@@ -146,7 +146,7 @@ class Map(object):
         """
         self.add_call("addTooltip", template)
 
-    def add_select_features(self) -> None:
+    def add_select_interaction(self) -> None:
         """Add `Select-Features` interaction to the map
 
         Note:
@@ -155,7 +155,7 @@ class Map(object):
         """
         self.add_call("addSelectFeatures")
 
-    def add_drag_and_drop_vector_layers_interaction(
+    def add_drag_and_drop_interaction(
         self,
         formats: list[FormatT] = [GeoJSON(), TopoJSON(), GPX(), KML()],
         style: FlatStyle | dict = None,
