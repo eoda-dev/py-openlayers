@@ -16,3 +16,9 @@ m
 m = Map(controls=[ol.ZoomSliderControl()])
 m.save()
 ```
+
+```python {marimo}
+import openlayers as ol
+
+ol.MapWidget(controls=[ol.ZoomSliderControl()])
+```
