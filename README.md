@@ -2,10 +2,11 @@
 
 [![Release](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)
 [![pypi](https://img.shields.io/pypi/v/openlayers.svg)](https://pypi.python.org/pypi/openlayers)
+[![Build status](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)
 [![License](https://img.shields.io/github/license/eoda-dev/py-openlayers)](https://img.shields.io/github/license/eoda-dev/py-openlayers)
 [![OpenLayers JS](https://img.shields.io/badge/OpenLayers-v10.5.0-blue.svg)](https://github.com/openlayers/openlayers/releases//tag/v10.5.0)
 
-Provides Python bindings for [Openlayers](https://openlayers.org/), a high-performance, full-featured web mapping library that displays maps from various sources and formats. It makes it a easy to create interactive maps in [Marimo](https://marimo.io/) and [Jupyter](https://jupyter.org/) notebbooks with a few lines of code in a pydantic way.
+Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-performance, full-featured web mapping library that displays maps from various sources and formats. It makes it a easy to create interactive maps in [Marimo](https://marimo.io/) and [Jupyter](https://jupyter.org/) notebooks with a few lines of code in a pythonic way.
 
 ## Features
 
@@ -39,6 +40,8 @@ Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map. Modify, draw an
 ```bash
 uv init
 
+uv add openlayers
+
 uv add "git+https://github.com/eoda-dev/py-openlayers@main"
 ```
 
@@ -55,6 +58,10 @@ m # Display map
 m = ol.Map()
 m.save()
 ```
+
+## Documentation
+
+[python-openlayers docs](https://eoda-dev.github.io/py-openlayers/)
 
 ## Note
 
