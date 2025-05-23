@@ -33,5 +33,19 @@ markdown_extensions:
 
 nav:
   - Get started: index.md
-  # - Concepts: concept.md
+  - Concepts:
+      - Map: concepts/map.md
+      - Controls: concepts/controls.md
+      - Layers and sources: concepts/layers.md
+      # - Interactions: concepts/interactions.md
+      - GeoPandas: concepts/geopandas.md
+  - API documentation:
+      - Map: api/map.md
+      - Controls: api/controls.md
+      - Layers: api/layers.md
+      - Sources: api/sources.md
+      - Styles: api/styles.md
+      - Basemaps: api/basemaps.md
+      - GeoPandas: api/geopandas.md
+      # - Express: api/express.md
   - Changelog: changelog.md

@@ -29,7 +29,10 @@ style = {
 }
 
 gdf = ol.GeoDataFrame.from_features(features, crs=Projection.MERCATOR)
-m = gdf.ol.explore(style=style, controls=[ol.controls.ZoomSliderControl()])
-# m.add_default_tooltip()
-m.add_tooltip("{{ name }}: {{ pop_max }}")
+m = gdf.ol.explore(
+    style=style,
+    tooltip="{{ name }}",
+    controls=[ol.controls.ZoomSliderControl()])
+m.add_default_tooltip()
+# m.add_tooltip("{{ name }}: {{ pop_max }}")
 m.save(preview=True)

@@ -1,6 +1,5 @@
 from openlayers.map import Map
-from openlayers.view import View
-# from openlayers.models.view import View
+from openlayers.models.view import View
 
 
 def test_map() -> None:
@@ -11,7 +10,7 @@ def test_map() -> None:
     m = Map(view)
 
     # Assert
-    print(m.map_options)
-    assert m.map_options["view"] == view.model_dump()
+    print(m.options)
+    assert m.options["view"] == view.model_dump()
 
-    assert m.initial_view.center == (2, 2)
+    assert m.initial_view_state["center"] == (2, 2)

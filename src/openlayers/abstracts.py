@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict
+from abc import ABC, abstractmethod
+
+from pydantic import BaseModel
+
+
+class LayerLike(ABC):
+    @property
+    @abstractmethod
+    def model(self): ...
 
 
 class MyBaseModel(BaseModel):
@@ -9,16 +17,3 @@ class MyBaseModel(BaseModel):
 
     def model_dump(self) -> dict:
         return super().model_dump(exclude_none=True, by_alias=True)
-
-
-class BaseType(BaseModel):
-    model_config = ConfigDict(extra="allow")
-
-    def model_dump(self) -> dict:
-        return dict(
-            type=self.type, options=super().model_dump(exclude_none=True, by_alias=True)
-        )
-
-    @property
-    def type(self) -> str:
-        return type(self).__name__

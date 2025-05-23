@@ -4,6 +4,7 @@ type SourceCatalog = {
     GeoTIFFSource: any;
     GeoJSONSource: any;
     ImageTileSource: any;
+    [key: string]: any;
 }
 type SourceCatalogKey = keyof SourceCatalog;
 
@@ -13,6 +14,8 @@ type LayerCatalog = {
     VectorLayer: any;
     WebGLVectorLayer: any;
     WebGLTileLayer: any;
+    VectorTileLayer: any;
+    [key: string]: any;
 }
 type LayerCatalogKey = keyof LayerCatalog;
 

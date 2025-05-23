@@ -1,9 +1,11 @@
-import type { MapBrowserEvent } from "ol";
+import type { Feature, MapBrowserEvent } from "ol";
 import type { FeatureLike } from "ol/Feature";
 import type { FeatureProps } from ".";
 import type { View } from "ol";
 
-import { toLonLat } from "ol/proj";
+import { GeoJSON } from "ol/format";
+
+// import { toLonLat } from "ol/proj";
 
 // TODO: get 'info' from 'parseView' 
 function parseClickEvent(e: MapBrowserEvent): any {
@@ -12,8 +14,7 @@ function parseClickEvent(e: MapBrowserEvent): any {
     const info = {
         center: view.getCenter(),
         projection: projectionCode,
-        zoom: view.getZoom(),
-        centerLonLat: toLonLat(e.coordinate)
+        zoom: view.getZoom()
     };
     return info;
 }
@@ -25,7 +26,7 @@ function parseView(view: View): any {
         center: center,
         projection: projectionCode,
         zoom: view.getZoom(),
-        center_lonlat: toLonLat(center)
+        extent: view.calculateExtent()
     };
 }
 
@@ -34,4 +35,8 @@ function getFeatureProperties(feature: FeatureLike): FeatureProps {
     return props;
 }
 
-export { parseClickEvent, getFeatureProperties, parseView }
+function featureToGeoJSON(feature: Feature): any {
+    return new GeoJSON().writeFeatureObject(feature);
+}
+
+export { parseClickEvent, getFeatureProperties, parseView, featureToGeoJSON }

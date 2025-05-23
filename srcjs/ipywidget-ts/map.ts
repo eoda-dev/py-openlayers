@@ -1,10 +1,23 @@
 import { Map, View } from "ol";
-import { defaults as defaultControls } from 'ol/control/defaults.js';
+// import { defaults as defaultControls } from 'ol/control/defaults.js';
 import GeoJSON from "ol/format/GeoJSON";
 import Overlay from "ol/Overlay";
-import { fromLonLat } from "ol/proj";
+import { useGeographic } from "ol/proj";
+import { isEmpty } from "ol/extent";
+import Modify from "ol/interaction/Modify";
+import Snap from "ol/interaction/Snap";
+
 import { JSONConverter } from "./json";
-import { addTooltip2 } from "./tooltip2";
+import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
+import { defaultControls } from "./controls";
+
+// import { DrawControl } from "./custom-controls/draw";
+
+import { featureToGeoJSON } from "./utils";
+import { addTooltipToMap } from "./tooltip";
+import { addEventListernersToMapWidget } from "./events";
+import { addSelectFeaturesToMap } from "./select-features";
+import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
 
 // --- Types
 import type Layer from "ol/layer/Layer";
@@ -13,6 +26,7 @@ import type VectorSource from "ol/source/Vector";
 import type VectorLayer from "ol/layer/Vector";
 import type WebGLVectorLayer from "ol/layer/WebGLVector";
 import type { Coordinate } from "ol/coordinate";
+import type { FlatStyle } from "ol/style/flat";
 import type { MyMapOptions } from ".";
 
 import type { AnyModel } from "@anywidget/types";
@@ -22,32 +36,24 @@ type Metadata = {
   controls: any[];
 };
 
-// --- Constants
-// TODO: Move to constants
-const TYPE_IDENTIFIER = "@@type";
-const GEOJSON_IDENTIFIER = "@@geojson";
+// TODO: Rename to something like `FeatureStore`
+type Features = {
+  [layerId: string]: any[];
+}
 
 const jsonConverter = new JSONConverter();
 
-// --- Helpers
-function parseViewDef(viewDef: JSONDef): View {
-  const view = jsonConverter.parse(viewDef) as View;
-  const center = view.getCenter();
-  console.log("view center", center)
-  if (center && view.getProjection().getCode() !== "EPSG:4326") {
-    const centerTransformed = fromLonLat(center);
-    console.log("view center transformed", centerTransformed);
-    view.setCenter(centerTransformed);
-  }
-
-  return view;
-}
+// --- Use geographic coordinates (WGS-84) in all methods
+useGeographic();
 
 function parseLayerDef(layerDef: JSONDef): Layer {
   const layer = jsonConverter.parse(layerDef);
   console.log("layerDef", layerDef);
-  layer.set("id", layerDef.id);
-  addGeojsonFeatures(layer, layerDef["source"][GEOJSON_IDENTIFIER]);
+  layer.setProperties({
+    id: layerDef.id,
+    type: layerDef[TYPE_IDENTIFIER]
+  });
+  addGeojsonFeatures(layer, layerDef.source[GEOJSON_IDENTIFIER]);
   return layer;
 }
 
@@ -64,22 +70,29 @@ export default class MapWidget {
   _container: HTMLElement;
   _map: Map;
   _metadata: Metadata = { layers: [], controls: [] };
+  // _features: Features = {};
   _model: AnyModel | undefined;
 
   constructor(mapElement: HTMLElement, mapOptions: MyMapOptions, model?: AnyModel | undefined) {
     this._model = model;
 
-    const view = parseViewDef(mapOptions.view);
-    let baseControls: Control[] = [];
-    let baseLayers: Layer[] = [];
+    const view = jsonConverter.parse(mapOptions.view) as View;
 
     this._container = mapElement;
     this._map = new Map({
       target: mapElement,
       view: view,
-      controls: defaultControls().extend(baseControls),
-      layers: baseLayers,
+      controls: [],
+      layers: []
     });
+
+    // Add event listeners
+    addEventListernersToMapWidget(this);
+
+    // Add default controls
+    for (const defaultControl of defaultControls)
+      this._map.addControl(defaultControl);
+
 
     // Add controls
     for (let controlDef of mapOptions.controls || []) {
@@ -92,6 +105,7 @@ export default class MapWidget {
     }
   }
 
+  // --- Functions
   getElement(): HTMLElement {
     return this._container;
   }
@@ -104,16 +118,50 @@ export default class MapWidget {
     return this._metadata;
   }
 
+  getAnywidgetModel(): AnyModel | undefined {
+    return this._model;
+  }
+
   setViewFromSource(layerId: string): void {
-    const layer = this.getLayer(layerId);
-    const source = layer?.getSource();
-    const view = source?.getView();
+    const view = this.getLayer(layerId)?.getSource()?.getView();
     if (view)
       this._map.setView(view);
   }
 
-  setExtentFromSource(): void {
+  setExtendByLayerId(layerId: string): void {
+    const source = this.getLayer(layerId)?.getSource() as VectorSource;
+    this.setExtentFromSource(source)
+  }
 
+  setExtentFromSource(source?: VectorSource): void {
+    if (source) {
+      if (isEmpty(source.getExtent())) {
+        source.on("featuresloadend", (e) => {
+          this._map.getView().fit(source.getExtent());
+        });
+      }
+      else {
+        this._map.getView().fit(source.getExtent());
+      }
+    }
+  }
+
+  fitBounds(extent: any): void {
+    this._map.getView().fit(extent);
+  }
+
+  setView(viewDef: JSONDef): void {
+    const view = jsonConverter.parse(viewDef) as View;
+    this._map.setView(view);
+  }
+
+  // --- View Methods
+  applyCallToView(call: OLAnyWidgetCall): void {
+    const view = this._map.getView();
+    console.log("run view method", view);
+
+    // @ts-expect-error
+    view[call.method](...call.args)
   }
 
   // --- Layer methods
@@ -126,28 +174,28 @@ export default class MapWidget {
 
   addLayer(layerDef: JSONDef): void {
     const layer = parseLayerDef(layerDef);
+
+    // Fit bounds for VectorSources
+    if (layer.get("fitBounds")) {
+      const source = layer.getSource() as VectorSource;
+      this.setExtentFromSource(source);
+    }
+
     this._map.addLayer(layer);
-    this._metadata.layers.push({
-      id: layer.get("id"),
-      type: layerDef[TYPE_IDENTIFIER]
-    });
-    console.log("layer", layer.get("id"), "added", this._metadata);
   }
 
   removeLayer(layerId: string): void {
     const layer = this.getLayer(layerId);
     if (layer) {
       this._map.removeLayer(layer);
-      this._metadata.layers = this._metadata.layers.filter(item => item["id"] != layerId);
-      console.log("layer", layerId, "removed", this._metadata);
     }
   }
 
   setLayerStyle(layerId: string, style: any): void {
     const layer = this.getLayer(layerId) as VectorLayer | WebGLVectorLayer;
     if (layer) {
-      console.log("set layer style", layerId, style);
-      layer.setStyle(style)
+      layer.setStyle(style);
+      console.log("style", layerId, "updated", style);
     }
   }
 
@@ -157,6 +205,17 @@ export default class MapWidget {
 
     // @ts-expect-error
     layer[call.method](...call.args)
+  }
+
+  setSource(layerId: string, sourceDef: JSONDef): void {
+    const layer = this.getLayer(layerId);
+    if (layer) {
+      const source = jsonConverter.parse(sourceDef);
+      layer.setSource(source);
+      const features = sourceDef[GEOJSON_IDENTIFIER];
+      if (features)
+        source.addFeatures(new GeoJSON().readFeatures(features));
+    }
   }
 
   // --- Control methods
@@ -169,35 +228,64 @@ export default class MapWidget {
 
   addControl(controlDef: JSONDef): void {
     const control = jsonConverter.parse(controlDef);
-    control.set("id", controlDef.id);
+    control.setProperties({ id: controlDef.id, type: controlDef[TYPE_IDENTIFIER] });
     this._map.addControl(control);
-    this._metadata.controls.push({
-      id: control.get("id"),
-      type: controlDef[TYPE_IDENTIFIER],
-    });
-    console.log("control", control.get("id"), "added", this._metadata);
   }
 
   removeControl(controlId: string): void {
     const control = this.getControl(controlId);
     if (control) {
       this._map.removeControl(control);
-      this._metadata.controls = this._metadata.controls.filter(item => item["id"] != controlId);
-      console.log("control", controlId, "removed", this._metadata);
     }
   }
 
-  // TODO: Test only at the moment
-  addOverlay(position: Coordinate | undefined): void {
+  // ...
+  addOverlay(position: Coordinate | undefined, html: string, cssText: string | undefined, id: string = "ol-overlay"): void {
     const el = document.createElement("div");
-    el.style.cssText = "";
-    el.innerHTML = "We are out here."
+    el.id = id;
+    el.style.cssText = cssText || "";
+    el.innerHTML = html;
     const overlay = new Overlay({ element: el, position: position });
     this._map.addOverlay(overlay);
   }
 
   // ...
   addTooltip(template: string | null): void {
-    addTooltip2(this._map, template);
+    addTooltipToMap(this._map, template);
+  }
+
+  addSelectFeatures(): void {
+    addSelectFeaturesToMap(this._map, this._model);
+  }
+
+  addDragAndDropVectorLayers(formatsDef?: JSONDef[], style?: FlatStyle): void {
+    const formats = formatsDef?.map(item => jsonConverter.parse(item));
+    console.log("drag and drop formats", formats);
+    addDragAndDropVectorLayersToMap(this._map, formats, style);
+  }
+
+  // Does not work for `WebGLVectorLayer`
+  addModifyInteraction(layerId: string): void {
+    const source = this.getLayer(layerId)?.getSource() as VectorSource;
+    if (source) {
+      const snap = new Snap({ source: source });
+      this._map.addInteraction(snap);
+      const modify = new Modify({ source: source });
+      this._map.addInteraction(modify);
+
+      // Add event listener
+      source.on("changefeature", (e) => {
+        if (e.feature) {
+          const feature = featureToGeoJSON(e.feature);
+          console.log("feature changed", feature);
+          if (this._model) {
+            // this._features[layerId] = [feature];
+            // this._model.set("features", this._features);
+            this._model.set("features", { [layerId]: [feature] });
+            this._model.save_changes();
+          }
+        }
+      });
+    }
   }
 }
