@@ -2,6 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)
 [![pypi](https://img.shields.io/pypi/v/openlayers.svg)](https://pypi.python.org/pypi/openlayers)
+[![Build status](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)
 [![License](https://img.shields.io/github/license/eoda-dev/py-openlayers)](https://img.shields.io/github/license/eoda-dev/py-openlayers)
 [![OpenLayers JS](https://img.shields.io/badge/OpenLayers-v10.5.0-blue.svg)](https://github.com/openlayers/openlayers/releases//tag/v10.5.0)
 
@@ -38,6 +39,8 @@ Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map. Modify, draw an
 
 ```bash
 uv init
+
+uv add openlayers
 
 uv add "git+https://github.com/eoda-dev/py-openlayers@main"
 ```
