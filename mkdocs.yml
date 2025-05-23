@@ -9,6 +9,7 @@ theme:
     primary: green
 
 plugins:
+  - marimo:
   - search:
   - mkdocstrings:
       handlers:

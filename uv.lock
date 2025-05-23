@@ -490,6 +490,14 @@ wheels = [
 ]
 
 [[package]]
+name = "htmlmin2"
+version = "0.1.13"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/be/31/a76f4bfa885f93b8167cb4c85cf32b54d1f64384d0b897d45bc6d19b7b45/htmlmin2-0.1.13-py3-none-any.whl", hash = "sha256:75609f2a42e64f7ce57dbff28a39890363bde9e7e5885db633317efbdf8c79a2", size = 34486 },
+]
+
+[[package]]
 name = "httpcore"
 version = "1.0.8"
 source = { registry = "https://pypi.org/simple" }
@@ -1134,6 +1142,21 @@ wheels = [
 ]
 
 [[package]]
+name = "mkdocs-marimo"
+version = "0.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "htmlmin2" },
+    { name = "marimo" },
+    { name = "mkdocs" },
+    { name = "pymdown-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5a/56/0bf393acdbfddc18f21124837529c0bee627988a6522abaa35a0a92d1bb6/mkdocs_marimo-0.2.1.tar.gz", hash = "sha256:9e4cf8005b79856beb3e9db48e7c8fa7f94a5d00c05aa6877f44a173c0ec9bb0", size = 15006 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/9c/2f1a7903d5a041b7e249bf24ec745d933c3976749a96687675876a0f83e9/mkdocs_marimo-0.2.1-py3-none-any.whl", hash = "sha256:96f73bd5c8ccd15258266d201a7f65a451563018c01e9cabae0aaa112e0a1152", size = 12852 },
+]
+
+[[package]]
 name = "mkdocs-material"
 version = "9.6.12"
 source = { registry = "https://pypi.org/simple" }
@@ -1342,7 +1365,7 @@ wheels = [
 
 [[package]]
 name = "openlayers"
-version = "0.1.0rc2"
+version = "0.1.0rc7"
 source = { editable = "." }
 dependencies = [
     { name = "anywidget" },
@@ -1359,6 +1382,7 @@ dev = [
     { name = "jupyter" },
     { name = "marimo" },
     { name = "mkdocs" },
+    { name = "mkdocs-marimo" },
     { name = "mkdocs-material" },
     { name = "mkdocstrings", extra = ["python"] },
     { name = "pyproj" },
@@ -1383,6 +1407,7 @@ dev = [
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "marimo", specifier = ">=0.13.2" },
     { name = "mkdocs", specifier = ">=1.6.1" },
+    { name = "mkdocs-marimo", specifier = ">=0.2.1" },
     { name = "mkdocs-material", specifier = ">=9.6.12" },
     { name = "mkdocstrings", extras = ["python"], specifier = ">=0.29.1" },
     { name = "pyproj", specifier = ">=3.6.1" },
