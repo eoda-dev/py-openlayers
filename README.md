@@ -56,6 +56,10 @@ m = ol.Map()
 m.save()
 ```
 
+## Documentation
+
+[python-openlayers docs](https://eoda-dev.github.io/py-openlayers/)
+
 ## Note
 
 The documentation is still in an early stage, more examples will be added as soon as possible.
