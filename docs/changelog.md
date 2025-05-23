@@ -2,7 +2,7 @@
 
 ## v0.1.1
 
-* Innitial release
+* Initial release
 
 ## v0.1.0
 
