@@ -27,6 +27,7 @@ dev = [
     "jupyter>=1.1.1",
     "marimo>=0.13.2",
     "mkdocs>=1.6.1",
+    "mkdocs-marimo>=0.2.1",
     "mkdocs-material>=9.6.12",
     "mkdocstrings[python]>=0.29.1",
     "pyproj>=3.6.1",
