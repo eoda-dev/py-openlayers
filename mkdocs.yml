@@ -1,4 +1,5 @@
 site_name: OpenLayers For Python
+site_url: https://eoda-dev.github.io/py-openlayers
 
 repo_name: py-openlayers
 repo_url: https://github.com/eoda-dev/py-openlayers

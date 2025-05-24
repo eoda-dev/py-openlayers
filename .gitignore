@@ -19,3 +19,4 @@ srcjs/anywidget-bindings/
 # Misc
 *.swp
 
+site/
