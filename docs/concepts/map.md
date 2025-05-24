@@ -14,6 +14,20 @@ Properties such as _center_, _zoom level_ and _projection_ are managed by the [V
 -8<-- "concepts/view.py"
 ```
 
+```python {marimo display_code=true}
+import marimo as mo
+import openlayers as ol
+
+m = ol.MapWidget(ol.View(center=(172.606201, -43.556510), zoom=12))
+
+w = mo.ui.anywidget(m)
+w
+```
+
+```python {marimo display_code=true}
+w.value["view_state"]
+```
+
 ## Basemaps
 
 A basemap in openlayers consists of one or more layers from your layer stack:
