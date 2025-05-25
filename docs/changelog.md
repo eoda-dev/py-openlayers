@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.2 (unreleased)
+
+* Vector layer: Allow lists for style parameter, see [style-expressions-example](https://openlayers.org/en/latest/examples/style-expressions.html)
+
 ## v0.1.1
 
 * Initial release
