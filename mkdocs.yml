@@ -8,6 +8,9 @@ theme:
   name: material
   palette:
     primary: green
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
 
 plugins:
   - marimo:
@@ -50,4 +53,7 @@ nav:
       - Basemaps: api/basemaps.md
       - GeoPandas: api/geopandas.md
       # - Express: api/express.md
+  - Examples:
+      - Get started: showcase/get-started.md
+      # - Icons: showcase/icons.md
   - Changelog: changelog.md
