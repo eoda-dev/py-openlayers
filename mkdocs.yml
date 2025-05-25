@@ -55,5 +55,6 @@ nav:
       # - Express: api/express.md
   - Examples:
       - Get started: showcase/get-started.md
+      - Style expressions: showcase/style-expressions.md
       # - Icons: showcase/icons.md
   - Changelog: changelog.md
