@@ -34,7 +34,7 @@ class TileLayer(Layer): ...
 
 
 class VectorTileLayer(Layer):
-    style: dict | FlatStyle | None = default_style()
+    style: dict | FlatStyle | list | None = default_style()
 
     @field_validator("style")
     def validate_style(cls, v):
