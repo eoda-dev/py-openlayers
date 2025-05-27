@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/eoda-dev/py-openlayers)](https://img.shields.io/github/license/eoda-dev/py-openlayers)
 [![OpenLayers JS](https://img.shields.io/badge/OpenLayers-v10.5.0-blue.svg)](https://github.com/openlayers/openlayers/releases//tag/v10.5.0)
 
-Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-performance, full-featured web mapping library that displays maps from various sources and formats. It makes it a easy to create interactive maps in [Marimo](https://marimo.io/) and [Jupyter](https://jupyter.org/) notebooks with a few lines of code in a pythonic way.
+Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-performance, full-featured web mapping library that displays maps from various sources and formats. It makes it easy to create interactive maps in [Marimo](https://marimo.io/) and [Jupyter](https://jupyter.org/) notebooks with a few lines of code in a pythonic way.
 
 ## Features
 
