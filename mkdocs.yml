@@ -56,5 +56,6 @@ nav:
   - Examples:
       - Get started: showcase/get-started.md
       - Style expressions: showcase/style-expressions.md
+      - Style expressions text: showcase/style-expressions-text.md
       # - Icons: showcase/icons.md
   - Changelog: changelog.md
