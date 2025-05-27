@@ -47,22 +47,4 @@ const style = {
 
 > See [Styles API](../../api/styles/) and [ol/style/flat](https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html) for details.
 
-```python {marimo display_code=true}
-import openlayers as ol
-
-data = "https://openlayers.org/en/latest/examples/data/geojson/roads-seoul.geojson"
-
-vector = ol.VectorLayer(
-    id="roads",
-    source=ol.VectorSource(url=data),
-    fit_bounds=True,
-    style=ol.FlatStyle(
-      stroke_color = "steelblue",
-      stroke_width = 3.5
-    )
-)
-
-m = ol.MapWidget(layers=[ol.BasemapLayer(), vector])
-m.add_default_tooltip()
-m
-```
+<iframe src="https://marimo.app/l/5a5k2w?embed=true" width="100%" height=700 frameBorder="0"></iframe>

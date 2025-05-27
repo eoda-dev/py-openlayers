@@ -1,4 +1,4 @@
-# Style expressions text
+# Style expressions
 
 See also [style-expressions](https://openlayers.org/en/latest/examples/style-expressions.html)
 

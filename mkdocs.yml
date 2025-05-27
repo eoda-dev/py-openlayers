@@ -55,7 +55,10 @@ nav:
       # - Express: api/express.md
   - Examples:
       - Get started: showcase/get-started.md
-      - Style expressions: showcase/style-expressions.md
-      - Style expressions text: showcase/style-expressions-text.md
+      # - Style expressions: showcase/style-expressions.md
+      - Style expressions: showcase/style-expressions-text.md
+      - GPX vector source: showcase/gpx-vector-source.md
+      - KML vector source: showcase/kml-vector-source.md
+      - MVT tile source: showcase/mvt-tile-source.md
       # - Icons: showcase/icons.md
   - Changelog: changelog.md
