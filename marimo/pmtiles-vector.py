@@ -9,9 +9,8 @@ app = marimo.App(width="medium")
 @app.cell
 def _():
     import openlayers as ol
-    from openlayers.sources import PMTilesVectorSource
     from openlayers.styles import default_style
-    return PMTilesVectorSource, default_style, ol
+    return default_style, ol
 
 
 @app.cell
@@ -21,11 +20,11 @@ def _():
 
 
 @app.cell
-def _(PMTilesVectorSource, data, default_style, ol):
+def _(data, default_style, ol):
     pmtiles = ol.layers.VectorTileLayer(
         id="pmtiles-vector",
         style=default_style(stroke_color="green", stroke_width=2),
-        source=PMTilesVectorSource(
+        source=ol.PMTilesVectorSource(
             url=data, attributions=["© Land Information New Zealand"]
         ),
     )

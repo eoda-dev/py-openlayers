@@ -8,8 +8,9 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
+    import marimo as mo
     import openlayers as ol
-    return (ol,)
+    return mo, ol
 
 
 @app.cell
@@ -19,8 +20,20 @@ def _(ol):
 
 
 @app.cell
-def _(m):
-    m
+def _(m, mo):
+    widget = mo.ui.anywidget(m)
+    return (widget,)
+
+
+@app.cell
+def _(widget):
+    widget
+    return
+
+
+@app.cell
+def _(widget):
+    widget.value["view_state"]
     return
 
 
