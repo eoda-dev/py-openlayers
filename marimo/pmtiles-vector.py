@@ -10,13 +10,8 @@ app = marimo.App(width="medium")
 def _():
     import marimo as mo
     import openlayers as ol
-    return mo, ol
-
-
-@app.cell
-def _():
     from openlayers.styles import default_style
-    return (default_style,)
+    return default_style, mo, ol
 
 
 @app.cell(hide_code=True)
