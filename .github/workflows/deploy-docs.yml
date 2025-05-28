@@ -30,6 +30,12 @@ jobs:
       - name: Build docs
         run: mkdocs build -d dist
 
+      - name: Build jupyterlite
+        run: |
+          cd jupyterlite
+          pip install -r requirements.txt
+          jupyter lite build --contents contents --output-dir ../dist/jupyterlite
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
