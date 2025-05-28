@@ -8,9 +8,27 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
+    import marimo as mo
     import openlayers as ol
+    return mo, ol
+
+
+@app.cell
+def _():
     from openlayers.styles import default_style
-    return default_style, ol
+    return (default_style,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        # PMTiles vector source
+
+        See also [pmtiles/openlayers](https://docs.protomaps.com/pmtiles/openlayers)
+        """
+    )
+    return
 
 
 @app.cell

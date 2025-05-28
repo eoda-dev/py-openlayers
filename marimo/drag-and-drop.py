@@ -17,7 +17,7 @@ def _():
 def _(mo):
     mo.md(
         r"""
-        ## Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map.
+        ## Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map
 
         Download sample files from here:
 
