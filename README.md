@@ -35,6 +35,20 @@ Render PMTiles from vector and raster sources.
 
 Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map. Modify, draw and select features.
 
+<a href="https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html" target="_blank">Drag-and-drop example notebook<a>
+
+### GeoPandas Extension
+
+```python
+import openlayers as ol
+
+data = "zip+https://github.com/Toblerity/Fiona/files/11151652/coutwildrnp.zip"
+
+gdf = ol.GeoDataFrame.from_file(data)
+
+gdf.ol.color_category("STATE").explore()
+```
+
 ## Installation
 
 ```bash
