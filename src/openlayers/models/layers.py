@@ -83,6 +83,12 @@ class WebGLTileLayer(Layer):
     style: dict | None = None
 
 
+class HeatmapLayer(Layer):
+    radius: int | list | None = 8
+    blur: int | list | None = 15
+    weight: str | list | None = "weight"
+
+
 # --- Layer type
 LayerT = Union[
     Layer,
@@ -93,4 +99,5 @@ LayerT = Union[
     VectorTileLayer,
     WebGLVectorTileLayer,
     VectorImageLayer,
+    HeatmapLayer,
 ]

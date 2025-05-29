@@ -11,6 +11,7 @@ from .models.layers import (
     WebGLTileLayer,
     WebGLVectorLayer,
     WebGLVectorTileLayer,
+    HeatmapLayer,
 )
 
 __all__ = [
@@ -22,4 +23,5 @@ __all__ = [
     "VectorTileLayer",
     "WebGLVectorTileLayer",
     "VectorImageLayer",
+    "HeatmapLayer",
 ]
