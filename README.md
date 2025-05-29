@@ -12,7 +12,7 @@ Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-perfo
 
 ### Tiled Layers
 
-Pull tiles from OSM, CartoDB, MapTiler and any other XYZ source.
+Pull tiles from OSM, [Carto](https://github.com/CartoDB/basemap-styles), [MapTiler](https://www.maptiler.com/) and any other XYZ source.
 
 ### Vector Layers
 
@@ -22,7 +22,7 @@ Render vector data from GeoJSON, TopoJSON, KML, GML and other formats.
 
 Add geocoding, draw, full screen and other controls to your map.
 
-<a href="https://eoda-dev.github.io/py-openlayers/marimo/draw-control.html" target="_blank">Draw control example<a>
+[Draw control example](https://eoda-dev.github.io/py-openlayers/marimo/draw-control.html)
 
 ### WebGL
 

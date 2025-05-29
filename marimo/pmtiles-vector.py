@@ -34,7 +34,7 @@ def _():
 
 @app.cell
 def _(data, default_style, ol):
-    pmtiles = ol.layers.VectorTileLayer(
+    pmtiles = ol.VectorTileLayer(
         id="pmtiles-vector",
         style=default_style(stroke_color="green", stroke_width=2),
         source=ol.PMTilesVectorSource(
