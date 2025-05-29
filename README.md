@@ -70,12 +70,13 @@ m = ol.Map()
 m.save()
 ```
 
-## Marimo example notebooks
+## Marimo Example Notebooks
 
 * [Get started](https://eoda-dev.github.io/py-openlayers/marimo/getting-started.html)
 * [PMTiles](https://eoda-dev.github.io/py-openlayers/marimo/pmtiles-vector.html)
 * [Drag and drop](https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html)
 * [Style expressions](https://marimo.app/l/ig7brp)
+* [Heatmap](https://eoda-dev.github.io/py-openlayers/marimo/earthquakes-heatmap.html)
 
 ## Documentation
 
