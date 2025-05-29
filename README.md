@@ -22,8 +22,6 @@ Render vector data from GeoJSON, TopoJSON, KML, GML and other formats.
 
 Add geocoding, draw, full screen and other controls to your map.
 
-[Draw control example](https://eoda-dev.github.io/py-openlayers/marimo/draw-control.html)
-
 ### WebGL
 
 Render large data sets using WebGL.
@@ -32,13 +30,9 @@ Render large data sets using WebGL.
 
 Render PMTiles from vector and raster sources.
 
-[PMTiles vector source example](https://eoda-dev.github.io/py-openlayers/marimo/pmtiles-vector.html)
-
 ### Interactions
 
 Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map. Modify, draw and select features.
-
-[Drag-and-drop example](https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html)
 
 ### GeoPandas Extension
 
@@ -76,7 +70,12 @@ m = ol.Map()
 m.save()
 ```
 
-<a href="https://eoda-dev.github.io/py-openlayers/marimo/getting-started.html" target="_blank">Getting started<a>
+## Marimo example notebooks
+
+* [Get started](https://eoda-dev.github.io/py-openlayers/marimo/getting-started.html)
+* [PMTiles](https://eoda-dev.github.io/py-openlayers/marimo/pmtiles-vector.html)
+* [Drag and drop](https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html)
+* [Style expressions](https://marimo.app/l/ig7brp)
 
 ## Documentation
 
