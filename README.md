@@ -32,13 +32,13 @@ Render large data sets using WebGL.
 
 Render PMTiles from vector and raster sources.
 
-<a href="https://eoda-dev.github.io/py-openlayers/marimo/pmtiles-vector.html" target="_blank">PMTiles vector source example<a>
+[PMTiles vector source example](https://eoda-dev.github.io/py-openlayers/marimo/pmtiles-vector.html)
 
 ### Interactions
 
 Drag and drop GPX, GeoJSON, KML or TopoJSON files on to the map. Modify, draw and select features.
 
-<a href="https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html" target="_blank">Drag-and-drop example<a>
+[Drag-and-drop example](https://eoda-dev.github.io/py-openlayers/marimo/drag-and-drop.html)
 
 ### GeoPandas Extension
 
