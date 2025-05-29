@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from .basemaps import BasemapLayer
 from .models.layers import (
+    HeatmapLayer,
     Layer,
     LayerT,
     TileLayer,
@@ -11,7 +12,6 @@ from .models.layers import (
     WebGLTileLayer,
     WebGLVectorLayer,
     WebGLVectorTileLayer,
-    HeatmapLayer,
 )
 
 __all__ = [

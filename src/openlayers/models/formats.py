@@ -12,20 +12,34 @@ class Format(OLBaseModel): ...
 
 
 # --- Formats
-class GeoJSON(Format): ...
+class GeoJSON(Format):
+    """GeoJSON format"""
+
+    ...
 
 
-class TopoJSON(Format): ...
+class TopoJSON(Format):
+    """TopoJSON format"""
+
+    ...
 
 
 class KML(Format):
+    """KML format"""
+
     extract_styles: bool = Field(True, serialization_alias="extractStyles")
 
 
-class GPX(Format): ...
+class GPX(Format):
+    """GPX format"""
+
+    ...
 
 
-class MVT(Format): ...
+class MVT(Format):
+    """MVT format"""
+
+    ...
 
 
 # --- Format type

@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import os
-
 from enum import Enum
 
 from pydantic import BaseModel, Field
 
 from .abstracts import LayerLike
+from .constants import MAPTILER_API_KEY_ENV_VAR
 from .models.layers import TileLayer
 from .models.sources import OSM, ImageTileSource, TileJSONSource
-from .constants import MAPTILER_API_KEY_ENV_VAR
 
 # --- OSM
 

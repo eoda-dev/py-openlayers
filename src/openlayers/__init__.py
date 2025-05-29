@@ -6,11 +6,11 @@ try:
 except ImportError as e:
     ...
 
-from . import controls, layers
+from . import controls, layers, formats
 from .controls import *
 from .layers import *
 from .map import Map
-from .models import formats
+from .formats import *
 from .sources import *
 from .styles import FlatStyle
 from .view import View

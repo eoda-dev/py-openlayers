@@ -6,10 +6,10 @@ from uuid import uuid4
 
 from pydantic import Field, field_validator
 
+from ..constants import MAPTILER_API_KEY_ENV_VAR
 from .core import OLBaseModel
 from .layers import LayerT, TileLayer
 from .sources import OSM
-from ..constants import MAPTILER_API_KEY_ENV_VAR
 
 
 # -- Base control
