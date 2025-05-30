@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.4 (unreleased)
+
+* Add click interaction
+* Add Shiny for Python example
+
 ## v0.1.3
 
 * Add `openlayers.models.layers.HeatmapLayer`
