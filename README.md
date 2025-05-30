@@ -77,6 +77,11 @@ m.save()
 * [Style expressions](https://marimo.app/l/ig7brp)
 * [Heatmap](https://eoda-dev.github.io/py-openlayers/marimo/earthquakes-heatmap.html)
 
+
+## Shiny Example Apps
+
+* [Get started](https://shinylive.io/py/editor/#code=NobwRAdghgtgpmAXGKAHVA6VBPMAaMAYwHsIAXOcpMASxlWICcyACAKwGdSAdCXgM0bEYLABZkYAGzLFikjizoNmYgIwChIjqJoRsAdxoATAOZwyCpU1aM4UQmRoA3OAH1bUI3ha2IRuIyuhqbmvLxWKsSolJJQ2AEKUApyGsIs2rrYivTWPnYOznCpWjp6GHAAHqi2HJY5KrqoAK5k3r7+jN5NNGEQhDRk2K6ElBSMCgC8LCC8LHMs3GAAMqRGPEgsABQArKoY2wAMAOwALN4HGKoATEcAHACUeLPziwAKUIw0HIuIWye3GFu2wAbMDvFcMABmbZXK6PZ5zRYAOTg+hYAE0mABrH5-C5Ha63bwAWlOGAOB2BB3hEAAvr1RKpNoscGRRKRiVEYnEEot7r1uhhGi1XBw4JI4A5mURRgFFt5FgBhWWMeUsQjsmgjDgTSRfMibfqDYYqjgYLFwbAcTb3W29XgAAXaASCxjMZF4-n4LDkrhgaBtiARLFirRDpBYUyNQxG5ASwEWKz86wAusGRFM5BgALJoADqbvMzIg81LPskGAAajRUYaVRNNpJSN5Q48WAAvWQwCYPJ4lstzEjkITyCbALMAeRcjCcNf0udQitIZBHhrksVQYqMEwAYlB5HB7im+6X+f25rYyE1GCWYPaIE7KB0MCR-J64N7dPxiIHg7PUaKZBQBQkZ5PYjguO4dhGJsvr+pgwTugqYD-vogHAUUYBnqWl7XiWnCkBgRhNPQ1qoehFDeLo-jkBMcL3o+4GFOU-D8JKHp+B+LCuL+54hsBLYRlGAwxqawDCmQL4qjaaZ8XBaAYIh5gYGKZAmnGjCNs2-FkGeYC0ng4DQPA1C2AAjt0tjwOQZpkBUZD4EQy6jNQXIQLE8TjLw+kpkAA)
+
 ## Documentation
 
 [python-openlayers docs](https://eoda-dev.github.io/py-openlayers/)
