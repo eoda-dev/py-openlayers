@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.4 (unreleased)
+## v0.1.4
 
 * Add click interaction
 * Add Shiny for Python example
