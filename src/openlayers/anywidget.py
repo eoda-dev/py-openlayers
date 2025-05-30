@@ -25,7 +25,7 @@ class MapWidget(Map, AnyWidget):
     calls = traitlets.List().tag(sync=True)
     created = traitlets.Bool().tag(sync=True)
     options = traitlets.Dict().tag(sync=True)
-    # clicked = traitlets.Dict().tag(sync=True)
+    clicked = traitlets.Dict().tag(sync=True)
     view_state = traitlets.Dict().tag(sync=True)
     metadata = traitlets.Dict().tag(sync=True)
 

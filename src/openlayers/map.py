@@ -167,6 +167,10 @@ class Map(object):
 
         return self.add_call("addDragAndDropVectorLayers", formats, style)
 
+    def add_click_interaction(self) -> None:
+        """Add a click interaction to map"""
+        self.add_call("addClickInteraction")
+
     def add_modify_interaction(self, layer_id) -> None:
         """Add a modify interaction to the map
 

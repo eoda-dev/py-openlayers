@@ -12,7 +12,8 @@ function parseClickEvent(e: MapBrowserEvent): any {
     const view = e.target.getView();
     const projectionCode = view.getProjection().getCode();
     const info = {
-        center: view.getCenter(),
+        // center: view.getCenter(),
+        coordinate: e.coordinate,
         projection: projectionCode,
         zoom: view.getZoom()
     };

@@ -10,7 +10,7 @@ import Snap from "ol/interaction/Snap";
 import { JSONConverter } from "./json";
 import { TYPE_IDENTIFIER, GEOJSON_IDENTIFIER } from "./constants";
 import { defaultControls } from "./controls";
-
+import { parseClickEvent } from "./utils";
 // import { DrawControl } from "./custom-controls/draw";
 
 import { featureToGeoJSON } from "./utils";
@@ -256,6 +256,18 @@ export default class MapWidget {
 
   addSelectFeatures(): void {
     addSelectFeaturesToMap(this._map, this._model);
+  }
+
+  addClickInteraction(): void {
+    const model = this._model;
+    this._map.on("click", (e) => {
+      const info = parseClickEvent(e);
+      console.log(info);
+      if (model) {
+        model.set("clicked", info);
+        model.save_changes();
+      }
+    });
   }
 
   addDragAndDropVectorLayers(formatsDef?: JSONDef[], style?: FlatStyle): void {

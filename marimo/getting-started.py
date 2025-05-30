@@ -16,6 +16,7 @@ def _():
 @app.cell
 def _(ol):
     m = ol.MapWidget()
+    m.add_click_interaction()
     return (m,)
 
 
@@ -34,6 +35,12 @@ def _(widget):
 @app.cell
 def _(widget):
     widget.value["view_state"]
+    return
+
+
+@app.cell
+def _(widget):
+    widget.value["clicked"]
     return
 
 

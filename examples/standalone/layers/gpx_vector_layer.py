@@ -13,4 +13,6 @@ gpx_layer = ol.WebGLVectorLayer(
 m = ol.Map()
 m.add_layer(gpx_layer)
 m.add_tooltip()
+# m.add_call("addClickInteraction")
+m.add_click_interaction()
 m.save("/tmp/ol-example.html")
