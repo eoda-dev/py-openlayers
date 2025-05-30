@@ -42,7 +42,6 @@ import openlayers as ol
 data = "zip+https://github.com/Toblerity/Fiona/files/11151652/coutwildrnp.zip"
 
 gdf = ol.GeoDataFrame.from_file(data)
-
 gdf.ol.color_category("STATE").explore()
 ```
 
