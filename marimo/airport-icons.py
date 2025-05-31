@@ -27,16 +27,18 @@ def _():
 
 @app.cell
 def _(icon, ol):
-    style = ol.FlatStyle(icon_src=icon, icon_scale=0.03)
+    style = ol.FlatStyle(
+        icon_src=icon,
+        icon_scale=["match", ["get", "type"], "major", 0.05, 0.03],
+        # text_value=["get", "name"],
+        # text_fill_color="steelblue"
+    )
     return (style,)
 
 
 @app.cell
 def _(data, ol, style):
-    vector = ol.VectorLayer(
-        source=ol.VectorSource(url=data),
-        style=style
-    )
+    vector = ol.VectorLayer(source=ol.VectorSource(url=data), style=style)
     return (vector,)
 
 
@@ -44,7 +46,7 @@ def _(data, ol, style):
 def _(ol, vector):
     m = ol.MapWidget(
         ol.View(center=(16.62662018, 49.2125578), zoom=5),
-        layers=[ol.BasemapLayer(), vector]
+        layers=[ol.BasemapLayer(), vector],
     )
     m.add_tooltip()
     return (m,)

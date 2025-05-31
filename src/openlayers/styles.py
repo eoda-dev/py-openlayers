@@ -37,7 +37,7 @@ class FlatStyle(BaseModel):
     circle_stroke_color: str | list | None = None
 
     icon_src: str | Path | list | None = None
-    icon_scale: float | int | None = None
+    icon_scale: float | int | list | None = None
     icon_color: str | list | None = None
     icon_opacity: float | int | None = Field(None, gt=0, le=1)
 
