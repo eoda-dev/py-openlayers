@@ -41,6 +41,12 @@ class FlatStyle(BaseModel):
     icon_color: str | list | None = None
     icon_opacity: float | int | None = Field(None, gt=0, le=1)
 
+    text_value: str | list | None = None
+    text_font: str | list | None = None
+    text_fill_color: str | list | None = None
+    text_stroke_width: float | int | list | None = None
+    text_stroke_color: str | list | None = None
+
     @field_validator("icon_src")
     def validate_icon_src(cls, v) -> str:
         if os.path.isfile(v):
