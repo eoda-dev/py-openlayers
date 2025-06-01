@@ -1,4 +1,4 @@
-# TODOS
+# TODOs
 
 ## STAC layers
 

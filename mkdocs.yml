@@ -61,5 +61,6 @@ nav:
       - KML vector source: showcase/kml-vector-source.md
       - MVT tile source: showcase/mvt-tile-source.md
       - PMTiles vector source: showcase/pmtiles-vector-source.md
-      # - Icons: showcase/icons.md
+      - Icons: showcase/icons.md
+      - Heatmap: showcase/heatmap.md
   - Changelog: changelog.md
