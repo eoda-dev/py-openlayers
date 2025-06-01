@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.5
+
+* Allow `list` type for `icon_scale` to support expressions
+* Add basic `text_` properties to `FlatStyle`
+* Add icon example
+
 ## v0.1.4
 
 * Add click interaction
