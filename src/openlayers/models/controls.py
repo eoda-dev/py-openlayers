@@ -17,6 +17,7 @@ class Control(OLBaseModel):
     id: str | None = None
 
     @field_validator("id")
+    @classmethod
     def validate_id(cls, v) -> str:
         if v is None:
             return uuid4().hex[0:10]
@@ -83,11 +84,7 @@ class ZoomToExtentControl(Control):
     Provides a button that changes the map view to a specific extent when clicked.
     """
 
-    extent: (
-        tuple[float | float | float | float]
-        | list[float | float | float | float]
-        | None
-    ) = None
+    extent: tuple[float, float, float, float] | list[float] | None = None
 
 
 # --- MapTiler
