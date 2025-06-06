@@ -18,6 +18,7 @@ class MapOptions(BaseModel):
     layers: list[dict | LayerT | LayerLike] | None = None
 
     @field_validator("layers")
+    @classmethod
     def validate_layers(cls, layers) -> list[dict | LayerT]:
         layers = [
             layer.model if isinstance(layer, LayerLike) else layer for layer in layers

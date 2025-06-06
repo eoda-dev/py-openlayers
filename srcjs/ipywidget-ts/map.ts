@@ -161,7 +161,7 @@ export default class MapWidget {
     console.log("run view method", view);
 
     // @ts-expect-error
-    view[call.method](...call.args)
+    view[call.method_name](...call.args)
   }
 
   // --- Layer methods
@@ -204,7 +204,7 @@ export default class MapWidget {
     const layer = this.getLayer(layerId);
 
     // @ts-expect-error
-    layer[call.method](...call.args)
+    layer[call.method_name](...call.args)
   }
 
   setSource(layerId: string, sourceDef: JSONDef): void {

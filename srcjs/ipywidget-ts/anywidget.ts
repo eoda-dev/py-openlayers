@@ -37,7 +37,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
   for (let call of calls) {
 
     // @ts-expect-error
-    mapWidget[call.method](...call.args);
+    mapWidget[call.method_name](...call.args);
   }
 
   const map = mapWidget.getMap();
@@ -61,7 +61,7 @@ function render({ model, el }: { model: AnyModel; el: HTMLElement }): void {
 
     try {
       // @ts-expect-error
-      mapWidget[msg.method](...msg.args);
+      mapWidget[msg.method_name](...msg.args);
     } catch (error) {
       console.log("error in anywidget msg call", error);
     }

@@ -49,7 +49,7 @@ class MapWidget(Map, AnyWidget):
         AnyWidget.__init__(self, height=height, **kwargs)
 
     def add_call(self, method_name: str, *args: Any) -> None:
-        call = dict(method=method_name, args=args)
+        call = dict(method_name=method_name, args=args)
         if self.created:
             return self.send(call)
 

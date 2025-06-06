@@ -14,9 +14,9 @@ const MAP_CONTAINER = "map";
 
     console.log("calls", mapOptions.calls);
     if (mapOptions.calls) {
-        for (let call of mapOptions.calls) {
+        for (let call of mapOptions.calls as OLAnyWidgetCall[]) {
             // @ts-expect-error
-            mapWidget[call.method](...call.args);
+            mapWidget[call.method_name](...call.args);
         }
     }
 };

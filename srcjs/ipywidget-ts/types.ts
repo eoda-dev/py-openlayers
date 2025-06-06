@@ -40,6 +40,6 @@ type TypeCatalogKey = keyof TypeCatalog;
 
 // ...
 type OLAnyWidgetCall = {
-    method: string;
+    method_name: string;
     args: any[];
 }

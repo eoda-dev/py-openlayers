@@ -36,8 +36,6 @@ class View(OLBaseModel):
     zoom: float | int | None = 0
     projection: str | None = Projection.WEB_MERCATOR
     rotation: float | int | None = None
-    extent: (
-        tuple[float, float, float, float] | list[float, float, float, float] | None
-    ) = None
+    extent: tuple[float, float, float, float] | list[float] | None = None
     min_zoom: int | float | None = Field(None, serialization_alias="minZoom")
     max_zoom: int | float | None = Field(None, serialization_alias="maxZoom")
