@@ -1,6 +1,6 @@
 [project]
 name = "openlayers"
-version = "0.1.6-rc.1"
+version = "0.1.6"
 description = "Python Bindings for OpenLayersJS"
 readme = "README.md"
 authors = [{ name = "Stefan Kuethe", email = "stefan.kuethe@eoda.de" }]

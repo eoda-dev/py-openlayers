@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.6
+
+* Rename `call.method` to `call.method_name` to fix JS warning in marimo wasm notebooks
+* Fix pydantic list types
+
 ## v0.1.5
 
 * Allow `list` type for `icon_scale` to support expressions
