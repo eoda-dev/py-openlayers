@@ -1,5 +1,7 @@
 # py-openlayers: OpenLayers for Python
 
+[Docs](https://eoda-dev.github.io/py-openlayers/) | [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw) | [Examples](https://eoda-dev.github.io/py-openlayers/showcase/get-started/)
+
 [![Release](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)
 [![pypi](https://img.shields.io/pypi/v/openlayers.svg)](https://pypi.python.org/pypi/openlayers)
 [![Build status](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)](https://img.shields.io/github/actions/workflow/status/eoda-dev/py-openlayers/pytest.yml?branch=main)
@@ -7,6 +9,10 @@
 [![OpenLayers JS](https://img.shields.io/badge/OpenLayers-v10.5.0-blue.svg)](https://github.com/openlayers/openlayers/releases//tag/v10.5.0)
 
 Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-performance, full-featured web mapping library that displays maps from various sources and formats. It makes it easy to create interactive maps in [Marimo](https://marimo.io/) and [Jupyter](https://jupyter.org/) notebooks with a few lines of code in a pythonic way.
+
+## Join the conversation
+
+Join us on [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw).
 
 ## Features
 
