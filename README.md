@@ -1,6 +1,6 @@
 # py-openlayers: OpenLayers for Python
 
-[Docs](https://eoda-dev.github.io/py-openlayers/) | [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw) | [Examples](https://eoda-dev.github.io/py-openlayers/showcase/get-started/)
+[Docs](https://eoda-dev.github.io/py-openlayers/) | [Discord](https://discord.gg/TB8FmEb6zH) | [Examples](https://eoda-dev.github.io/py-openlayers/showcase/get-started/) | [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw)
 
 [![Release](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)](https://img.shields.io/github/v/release/eoda-dev/py-openlayers)
 [![pypi](https://img.shields.io/pypi/v/openlayers.svg)](https://pypi.python.org/pypi/openlayers)
