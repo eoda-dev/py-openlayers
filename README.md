@@ -12,7 +12,7 @@ Provides Python bindings for [OpenLayers](https://openlayers.org/), a high-perfo
 
 ## Join the conversation
 
-Join us on [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw).
+Join us on [Discord](https://discord.gg/TB8FmEb6zH) or [Slack](https://join.slack.com/t/eoda-dev/shared_invite/zt-39s73mev7-smKDIphRkDJ9jMV24N1omw).
 
 ## Features
 
