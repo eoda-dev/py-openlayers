@@ -7,7 +7,11 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import VectorLayer from "ol/layer/Vector";
 
+// Box selection
+import { platformModifierKeyOnly } from 'ol/events/condition.js';
+
 import { featureToGeoJSON } from "./utils";
+import DragBox from 'ol/interaction/DragBox.js';
 
 // TODO: Should be a parameter
 const highlightStyle = new Style({
@@ -58,4 +62,21 @@ function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
     });
 }
 
-export { addSelectFeaturesToMap };
+function addBoxSelectionToMap(map: Map, model?: AnyModel): void {
+    console.warn("Box selection not implemented yet");
+
+    const dragBox = new DragBox({
+        condition: platformModifierKeyOnly,
+    });
+    map.addInteraction(dragBox);
+    dragBox.on('boxend', function () {
+        const extent = dragBox.getGeometry().getExtent();
+        console.log("box extent", extent);
+    });
+
+    dragBox.on('boxstart', function () {
+        // select.clearSelection();
+    });
+}
+
+export { addSelectFeaturesToMap, addBoxSelectionToMap };

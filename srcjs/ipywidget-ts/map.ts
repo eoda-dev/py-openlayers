@@ -16,7 +16,7 @@ import { parseClickEvent } from "./utils";
 import { featureToGeoJSON } from "./utils";
 import { addTooltipToMap } from "./tooltip";
 import { addEventListernersToMapWidget } from "./events";
-import { addSelectFeaturesToMap } from "./select-features";
+import { addSelectFeaturesToMap, addBoxSelectionToMap } from "./select-features";
 import { addDragAndDropToMap as addDragAndDropVectorLayersToMap } from "./drag-and-drop";
 
 // --- Types
@@ -256,6 +256,10 @@ export default class MapWidget {
 
   addSelectFeatures(): void {
     addSelectFeaturesToMap(this._map, this._model);
+  }
+
+  addBoxSelection(): void {
+    addBoxSelectionToMap(this._map, this._model);
   }
 
   addClickInteraction(): void {
