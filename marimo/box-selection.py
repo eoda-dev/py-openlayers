@@ -17,7 +17,7 @@ def _():
 def _(ol):
     data = "https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
     # data = "https://github.com/visgl/deck.gl-data/raw/master/examples/line/airports.json"
-    layer = ol.WebGLVectorLayer(
+    layer = ol.VectorLayer(
         id="xyz",
         source=ol.sources.VectorSource(
             url=data,

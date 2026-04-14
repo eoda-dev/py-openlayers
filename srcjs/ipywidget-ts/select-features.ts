@@ -85,26 +85,29 @@ function addBoxSelectionToMap(map: Map, model?: AnyModel): void {
     dragBox.on('boxend', function () {
         const extent = dragBox.getGeometry().transform('EPSG:3857', 'EPSG:4326').getExtent();
         console.log("box extent", extent);
-        //
         for (let layer of map.getLayers().getArray()) {
-            if (layer instanceof VectorLayer || layer instanceof WebGLVectorLayer) {
-                const source: VectorSource = layer.getSource();
-                console.log("source extend", source.getExtent());
-                // const features = source.getFeaturesInExtent(extent).filter((feature: Feature) => feature?.getGeometry()?.intersectsExtent(extent));
-                source.forEachFeatureIntersectingExtent(extent, (feature: Feature) => {
-                    feature.set("layer", layer.get("id"));
-                    selected.push(feature);
-                    if (layer instanceof VectorLayer) {
-                        feature.setStyle(highlightStyle);
-                    }
-                });
-                const output = selected.map(f => featureToGeoJSON(f));
-                console.log("selected features", output);
-                if (model) {
-                    model.set("features", { selected: output });
-                    model.save_changes();
-                }
+            if (!(layer instanceof VectorLayer) && !(layer instanceof WebGLVectorLayer)) {
+                console.log("skip layer", layer.get("id"));
+                continue;
             }
+
+            const source: VectorSource = layer.getSource();
+            console.log("source extend", source.getExtent());
+            // const features = source.getFeaturesInExtent(extent).filter((feature: Feature) => feature?.getGeometry()?.intersectsExtent(extent));
+            source.forEachFeatureIntersectingExtent(extent, (feature: Feature) => {
+                feature.set("layer", layer.get("id"));
+                selected.push(feature);
+                if (layer instanceof VectorLayer) {
+                    feature.setStyle(highlightStyle);
+                }
+            });
+            const output = selected.map(feature => featureToGeoJSON(feature));
+            console.log("selected features", output);
+            if (model) {
+                model.set("features", { selected: output });
+                model.save_changes();
+            }
+            // }
         }
     });
 
