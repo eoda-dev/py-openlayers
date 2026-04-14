@@ -3,30 +3,38 @@ import type { Map } from "ol";
 import type Feature from "ol/Feature";
 
 import Style from "ol/style/Style";
-import Fill from 'ol/style/Fill.js';
-import Stroke from 'ol/style/Stroke.js';
+import Fill from 'ol/style/Fill';
+import Stroke from 'ol/style/Stroke';
+import Circle from "ol/style/Circle";
 import VectorLayer from "ol/layer/Vector";
+import WebGLVectorLayer from "ol/layer/WebGLVector";
+import VectorSource from "ol/source/Vector";
 
 // Box selection
-import { platformModifierKeyOnly } from 'ol/events/condition.js';
-import { getWidth } from 'ol/extent.js';
-import DragBox from 'ol/interaction/DragBox.js';
-import { getTransformFromProjections, transform } from 'ol/proj';
+import { platformModifierKeyOnly } from 'ol/events/condition';
+// import { getWidth } from 'ol/extent.js';
+import DragBox from 'ol/interaction/DragBox';
+// import { getTransformFromProjections, transform } from 'ol/proj';
 
 import { featureToGeoJSON } from "./utils";
-import VectorSource from "ol/source/Vector";
+
+const fill = new Fill({
+    color: 'rgba(58, 154, 178,0.7)'
+});
+const stroke = new Stroke({
+    color: "rgba(220, 203, 78, 0.7)",
+    width: 2
+});
 
 // TODO: Should be a parameter
 const highlightStyle = new Style({
-    fill: new Fill({
-        color: 'rgba(58, 154, 178,0.7)'
+    image: new Circle({
+        fill: fill,
+        stroke: stroke,
+        radius: 5,
     }),
-    stroke: new Stroke({
-        // color: 'rgba(241, 27, 0, 0.7)',
-        color: "rgba(220, 203, 78, 0.7)",
-        // color: "rgba(111, 178, 193, 0.7)",
-        width: 2
-    })
+    fill: fill,
+    stroke: stroke
 });
 
 // TODO: Setting new style only works for 'VectorLayer'
@@ -79,22 +87,34 @@ function addBoxSelectionToMap(map: Map, model?: AnyModel): void {
         console.log("box extent", extent);
         //
         for (let layer of map.getLayers().getArray()) {
-            if (layer instanceof VectorLayer) {
+            if (layer instanceof VectorLayer || layer instanceof WebGLVectorLayer) {
                 const source: VectorSource = layer.getSource();
                 console.log("source extend", source.getExtent());
                 // const features = source.getFeaturesInExtent(extent).filter((feature: Feature) => feature?.getGeometry()?.intersectsExtent(extent));
                 source.forEachFeatureIntersectingExtent(extent, (feature: Feature) => {
                     feature.set("layer", layer.get("id"));
-                    selected.push(featureToGeoJSON(feature));
+                    selected.push(feature);
+                    if (layer instanceof VectorLayer) {
+                        feature.setStyle(highlightStyle);
+                    }
                 });
-                console.log("selected features", selected);
+                const output = selected.map(f => featureToGeoJSON(f));
+                console.log("selected features", output);
+                if (model) {
+                    model.set("features", { selected: output });
+                    model.save_changes();
+                }
             }
         }
     });
 
 
     dragBox.on('boxstart', function () {
-        // select.clearSelection();
+        selected.forEach((f: Feature) => { f.setStyle(); });
+        if (model) {
+            model.set("features", {});
+            model.save_changes();
+        }
         selected = [];
     });
 }

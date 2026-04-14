@@ -17,7 +17,7 @@ def _():
 def _(ol):
     data = "https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
     # data = "https://github.com/visgl/deck.gl-data/raw/master/examples/line/airports.json"
-    layer = ol.VectorLayer(
+    layer = ol.WebGLVectorLayer(
         id="xyz",
         source=ol.sources.VectorSource(
             url=data,
@@ -34,7 +34,7 @@ def _(ol):
 
 @app.cell
 def _(layer, ol):
-    m = ol.MapWidget(layers=[layer])
+    m = ol.MapWidget(layers=[ol.BasemapLayer(), layer])
     # m.add_layer(layer)
     return (m,)
 
@@ -43,6 +43,11 @@ def _(layer, ol):
 def _(m, mo):
     w = mo.ui.anywidget(m)
     return (w,)
+
+
+@app.cell
+def _():
+    return
 
 
 @app.cell
