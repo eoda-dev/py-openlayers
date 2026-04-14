@@ -258,8 +258,8 @@ export default class MapWidget {
     addSelectFeaturesToMap(this._map, this._model);
   }
 
-  addBoxSelection(): void {
-    addBoxSelectionToMap(this._map, this._model);
+  addBoxSelection(layerIds?: string[]): void {
+    addBoxSelectionToMap(this._map, layerIds, this._model);
   }
 
   addClickInteraction(): void {

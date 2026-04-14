@@ -73,19 +73,24 @@ function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
     });
 }
 
-function addBoxSelectionToMap(map: Map, model?: AnyModel): void {
+function addBoxSelectionToMap(map: Map, layerIds?: string[], model?: AnyModel): void {
     console.warn("Box selection is still experimental.");
 
-    let selected = [] as Feature[];
+    let layers = map.getLayers().getArray();
+    if (layerIds) {
+        layers = layers.filter(layer => layerIds.includes(layer.get("id")));
+    }
 
+    let selected = [] as Feature[];
     const dragBox = new DragBox({
         condition: platformModifierKeyOnly,
     });
+
     map.addInteraction(dragBox);
     dragBox.on('boxend', function () {
         const extent = dragBox.getGeometry().transform('EPSG:3857', 'EPSG:4326').getExtent();
         console.log("box extent", extent);
-        for (let layer of map.getLayers().getArray()) {
+        for (let layer of layers) {
             if (!(layer instanceof VectorLayer) && !(layer instanceof WebGLVectorLayer)) {
                 console.log("skip layer", layer.get("id"));
                 continue;
