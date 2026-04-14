@@ -9,9 +9,12 @@ import VectorLayer from "ol/layer/Vector";
 
 // Box selection
 import { platformModifierKeyOnly } from 'ol/events/condition.js';
+import { getWidth } from 'ol/extent.js';
+import DragBox from 'ol/interaction/DragBox.js';
+import { getTransformFromProjections, transform } from 'ol/proj';
 
 import { featureToGeoJSON } from "./utils";
-import DragBox from 'ol/interaction/DragBox.js';
+import VectorSource from "ol/source/Vector";
 
 // TODO: Should be a parameter
 const highlightStyle = new Style({
@@ -63,19 +66,36 @@ function addSelectFeaturesToMap(map: Map, model?: AnyModel): void {
 }
 
 function addBoxSelectionToMap(map: Map, model?: AnyModel): void {
-    console.warn("Box selection not implemented yet");
+    console.warn("Box selection is still experimental.");
+
+    let selected = [] as Feature[];
 
     const dragBox = new DragBox({
         condition: platformModifierKeyOnly,
     });
     map.addInteraction(dragBox);
     dragBox.on('boxend', function () {
-        const extent = dragBox.getGeometry().getExtent();
+        const extent = dragBox.getGeometry().transform('EPSG:3857', 'EPSG:4326').getExtent();
         console.log("box extent", extent);
+        //
+        for (let layer of map.getLayers().getArray()) {
+            if (layer instanceof VectorLayer) {
+                const source: VectorSource = layer.getSource();
+                console.log("source extend", source.getExtent());
+                // const features = source.getFeaturesInExtent(extent).filter((feature: Feature) => feature?.getGeometry()?.intersectsExtent(extent));
+                source.forEachFeatureIntersectingExtent(extent, (feature: Feature) => {
+                    feature.set("layer", layer.get("id"));
+                    selected.push(featureToGeoJSON(feature));
+                });
+                console.log("selected features", selected);
+            }
+        }
     });
+
 
     dragBox.on('boxstart', function () {
         // select.clearSelection();
+        selected = [];
     });
 }
 

@@ -15,10 +15,19 @@ def _():
 
 @app.cell
 def _(ol):
+    data = "https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson"
+    # data = "https://github.com/visgl/deck.gl-data/raw/master/examples/line/airports.json"
     layer = ol.VectorLayer(
+        id="xyz",
         source=ol.sources.VectorSource(
-            url="https://openlayers.org/data/vector/ecoregions.json"
-        )
+            url=data,
+            # url="https://openlayers.org/data/vector/ecoregions.json"
+            crossOrigin="anonymous"
+
+        ),
+        style=ol.FlatStyle(
+            circle_radius=5,
+            circle_fill_color="red", circle_stroke_color="green")
     )
     return (layer,)
 
@@ -26,6 +35,7 @@ def _(ol):
 @app.cell
 def _(layer, ol):
     m = ol.MapWidget(layers=[layer])
+    # m.add_layer(layer)
     return (m,)
 
 
@@ -42,14 +52,26 @@ def _(w):
 
 
 @app.cell
-def _(w):
-    w.value["view_state"]
+def _():
+    # w.value["view_state"]
     return
 
 
 @app.cell
 def _(m):
     m.add_call("addBoxSelection")
+    return
+
+
+@app.cell
+def _(m):
+    m.add_select_interaction()
+    return
+
+
+@app.cell
+def _(w):
+    w.value["features"]
     return
 
 
